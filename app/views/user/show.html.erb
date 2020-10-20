@@ -1,0 +1,94 @@
+<div class="container-fluid">
+  <div class="text-center">
+    <h2>员工档案</h2>
+    <table class="table">
+      <tbody>
+      <tr>
+        <th>姓名</th>
+        <td><%= @user.name %></td>
+        <th>性别</th>
+        <td><%= @user.gender %></td>
+      </tr>
+      <tr>
+        <th>工号</th>
+        <td><%= @user.work_id %></td>
+        <th>工种</th>
+        <td><%= @user.work_type %></td>
+      </tr>
+      <tr>
+        <% if @user.basic_wage != 0 && @user.basic_wage != nil %>
+          <th>工资方式</th>
+          <td>计时</td>
+          <th>基本工资</th>
+          <td><%= @user.basic_wage %>元/月</td>
+        <% end %>
+        <% if @user.minimun_wage != 0 && @user.minimun_wage != nil %>
+          <th>工资方式</th>
+          <td>计件</td>
+          <th>保低工资</th>
+          <td><%= @user.minimun_wage %>元/月</td>
+        <% end %>
+      </tr>
+      <tr>
+        <th>房屋补贴</th>
+        <% if @user.house_allowance != 0 && @user.house_allowance != nil %>
+          <td><%= @user.house_allowance %>元/月</td>
+        <% else %>
+          <td>无</td>
+        <% end %>
+        <th>其他补贴</th>
+        <% if @user.other_allowance != 0 && @user.other_allowance != nil %>
+          <td><%= @user.other_allowance %>元/月</td>
+        <% else %>
+          <td>无</td>
+        <% end %>
+
+      </tr>
+      <tr>
+        <th>手机号码</th>
+        <td><%= @user.phone %></td>
+        <th>银行卡号</th>
+        <td><%= @user.bank_card %></td>
+      </tr>
+      <tr>
+        <th>身份证号</th>
+        <td colspan="4"><%= @user.id_number %></td>
+      </tr>
+      <tr>
+        <th>入职日期</th>
+        <td><%= @user.entry_date %></td>
+        <th>目前状态</th>
+        <td><%= @user.work_status %></td>
+      </tr>
+
+      <% if @user.daparture_date != nil %>
+        <tr>
+          <th>离职日期</th>
+          <td><%= @user.daparture_date %></td>
+        </tr>
+      <% end %>
+
+      <tr>
+        <th>备注</th>
+        <td colspan="5"><%= @user.remarks %></td>
+      </tr>
+      <% if @user.role != "employee" && @user.role != nil %>
+        <tr>
+          <th>权限</th>
+          <td><%= role_to_chinese(@user.role) %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <div>
+      <% if can? :edit, @user %>
+        <%= link_to "编辑信息", edit_user_path(@user), class: "btn btn-primary" %>
+        <%= link_to "返回", user_index_path, class: "btn btn-primary" %>
+      <% else %>
+        <%= link_to "返回主页", root_url, class: "btn btn-primary" %>
+      <% end %>
+
+    </div>
+  </div>
+</div>

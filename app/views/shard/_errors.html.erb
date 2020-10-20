@@ -1,0 +1,13 @@
+
+<div id="error_explanation">
+  <% if object.errors.any? %>
+    <div class="alert alert-danger">
+      这表单有 <%= pluralize(object.errors.count, "个错误") %>.
+    </div>
+    <ul>
+      <% object.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

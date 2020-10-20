@@ -1,0 +1,72 @@
+<div class="text-center">
+  <%= render "shard/errors", object: @user %>
+  <%= form_for(user, url: url) do |f| %>
+    <div class="form-group">
+      <dl class="row">
+        <dt class="col-2"><%= f.label :name, "姓名", class: "caption " %></dt>
+        <dd class="col-1"><%= f.text_field :name %></dd>
+      </dl>
+      <dl class="row">
+        <dt class="col-2"><%= f.label :gender, "性别", class: "caption " %></dt>
+        <dd class="col-1"><%= f.radio_button(:gender, "男") %><%= f.label :gender, "男" %></dd>
+        <dd class="col-1"><%= f.radio_button(:gender, "女") %><%= f.label :gender, "女" %></dd>
+      </dl>
+      <dl class="row">
+        <dt class="col-2"><%= f.label :work_id, "工作编号", class: "caption " %></dt>
+        <dd class="col-1"><%= f.number_field :work_id %></dd>
+        <dd class="col-3 d-none">该编号已经有人了，请选择新的编号</dd>
+      </dl>
+
+      <dl class="row work_type_now">
+        <dt class="col-2"><%= f.label :work_type, "选择工种", class: "caption " %></dt>
+
+        <dd class="col-2"><%= f.select(:work_type, User.all.collect {|p| p.work_type}.uniq) %></dd>
+        <a class="col-2 " id="edit_new_work_type">是新的工种？</a>
+      </dl>
+
+      <div class="row new_work_type d-none">
+        <dt class="col-2 ">新的工种</dt>
+        <dd class="col-1 "><%= f.text_field :work_type, disabled: "true" %></dd>
+        <a class="col-2 offset-2 " id="edit_old_work_type">还是原来的工种</a>
+      </div>
+      <dl class="row">
+        <dt class="col-2"><%= f.label :basic_wage, "基础工资", class: "caption " %></dt>
+        <dd class="col-8 text-left"><%= f.number_field :basic_wage %><span>元/月</span></dd>
+      </dl>
+      <dl class="row">
+        <dt class="col-2"><%= f.label :bank_card, "银行卡号", class: "caption " %></dt>
+        <dd class="col-2"><%= f.text_field :bank_card, maxlength: 19 %></dd>
+      </dl>
+      <dl class="row">
+        <dt class="col-2"><%= f.label :phone, "手机号码", class: "caption " %></dt>
+        <dd class="col-1"><%= f.text_field :phone, maxlength: 11 %></dd>
+      </dl>
+      <dl class="row">
+        <dt class="col-2"><%= f.label :entry_date, "入职日期", class: "caption " %></dt>
+        <dd class="col-1"><%= f.date_field :entry_date %></dd>
+      </dl>
+
+      <dl class="row">
+        <dt class="col-2"><%= f.label :daparture_date, "离职日期", class: "caption " %> </dt>
+        <dd class="col-1"><%= f.date_field :daparture_date %></dd>
+      </dl>
+      <dl class="row">
+        <dt class="col-2"><%= f.label :remarks, "备注", class: "caption " %></dt>
+        <dd class="col-1"><%= f.text_area :remarks, cols: 80 %></dd>
+      </dl>
+
+      <% if @user.role == "admin" %>
+        <dl class="row">
+          <dt class="col-2"><%= f.label :role, "角色", class: "caption " %></dt>
+          <dd class="col-2"><%= f.select(:role, options_for_select([['员工', 'employee'], ['编辑者', 'editor'], ['领导', 'leader'],
+                                                                    ['管理员', "admin"]], user.role)) %></dd>
+        </dl>
+      <% end %>
+      <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+      <%= link_to "取消", user_index_path, class: "btn btn-default" %>
+
+    </div>
+
+  <% end %>
+
+</div>
