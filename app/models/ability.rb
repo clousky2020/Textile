@@ -7,17 +7,21 @@ class Ability
     # Define abilities for the passed in user here. For example:
 
     user ||= User.new # guest user (not logged in)
-    if user.blank?
+    if user.roles.blank?
       cannot :manage, :all
-    elsif user.role == "admin"
+    elsif user.has_role? :superadmin
       can :manage, :all
-    elsif user.role == 'leader'
+    elsif user.has_role? :admin
+      can :manage, :all
+      cannot :destroy, User
+    elsif user.has_role? :sale
       can :read, :all
-    elsif user.role == 'editor'
+    elsif user.has_role? :buyer
       can :manage, :all
-    elsif user.role == 'employee'
-      can :show, User, id: user.id
-      can :manage, PasswordResetsController, id: user.id
+    elsif user.has_role? :warehouse
+      can :manage, :all
+    elsif user.has_role? :accounting
+      can :manage, :all
     end
     #
     # The first argument to `can` is the action you are giving the user

@@ -1,0 +1,24 @@
+<tr>
+  <th>供应商名称</th>
+  <td><%= object.name %></td>
+</tr>
+<tr>
+  <th>描述</th>
+  <td><%= object.description %></td>
+</tr>
+<tr>
+  <th>联系人</th>
+  <td><%= object.contacts %></td>
+</tr>
+<tr>
+  <th>联系电话</th>
+  <td><%= object.phone %></td>
+</tr>
+<tr>
+  <th>地址</th>
+  <td><%= object.address %></td>
+</tr>
+<tr>
+  <th>已有订单数</th>
+  <td><%=link_to object.purchase_orders.count,purchase_order_index_path(:search_company=>"#{object.name}") %></td>
+</tr>

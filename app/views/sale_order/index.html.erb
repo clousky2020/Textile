@@ -1,0 +1,42 @@
+<% provide :index_title, "销售订单管理界面" %>
+<% provide :manage_object, SaleOrder %>
+<% provide :new_url, new_sale_order_path %>
+
+<%= render 'shard/index_header',page:"sale_order" %>
+
+<table class="table table-hover table-active">
+  <thead>
+  <tr>
+    <td>订单号</td>
+    <td>供应商</td>
+    <td>品名</td>
+    <td>型号规格</td>
+    <% if can? :destroy, SaleOrder %>
+      <td>作废</td>
+    <% end %>
+  </tr>
+  </thead>
+  <tbody>
+  <% @sale_orders.each do |sale_order| %>
+    <tr>
+      <td><%= link_to sale_order.order_id, sale_order_path(sale_order) %></td>
+      <td><%= link_to sale_order.sale_customer.name, sale_customer_path(sale_order.sale_customer) %></td>
+      <td><%= sale_order.product.name %></td>
+      <td><%= sale_order.product.specification %></td>
+      <% if can? :destroy, SaleOrder %>
+        <td>
+          <%= link_to "作废", sale_order_path(sale_order), method: :delete, data: {confirm: "确定删除吗？"} %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<%=render 'shard/paginate',object:@sale_orders %>
+
+
+
+
+
+
+

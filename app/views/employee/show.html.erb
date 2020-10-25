@@ -1,0 +1,7 @@
+
+<% provide :title, "员工档案" %>
+<% provide :edit_url, edit_employee_path(@employee) %>
+<% provide :model, Employee %>
+<% provide :back_url, employee_index_path %>
+
+<%= render 'shard/show_form', object: @employee, type: "employee" %>

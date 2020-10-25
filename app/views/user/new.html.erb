@@ -1,3 +1,7 @@
 <% provide :button_text, "创建" %>
-<h2>创建新员工档案</h2>
-<%= render 'user/form', user: @user, url: user_index_path, method: :post %>
+<% provide :title, "创建新用户" %>
+<% provide :back_url, user_index_path %>
+
+<%= render 'shard/form', object: @user, url: user_index_path, type: "user", type_2: "create", method: :post %>
+
+

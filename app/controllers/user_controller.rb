@@ -1,15 +1,9 @@
 class UserController < ApplicationController
+  before_action :get_user, only: :lock
   load_and_authorize_resource
 
-
   def index
-    if params.has_key?(:search) && params[:search] != ""
-      @user = User.where("name LIKE?", "%#{params[:search]}%").order("work_id").page(params[:page]).per(10)
-    elsif params[:order] == "all"
-      @user = User.order("work_id").page(params[:page]).per(10)
-    else
-      @user = User.where("work_status=?", "在职").order("work_id").page(params[:page]).per(10)
-    end
+    @users = User.where("id !=?", 1).order("id").page(params[:page])
   end
 
   def new
@@ -20,10 +14,12 @@ class UserController < ApplicationController
   end
 
   def edit
+
   end
 
   def create
     @user = User.new(user_params)
+
     if @user.save
       flash[:success] = "创建成功"
       redirect_to user_index_url
@@ -35,9 +31,17 @@ class UserController < ApplicationController
 
 
   def update
-    # @user = User.find(params[:id])
+
+    if params[:roles]
+      @user.roles.clear
+      params[:roles].each do |permission|
+        role = Role.new(name: permission)
+        @user.roles << role
+      end
+    end
+
     if @user.update(user_params)
-      flash[:success] = "成功更新员工信息"
+      flash[:success] = "成功更新用户信息"
       redirect_to user_url(@user)
     else
       flash[:warning] = "#{@user.errors.full_messages.to_s}"
@@ -46,14 +50,24 @@ class UserController < ApplicationController
   end
 
   def destroy
+    User.delete(@user)
+    redirect_to user_index_path
+  end
 
+  def lock
+    @user.get_locked
+    redirect_to user_index_path
   end
 
   private
 
+
+
+  def get_user
+    @user = User.find(params[:id])
+  end
+
   def user_params
-    params.require(:user).permit(:name, :gender, :work_id, :work_type, :basic_wage, :minimun_wage, :house_allowance,
-                                 :other_allowance, :phone, :bank_card, :work_status, :entry_date, :daparture_date,
-                                 :remarks, :role)
+    params.require(:user).permit(:name, :password, :password_confirmation, :is_lock, :email)
   end
 end

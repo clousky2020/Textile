@@ -1,0 +1,42 @@
+<% if current_user %>
+  <% if can? :read, Employee %>
+    <%= link_to "员工", employee_index_path, class: "btn btn-info" %>
+  <% end %>
+  <% if can? :manage, User %>
+    <%= link_to "用户", user_index_path, class: "btn btn-info" %>
+  <% end %>
+  <% if can? :manage, Repo %>
+    <%= link_to "仓库", repo_index_path, class: "btn btn-info" %>
+  <% end %>
+  <% if can? :manage, PurchaseSupplier %>
+    <%= link_to "供应商", purchase_supplier_index_path, class: "btn btn-info" %>
+  <% end %>
+  <% if can? :manage, PurchaseOrder %>
+    <%= link_to "采购订单", purchase_order_index_path, class: "btn btn-info" %>
+  <% end %>
+  <% if can? :manage, SaleCustomer %>
+    <%= link_to "客户", sale_customer_index_path, class: "btn btn-info" %>
+  <% end %>
+  <% if can? :manage, SaleOrder %>
+    <%= link_to "销售订单", sale_order_index_path, class: "btn btn-info" %>
+  <% end %>
+  <% if can? :manage, Material %>
+    <%= link_to "原材料", material_index_path, class: "btn btn-info" %>
+  <% end %>
+  <% if can? :manage, Product %>
+    <%= link_to "产品", product_index_path, class: "btn btn-info" %>
+  <% end %>
+
+  <div class="dropdown btn">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      欢迎你,<%= current_user.name %>
+      <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <li><%= link_to "更改密码", edit_password_reset_path(current_user), class: "btn " %></li>
+      <li> <%= link_to "退出", session_path(current_user), method: :delete, class: "btn " %></li>
+    </ul>
+  </div>
+
+
+<% end %>

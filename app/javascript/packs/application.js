@@ -26,21 +26,12 @@ $(document).ready(function () {
     $(document).on('click', "#edit_new_work_type", function () {
         $(".work_type_now").addClass("d-none ");
         $(".new_work_type").removeClass("d-none ");
-        $(".new_work_type").find("input[name='user[work_type]']").attr('disabled', false);
+        $(".new_work_type").find("input[name='employee[work_type]']").attr('disabled', false);
     })
     $(document).on('click', "#edit_old_work_type", function () {
         $(".work_type_now").removeClass("d-none ");
         $(".new_work_type").addClass("d-none ");
-        $(".new_work_type").find("input[name='user[work_type]']").attr('disabled', true);
+        $(".new_work_type").find("input[name='employee[work_type]']").attr('disabled', true);
     })
-
-    //前端校验员工编号
-    // $('input[name="user[work_id]"]').change(function () {
-    //     var work_id = $(this).val();
-    //     var arr = @work_ids;
-    //     if $(.inArray(work_id,)) {
-    //
-    //     }
-    // })
 
 })

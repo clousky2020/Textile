@@ -1,0 +1,12 @@
+
+
+<% provide :title, "产品详情" %>
+<% provide :edit_url, edit_product_path(@product) %>
+<% provide :model, Product %>
+<% provide :back_url, product_index_path %>
+
+<%= render 'shard/show_form', object: @product, type: "product" %>
+
+
+
+

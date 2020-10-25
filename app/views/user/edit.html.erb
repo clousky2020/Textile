@@ -1,4 +1,5 @@
 <% provide :button_text, "更新" %>
+<% provide :title, "用户信息编辑" %>
+<% provide :back_url, user_path(@user) %>
 
-<h2>员工档案编辑</h2>
-<%= render 'user/form', user: @user, url: user_path, method: :patch %>
+<%= render 'shard/form', object: @user, url: user_path, type: "user", type_2: "edit", method: :patch %>

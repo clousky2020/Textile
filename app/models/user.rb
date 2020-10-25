@@ -1,12 +1,38 @@
 class User < ApplicationRecord
-  # ROLES = %i[admin leader editor employee]
+  belongs_to :employee
+  has_one :repo
+
+  has_many :purchase_orders
+  has_many :sale_orders
+  has_many :products
+  has_many :materials
+
+
+  rolify
   has_secure_password
-  validates :gender, presence: true
-  validates :name, length: {maximum: 10, too_long: "员工姓名过长,最多10个字符",
-                            minimum: 1, too_short: "姓名过短，至少1个字符"}
-  validates :work_id, uniqueness: {scope: :work_status, :message => "该工号已经被使用，请更换别的工号！"}
-  # validates :phone, numericality: true, length: {is: 11, message: "手机号码位数应为11位"}
-  # validates :bank_card, numericality: true, length: {is: 19, message: "银行卡号位数应为19位"}
-  validates :entry_date, :presence => true
+  # after_create :assign_default_role
+
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+  validates :name, presence: true, length: {maximum: 10, message: "用户名长度超出10个字符"},
+            uniqueness: {message: "已有这个用户名"}
+  validates :email, length: {maximum: 255},
+            format: {with: VALID_EMAIL_REGEX},
+            uniqueness: {case_sensitive: false}
+
+  #创建用户后，设定初始的role
+  def assign_default_role
+    self.add_role(:newuser) if self.roles.blank?
+  end
+
+  #给账户上锁
+  def get_locked
+    if self.is_lock
+      self.update_columns(is_lock: false)
+    else
+      self.update_columns(is_lock: true)
+      self.update_columns(lock_time: Time.now)
+    end
+  end
+
 
 end

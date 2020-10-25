@@ -1,0 +1,7 @@
+<% provide :button_text, "更新" %>
+<% provide :title, "修改订单" %>
+<% provide :back_url, purchase_order_path %>
+
+<%= render 'shard/form', object: @purchase_order, url: purchase_order_path, type: "purchase_order", type_2: "edit", method: :patch %>
+
+

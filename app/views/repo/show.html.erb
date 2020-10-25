@@ -1,0 +1,9 @@
+<% provide :title, "仓库档案" %>
+<% provide :edit_url, edit_repo_path(@repo) %>
+<% provide :model, Repo %>
+<% provide :back_url, repo_index_path %>
+
+<%= render 'shard/show_form', object: @repo, type: "repo" %>
+
+
+

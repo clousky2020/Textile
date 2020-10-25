@@ -1,0 +1,10 @@
+<div class="search ml-auto">
+  <%= form_tag({action: action}, method: "get") do %>
+    <div class="input-group">
+      <%= text_field_tag :search, '', placeholder: "搜索名", size: 20 %>
+      <div class="input-group-append">
+        <%= submit_tag '搜索' %>
+      </div>
+    </div>
+  <% end %>
+</div>

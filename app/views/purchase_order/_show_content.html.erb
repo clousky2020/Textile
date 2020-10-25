@@ -1,0 +1,69 @@
+<tr>
+  <th>品名</th>
+  <td><%= object.name %></td>
+</tr>
+<tr>
+  <th>型号规格</th>
+  <td><%= object.specification %></td>
+</tr>
+<tr>
+  <th>批号</th>
+  <td><%= object.batch_number %></td>
+</tr>
+
+<tr>
+  <th>重量</th>
+  <td><%= object.weight %>千克</td>
+</tr>
+
+<tr>
+  <th>数量</th>
+  <td><%= object.number %><%= object.measuring_unit %></td>
+</tr>
+
+<% if object.freight %>
+  <tr>
+    <th>运费</th>
+    <td><%= object.freight %>元</td>
+  </tr>
+<% end %>
+<% if object.deposit %>
+  <tr>
+    <th>押金</th>
+    <td><%= object.deposit %>元</td>
+  </tr>
+<% end %>
+<tr>
+  <th>单价</th>
+  <td><%= object.price %>元</td>
+</tr>
+<% if object.tax_rate %>
+  <tr>
+    <th>税率</th>
+    <td><%= object.tax_rate * 100 %>%</td>
+  </tr>
+<% end %>
+<tr>
+  <th>总价</th>
+  <td><%= object.total_price %>元</td>
+</tr>
+<tr>
+  <th>供货商名称</th>
+  <td><%= object.purchase_supplier.name %></td>
+</tr>
+<tr>
+  <th>存放的仓库</th>
+  <td><%= object.repo.name %></td>
+</tr>
+<tr>
+  <th>创建时间</th>
+  <td><%= object.created_at %></td>
+</tr>
+<tr>
+  <th>经手人</th>
+  <td><%= object.user.name %></td>
+</tr>
+<tr>
+  <th>描述</th>
+  <td><%= object.description %></td>
+</tr>

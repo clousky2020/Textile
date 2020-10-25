@@ -1,0 +1,41 @@
+<% provide :index_title, "仓库管理界面" %>
+<% provide :manage_object, Repo %>
+<% provide :new_url, new_repo_path %>
+
+<%= render 'shard/index_header',page:"repo" %>
+
+
+<table class="table table-hover table-active">
+  <thead>
+  <tr>
+    <td>编号</td>
+    <td>仓库名称</td>
+    <td>查看</td>
+    <% if can? :destroy, Repo %>
+      <td>删除</td>
+    <% end %>
+  </tr>
+  </thead>
+  <tbody>
+  <% @repos.each do |repo| %>
+    <tr>
+      <td><%= repo.id %></td>
+      <td><%= repo.name %></td>
+      <td><%= link_to "详情", repo_path(repo) %></td>
+      <% if can? :destroy, Repo %>
+        <td>
+          <%= link_to "删除", repo_path(repo), method: :delete, data: {confirm: "确定删除吗？"} %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<%=render 'shard/paginate',object:@repos %>
+
+
+
+
+
+
+

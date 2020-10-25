@@ -1,0 +1,7 @@
+<% provide :button_text, "创建" %>
+<% provide :title, "创建新用户" %>
+<% provide :back_url, repo_index_path %>
+
+<%= render 'shard/form', object: @repo, url: repo_index_path, type: "repo", type_2: "create", method: :post %>
+
+

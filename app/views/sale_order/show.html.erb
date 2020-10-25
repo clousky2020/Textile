@@ -1,0 +1,12 @@
+
+
+<% provide :title, "订单详情" %>
+<% provide :edit_url, edit_sale_order_path(@sale_order) %>
+<% provide :model, SaleOrder %>
+<% provide :back_url, sale_order_index_path %>
+
+<%= render 'shard/show_form', object: @sale_order, type: "sale_orders" %>
+
+
+
+

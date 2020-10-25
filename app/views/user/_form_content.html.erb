@@ -1,0 +1,27 @@
+<div class="form-inline">
+  <%= f.label :name, "姓名" %>
+  <%= f.text_field :name, class: "form-control" %>
+</div>
+<div class="form-inline">
+  <%= f.label :email, "邮箱" %>
+  <%= f.email_field :email, class: "form-control" %>
+</div>
+<% if type_2 == "create" %>
+  <div class="form-inline">
+    <%= f.label :password, "密码" %>
+    <%= f.password_field :password, class: "form-control" %>
+  </div>
+  <div class="form-inline">
+    <%= f.label :password_confirmation, "确认密码" %>
+    <%= f.password_field :password_confirmation, class: "form-control" %>
+  </div>
+  <div class="form-check">
+    <%= f.label :is_lock, "是否锁住" %>
+    <%= f.check_box :is_lock %>
+  </div>
+<% end %>
+<div class="form-check-inline">
+  <%= check_box_tag "roles[]", "buyer", false %><%= label_tag '采购员' %>
+  <%= check_box_tag "roles[]", "sale", false %><%= label_tag '销售员' %>
+  <%= check_box_tag "roles[]", "warehouse", false %><%= label_tag '仓管员' %>
+</div>

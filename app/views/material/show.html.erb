@@ -1,0 +1,12 @@
+
+
+<% provide :title, "原材料详情" %>
+<% provide :edit_url, edit_material_path(@material) %>
+<% provide :model, Material %>
+<% provide :back_url, material_index_path %>
+
+<%= render 'shard/show_form', object: @material, type: "material" %>
+
+
+
+

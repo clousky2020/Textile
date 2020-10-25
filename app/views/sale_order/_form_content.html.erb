@@ -1,0 +1,50 @@
+<div class="form-inline">
+  <%= f.label :name, "品名" %>
+  <%= f.text_field :name, class: "form-control" %>
+</div>
+<div class="form-inline">
+  <%= f.label :specification, "型号规格" %>
+  <%= f.text_field :specification, class: "form-control" %>
+</div>
+
+<div class="form-inline">
+  <%= f.label :description, "描述" %>
+  <%= f.text_field :description, class: "form-control" %>
+</div>
+<div class="form-inline">
+  <%= f.label :repo_id, "存入仓库" %>
+  <%= f.select(:repo_id, Repo.all.map {|n| [n.name, n.id]}, class: "form-control") %>
+</div>
+<div class="form-inline">
+  <%= f.fields_for :sale_customer do |f2| %>
+    <%= f2.label :name, "客户名称" %>
+    <%= f2.text_field :name, class: "form-control" %>
+  <% end %>
+</div>
+<div class="form-inline">
+  <%= f.label :weight, "重量" %>
+  <%= f.text_field :weight, class: "form-control" %>
+</div>
+<div class="form-inline">
+  <%= f.label :price, "单价" %>
+  <%= f.text_field :price, class: "form-control" %>
+</div>
+<div class="form-inline">
+  <%= f.label :tax_rate, "税率" %>
+  <%= f.text_field :tax_rate, class: "form-control" %>
+</div>
+
+<div class="form-inline">
+  <%= f.label :freight, "运费" %>
+  <%= f.text_field :freight, class: "form-control" %>
+</div>
+
+
+<% if cannot? :edit, PurchaseOrder %>
+  <div class="form-inline">
+    <%= f.label :employee_id, "经手人" %>
+    <%= f.select(:employee_id, @salers.map {|n| [n.name, n.id]}, class: "form-control") %>
+  </div>
+<% end %>
+
+

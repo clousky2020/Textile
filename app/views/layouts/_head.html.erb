@@ -1,37 +1,26 @@
-<nav class="navbar navbar-expand-sm bg-light fixed-top justify-content-center">
-  <div class="navbar-header mr-auto">
-    <%= link_to "顾丰纺织生产管理系统", root_url, class: "navbar-brand" %>
+<!--pc导航栏-->
+<nav class="navbar-inverse visible-lg visible-md" role="navigation">
+  <div class="row no-gutters">
+<!--    <div class="mr-auto">-->
+      <%= link_to "顾丰纺织进销存系统", root_url, class: "navbar-brand mr-auto" %>
+<!--    </div>-->
+<!--    <div id="admin_header_nav" class="ml-auto">-->
 
+      <%= render 'layouts/menu' %>
+
+<!--    </div>-->
   </div>
-
-  <nav id="admin_header_nav" class="nav ml-auto">
-    <% if current_user %>
-      <% if can? :read, User %>
-        <div class="nav-item">
-          <%= link_to "个人信息", user_url(current_user) %>
-        </div>
-        <div class="nav-item">
-          <%= link_to "更改密码", edit_password_reset_path(current_user) %>
-        </div>
-      <% end %>
-      <% if can? :manage, @user %>
-        <div class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            人员管理
-            <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-right">
-            <li><%= link_to "所有人员", user_index_path, class: "nav-item" %></li>
-          </ul>
-        </div>
-      <% end %>
-
-
-      <div class="nav-item">欢迎你,<%= current_user.name %></div>
-      <%= link_to "退出", session_path(current_user), method: :delete %>
-    <% end %>
-
-  </nav>
-
-
 </nav>
+
+
+<!--手机端导航栏-->
+<!--<div id="mobile-menu" class="mobile-nav visible-xs">-->
+<%#= render 'layouts/menu' %>
+<!--</div>-->
+<!--手机导航栏侧滑-->
+<!--<div class="nav-btn visible-xs visible-sm">-->
+<!--  <a href="#" class="mobile-nav-taggle" id="mobile-nav-taggle">-->
+<!--    <span class="glyphicon glyphicon-align-justify"></span>-->
+<!--  </a>-->
+<!--</div>-->
+

@@ -1,0 +1,45 @@
+<% provide :index_title, "员工管理界面" %>
+<% provide :manage_object, Employee %>
+<% provide :new_url, new_employee_path %>
+
+<%= render 'shard/index_header',page:"employee" %>
+
+<table class="table table-hover table-active">
+  <thead>
+  <tr>
+    <td>工号</td>
+    <td>姓名</td>
+    <td>性别</td>
+    <td>岗位</td>
+    <td>状态</td>
+    <td>查看</td>
+    <% if can? :destroy, Employee %>
+      <td>删除</td>
+    <% end %>
+  </tr>
+  </thead>
+  <tbody>
+  <% @employees.each do |user| %>
+    <tr>
+      <td><%= user.work_id %></td>
+      <td><%= user.name %></td>
+      <td><%= user.gender %></td>
+      <td><%= user.work_type %></td>
+      <td><%= user.work_status %></td>
+      <td><%= link_to "详情", employee_path(user) %></td>
+      <% if can? :destroy, Employee %>
+        <td><%= link_to "删除", employee_path(user), method: :delete, data: {confirm: "确定删除？"} %></td>
+      <% end %>
+    </tr>
+
+  <% end %>
+  </tbody>
+</table>
+<%=render 'shard/paginate',object:@employees %>
+
+
+
+
+
+
+

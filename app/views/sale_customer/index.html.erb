@@ -1,0 +1,44 @@
+<h1 class="text-center">客户管理界面</h1>
+<div class="form-row">
+  <% if can? :manage, SaleCustomer %>
+    <div>
+      <%= link_to "新建", new_sale_customer_path %>
+    </div>
+  <% end %>
+  <%= render "shard/search", action: :index %>
+</div>
+<table class="table table-hover table-active">
+  <thead>
+  <tr>
+    <td>编号</td>
+    <td>公司名</td>
+    <td>查看</td>
+    <% if can? :manage, SaleCustomer %>
+      <td>删除</td>
+    <% end %>
+  </tr>
+  </thead>
+  <tbody>
+  <% @customers.each do |customer| %>
+    <tr>
+      <td><%= customer.id %></td>
+      <td><%= customer.name %></td>
+      <td><%= link_to "详情", sale_customer_path(customer) %></td>
+      <% if can? :manage, SaleCustomer %>
+        <td>
+          <%= link_to "删除", sale_customer_path(customer), method: :delete, data: {confirm: "确定删除吗？"} %>
+        </td>
+      <% end %>
+    </tr>
+
+  <% end %>
+  </tbody>
+</table>
+<%=render 'shard/paginate',object:@customers %>
+
+
+
+
+
+
+

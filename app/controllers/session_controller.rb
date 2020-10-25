@@ -6,7 +6,11 @@ class SessionController < ApplicationController
 
   def create
     user = User.find_by(name: params[:session][:name])
-    if user && user.authenticate(params[:session][:password])
+
+    if user && user.is_lock == true
+      flash[:warning] = "账户已锁定，请联系管理员"
+      render :'session/new'
+    elsif user && user.authenticate(params[:session][:password])
       login_in user
       flash[:success] = "成功登录"
       redirect_to root_url

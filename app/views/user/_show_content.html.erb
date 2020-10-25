@@ -1,0 +1,18 @@
+<tr>
+  <th>姓名</th>
+  <td><%= object.name %></td>
+</tr>
+<tr>
+  <th>邮箱</th>
+  <td><%= object.email %></td>
+</tr>
+<tr>
+  <th>权限</th>
+  <td><%= object.roles.map {|n| n.to_chinese}.join(",") %></td>
+</tr>
+<% if object.is_lock %>
+  <tr>
+    <th>锁住的时间</th>
+    <td><%= object.lock_time.localtime %></td>
+  </tr>
+<% end %>

@@ -1,0 +1,7 @@
+<% provide :button_text, "创建" %>
+<% provide :title, "创建新的销售订单" %>
+<% provide :back_url, sale_order_index_path %>
+
+<%= render 'shard/form', object: @sale_order, url: sale_order_index_path, type: "sale_order", type_2: "create", method: :post %>
+
+

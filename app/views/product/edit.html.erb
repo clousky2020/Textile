@@ -1,0 +1,7 @@
+<% provide :button_text, "更新" %>
+<% provide :title, "修改产品" %>
+<% provide :back_url, product_index_path %>
+
+<%= render 'shard/form', object: @product, url: product_path, type: "product", type_2: "edit", method: :post %>
+
+

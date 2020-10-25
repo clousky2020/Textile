@@ -1,0 +1,9 @@
+<% provide :title, "供应商档案" %>
+<% provide :edit_url, edit_purchase_supplier_path(@supplier) %>
+<% provide :model, PurchaseSupplier %>
+<% provide :back_url, purchase_supplier_index_path %>
+
+<%= render 'shard/show_form', object: @supplier, type: "purchase_supplier" %>
+
+
+

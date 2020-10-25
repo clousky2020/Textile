@@ -1,0 +1,6 @@
+<% provide :title, "客户档案" %>
+<% provide :edit_url, edit_sale_customer_path(@customer) %>
+<% provide :model, SaleCustomer %>
+<% provide :back_url, sale_customer_index_path %>
+
+<%= render 'shard/show_form', object: @customer, type: "sale_customer" %>
