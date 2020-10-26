@@ -33,11 +33,12 @@ class PurchaseOrderCreateForm
     self.deposit = params[:deposit]
     self.freight = params[:freight]
     self.repo_id = params[:repo_id]
+    self.user_id = current_user.id
     self.is_return = params[:is_return]
     self.purchase_supplier = params[:purchase_supplier]
     if valid?
       purchase_supplier = PurchaseSupplier.find_or_create_by(self.purchase_supplier)
-      material = Material.find_or_create_by(name: self.color, specification: self.specification, purchase_supplier_id: purchase_supplier.id)
+      material = Material.find_or_create_by(name: self.name, specification: self.specification, purchase_supplier_id: purchase_supplier.id)
       PurchaseOrder.find_by_created_at(name: material.name, specification: material.specification, description: self.description,
                                        measuring_unit: self.measuring_unit, material_id: material.id, repo_id: self.repo_id,
                                        user_id: self.user_id, number: self.number, weight: self.weight, price: self.price,
