@@ -1,5 +1,6 @@
 <% provide :button_text, "更新" %>
 <% provide :title, "客户信息编辑" %>
+<% provide :method, :patch %>
 <% provide :back_url, sale_customer_url(@customer) %>
 
-<%= render 'shard/form', object: @customer, url: sale_customer_path,type:"sale_customer",type_2:"edit", method: :patch %>
+<%= render 'shard/form', object: @customer, url: sale_customer_path,type:"sale_customer",type_2:"edit" %>

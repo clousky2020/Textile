@@ -1,5 +1,6 @@
 <% provide :button_text, "更新" %>
 <% provide :title, "员工档案编辑" %>
+<% provide :method, :patch %>
 <% provide :back_url, employee_url(@employee) %>
 
 <%= render 'shard/form', object: @employee, url: employee_path, type: "employee", type_2: "edit", method: :patch %>

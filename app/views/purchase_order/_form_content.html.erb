@@ -24,45 +24,43 @@
   <%= f.select :measuring_unit, options_for_select([['包', '包'], ['件', '件'], ['箱', '箱'],]), class: "form-control" %>
 </div>
 <div class="form-inline">
-  <%#= f.fields_for :materials do |f| %>
-  <%#= f.fields_for :purchase_supplier do |f| %>
   <%= f.label :purchase_supplier, "供应商" %>
   <%= f.text_field :purchase_supplier, class: "form-control" %>
-  <%# end %>
-  <%# end %>
 </div>
 
 <div class="form-inline">
   <%= f.label :weight, "重量" %>
-  <%= f.number_field :weight, class: "form-control" %>
+  <%= f.number_field :weight, min: 0, step: 0.1, class: "form-control" %>
 </div>
 <div class="form-inline">
   <%= f.label :number, "数量" %>
-  <%= f.number_field :number, class: "form-control" %>
+  <%= f.number_field :number, min: 0, step: 1, class: "form-control" %>
 </div>
 <div class="form-inline">
   <%= f.label :price, "单价" %>
-  <%= f.number_field :price, class: "form-control" %>
+  <%= f.number_field :price, min: 0, step: 0.01, class: "form-control" %>
 </div>
 <div class="form-inline">
   <%= f.label :tax_rate, "税率" %>
-  <%= f.number_field :tax_rate, step: 0.001, class: "form-control" %>
+  <%= f.number_field :tax_rate, step: 0.001, min: 0, max: 1, class: "form-control" %>
 </div>
 <div class="form-inline">
   <%= f.label :deposit, "押金" %>
-  <%= f.number_field :deposit, class: "form-control" %>
+  <%= f.number_field :deposit, min: 0, step: 1, class: "form-control" %>
 </div>
 <div class="form-inline">
   <%= f.label :freight, "运费" %>
-  <%= f.number_field :freight, class: "form-control" %>
+  <%= f.number_field :freight, min: 0, step: 1, class: "form-control" %>
+</div>
+<div class="form-inline">
+  <%= f.label :is_return, "是退货吗？" %>
+  <%= f.check_box :is_return, class: "form-control" %>
 </div>
 
-
-<% if cannot? :edit, PurchaseOrder %>
+<% if type_2 == "edit" %>
   <div class="form-inline">
-    <%= f.label :employee_id, "经手人" %>
-    <%= f.select(:employee_id, @salers.map {|n| [n.name, n.id]}, class: "form-control") %>
+    <%= f.label :user_id, "经手人" %>
+    <%= f.select :user_id, options_for_select(User.all.map {|n| [n.name, n.id] if n.has_role?(:buyer)}, object.user_id), class: "form-control  " %>
   </div>
+
 <% end %>
-
-

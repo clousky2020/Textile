@@ -1,5 +1,5 @@
 class Employee < ApplicationRecord
-  has_one :user
+
 
   validates :gender, presence: true
   validates :name, length: {maximum: 10, too_long: "员工姓名过长,最多10个字符",

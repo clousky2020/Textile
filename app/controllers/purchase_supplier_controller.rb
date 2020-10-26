@@ -44,7 +44,7 @@ class PurchaseSupplierController < ApplicationController
   end
 
   def destroy
-    if @supplier.purchase_orders.blank?
+    if @supplier.purchase_orders.where(status: true).blank?
       PurchaseSupplier.delete(@supplier)
       flash[:warning] = "已经删除供应商#{@supplier.name}了"
       redirect_to purchase_supplier_index_path
@@ -61,7 +61,7 @@ class PurchaseSupplierController < ApplicationController
   end
 
   def purchase_supplier_params
-    params.require(:purchase_supplier).permit(:name,:contacts,:phone,:address,:description,:status)
+    params.require(:purchase_supplier).permit(:name, :contacts, :phone, :address, :description, :status)
   end
 
 end

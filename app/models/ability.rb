@@ -9,15 +9,14 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.roles.blank?
       cannot :manage, :all
-    elsif user.has_role? :superadmin
-      can :manage, :all
     elsif user.has_role? :admin
       can :manage, :all
-      cannot :destroy, User
     elsif user.has_role? :sale
       can :read, :all
     elsif user.has_role? :buyer
-      can :manage, :all
+      can :manage, PurchaseOrder
+      cannot :destroy, PurchaseOrder
+      can :read, :all
     elsif user.has_role? :warehouse
       can :manage, :all
     elsif user.has_role? :accounting

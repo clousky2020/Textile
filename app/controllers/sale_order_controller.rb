@@ -14,7 +14,10 @@ class SaleOrderController < ApplicationController
 
   def new
     @sale_order = SaleOrder.new
-    @sale_order.sale_customer.build
+    @sale_order.build_sale_customer
+    @sale_order.build_product
+    @sale_order.build_user
+    @sale_order.build_repo
   end
 
   def edit
@@ -27,10 +30,6 @@ class SaleOrderController < ApplicationController
 
   def create
     @sale_order = SaleOrder.new(sale_order_params)
-    @sale_order.user = current_user
-    #如果是新的客户，则新建
-    # customer = SaleCustomer.find_by(name: params[:sale_order][:sale_customer]) || SaleCustomer.create(name: params[:sale_order][:sale_customer])
-    # @sale_order.sale_customer = customer
     if @sale_order.save
       flash[:success] = "创建成功"
       redirect_to sale_order_index_path
@@ -65,9 +64,9 @@ class SaleOrderController < ApplicationController
   end
 
   def sale_order_params
-    params.require(:sale_order).permit(:name, :specification, :description, :repo_id, :user_id, :number,
+    params.require(:sale_order).permit(:name, :specification, :description, :repo_id, :user_id, :number, :freight,
                                        :measuring_unit, :price, :tax_rate, :deposit, :weight, :picture, :is_return,
-                                       sale_customer_attributes: [:id,:name])
+                                       sale_customer_attributes: [:id, :name], product_attributes: [:id, :name, :specification])
   end
 
 

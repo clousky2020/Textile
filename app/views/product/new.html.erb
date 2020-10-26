@@ -1,5 +1,6 @@
 <% provide :button_text, "创建" %>
 <% provide :title, "创建新产品信息" %>
+<% provide :method, :post %>
 <% provide :back_url, product_index_path %>
 
 <%= render 'shard/form', object: @product, url: product_index_path, type: "product", type_2: "create", method: :post %>

@@ -1,5 +1,5 @@
 class MaterialController < ApplicationController
-  before_action :get_material,only: [:edit,:show,:update,:destroy]
+  before_action :get_material, only: [:edit, :show, :update, :destroy]
   load_and_authorize_resource
 
   def index
@@ -12,6 +12,7 @@ class MaterialController < ApplicationController
 
   def new
     @material = Material.new
+    @material.build_purchase_supplier
   end
 
   def show
@@ -55,7 +56,7 @@ class MaterialController < ApplicationController
 
   def material_params
     params.require(:material).permit(:name, :description, :type, :specification, :batch_number, :measuring_unit, :tax_rate,
-                                     :preset_price, :remarks, :status, :picture,)
+                                     :preset_price, :remarks, :status, :picture,  :purchase_supplier_attributes=>[:id,:name])
   end
 
 end

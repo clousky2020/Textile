@@ -1,5 +1,6 @@
 <% provide :button_text, "创建" %>
 <% provide :title, "创建新用户" %>
+<% provide :method, :post %>
 <% provide :back_url, purchase_supplier_index_path %>
 
 <%= render 'shard/form', object: @supplier, url: purchase_supplier_index_path, type: "purchase_supplier", type_2: "create", method: :post %>

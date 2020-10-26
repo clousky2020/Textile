@@ -1,12 +1,11 @@
 class CreatePurchaseOrders < ActiveRecord::Migration[6.0]
   def change
     create_table :purchase_orders do |t|
-      t.string :name
-      t.string :specification
-      t.string :batch_number
       t.string :order_id, index: true, uniq: true
+      t.string :batch_number
       t.string :description
       t.references :purchase_supplier
+      t.references :material
       t.references :repo
       t.references :user
       t.integer :number

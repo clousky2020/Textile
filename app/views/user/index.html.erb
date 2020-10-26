@@ -2,18 +2,15 @@
 <% provide :manage_object, User %>
 <% provide :new_url, new_user_path %>
 
-<%= render 'shard/index_header',page:"user" %>
+<%= render 'shard/index_header', page: "user" %>
 
 <table class="table table-hover table-active">
   <thead>
   <tr>
     <td>姓名</td>
     <td>身份</td>
-    <td>查看</td>
-    <% if can? :manage, User %>
-      <td>密码</td>
-      <td>锁定</td>
-    <% end %>
+    <td>操作</td>
+
   </tr>
   </thead>
   <tbody>
@@ -21,27 +18,23 @@
     <tr>
       <td><%= user.name %></td>
       <td><%= user.roles.map {|n| n.to_chinese}.join(",") %></td>
-      <td><%= link_to "详情", user_path(user) %></td>
-      <% if can? :manage, User %>
-        <td>
-          <%= link_to "重置", reset_password_reset_path(user) %>
-        </td>
-        <% if user.id != current_user.id %>
-          <td>
+      <td>
+        <%= link_to "查看详情", user_path(user) %>
+        <% if can? :manage, User %>
+          <%= link_to "重置密码", reset_password_reset_path(user) %>
+          <% if user.id != current_user.id %>
             <% if user.is_lock %>
               <%= link_to "解锁", lock_user_path(user) %>
             <% else %>
               <%= link_to "锁定", lock_user_path(user) %>
             <% end %>
-          </td>
-        <% end %>
-        <% if can? :destroy, User %>
-          <td>
+          <% end %>
+          <% if can? :destroy, User %>
             <%= link_to "删除", user_path(user), method: :delete, data: {confirm: "确定删除吗？"} %>
+          <% end %>
           </td>
         <% end %>
-      <% end %>
-    </tr>
+        </tr>
   <% end %>
   </tbody>
 </table>

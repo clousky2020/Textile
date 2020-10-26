@@ -1,9 +1,7 @@
 <h2 class="text-center"><%= yield(:title) %></h2>
+<%= render "shard/errors", object: object %>
 <div class="offset-md-4">
-  <%= render "shard/errors", object: object %>
-
-  <%= form_for(object, url: url,html: {class: 'form-horizontal'}) do |f| %>
-
+  <%= form_for(object, url: url, method: yield(:method)) do |f| %>
     <% if type == "sale_customer" %>
       <%= render 'sale_customer/form_content', f: f, type_2: type_2, object: object %>
     <% elsif type == "purchase_supplier" %>
@@ -23,8 +21,6 @@
     <% elsif type == "product" %>
       <%= render 'product/form_content', f: f, type_2: type_2, object: object %>
     <% end %>
-
-
     <div class="form-group">
       <%= f.submit yield(:button_text), class: "btn btn-primary" %>
       <%= link_to "取消", yield(:back_url), class: "btn btn-default" %>

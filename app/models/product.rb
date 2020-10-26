@@ -1,5 +1,5 @@
 class Product < ApplicationRecord
-  belongs_to :sale_order
-
-  # validates :name, presence: true, uniqueness: {scope: :specification}
+  has_many :sale_order
+  has_many :sale_customers, through: :sale_order
+  validates :name, presence: true, uniqueness: {scope: :specification}
 end

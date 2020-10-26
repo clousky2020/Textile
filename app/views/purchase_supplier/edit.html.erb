@@ -1,5 +1,6 @@
 <% provide :button_text, "更新" %>
 <% provide :title, "供应商信息编辑" %>
+<% provide :method, :patch %>
 <% provide :back_url, purchase_supplier_url(@supplier) %>
 
 <%= render 'shard/form', object: @supplier, url: purchase_supplier_path,type:"purchase_supplier",type_2:"edit", method: :patch %>

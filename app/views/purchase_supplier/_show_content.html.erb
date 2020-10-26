@@ -20,5 +20,5 @@
 </tr>
 <tr>
   <th>已有订单数</th>
-  <td><%=link_to object.purchase_orders.count,purchase_order_index_path(:search_company=>"#{object.name}") %></td>
+  <td><%=link_to object.purchase_orders.where(status:true).count,purchase_order_index_path(:search_company=>"#{object.name}") %></td>
 </tr>

@@ -2,10 +2,9 @@ class CreateSaleOrders < ActiveRecord::Migration[6.0]
   def change
     create_table :sale_orders do |t|
       t.string :order_id, index: true, uniq: true
-      t.string :name
-      t.string :specification
       t.string :description
       t.references :sale_customer
+      t.references :product
       t.belongs_to :repo
       t.belongs_to :user
       t.integer :number

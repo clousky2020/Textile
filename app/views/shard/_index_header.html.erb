@@ -1,7 +1,7 @@
 <h2 class="text-center"><%= yield(:index_title) %></h2>
 <div class="row no-gutters">
 
-  <% if can? :manage, yield(:manage_object) %>
+  <% if can? :edit, yield(:manage_object) %>
     <div>
       <%= link_to "新建", yield(:new_url), class: "btn btn-default" %>
     </div>
