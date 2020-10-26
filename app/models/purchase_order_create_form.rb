@@ -2,9 +2,9 @@ class PurchaseOrderCreateForm
   include ActiveModel::Model
   include ActiveModel::Validations
 
-  # def self.model_name
-  #   ActiveModel::Name.new(self, nil, "PurchaseOrder")
-  # end
+  def self.model_name
+    ActiveModel::Name.new(self, nil, "PurchaseOrder")
+  end
 
   class << self
     def i18n_scope
