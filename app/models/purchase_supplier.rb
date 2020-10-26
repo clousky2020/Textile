@@ -1,6 +1,6 @@
 class PurchaseSupplier < ApplicationRecord
-  has_many :purchase_orders, dependent: :destroy,inverse_of: :purchase_supplier
-  has_many :materials, through: :purchase_orders
+  has_many :materials
+  has_many :purchase_orders, through: :materials
 
   validates :name, uniqueness: true, presence: true
 

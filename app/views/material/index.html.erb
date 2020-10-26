@@ -1,4 +1,4 @@
-<% provide :index_title, "商品管理界面" %>
+<% provide :index_title, "原料管理界面" %>
 <% provide :manage_object, Material %>
 <% provide :new_url, new_material_path %>
 
@@ -9,7 +9,7 @@
   <tr>
     <td>品名</td>
     <td>型号</td>
-    <td>批号</td>
+
     <% if can? :destroy, Material %>
       <td>作废</td>
     <% end %>
@@ -20,7 +20,6 @@
     <tr>
       <td><%= link_to material.name, material_path(material) %></td>
       <td><%= material.specification %></td>
-      <td><%= material.batch_number %></td>
       <% if can? :destroy, Material %>
         <td>
           <%= link_to "删除", material_path(material), method: :delete, data: {confirm: "确定删除吗？"} %>

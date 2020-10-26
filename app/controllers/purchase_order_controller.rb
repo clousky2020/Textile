@@ -1,6 +1,6 @@
 class PurchaseOrderController < ApplicationController
   before_action :get_purchase_order, only: [:edit, :show, :update, :destroy]
-  before_action :handlers, only: [:edit, :new]
+  # before_action :handlers, only: [:edit, :new]
   load_and_authorize_resource
 
   def index
@@ -16,8 +16,7 @@ class PurchaseOrderController < ApplicationController
   end
 
   def new
-    @purchase_orders = PurchaseOrder.new
-    @purchase_orders.build_purchase_supplier
+    @purchase_order = PurchaseOrderCreateForm.new
   end
 
   def edit
@@ -29,12 +28,13 @@ class PurchaseOrderController < ApplicationController
   end
 
   def create
-    @purchase_order = PurchaseOrder.new(purchase_order_params)
-    @purchase_order.user = current_user
-    #如果是新的供货商，则新建
-    supplier = PurchaseSupplier.find_by(name: params[:purchase_order][:purchase_supplier]) || PurchaseSupplier.create(name: params[:purchase_order][:purchase_supplier_name])
-    @purchase_order.purchase_supplier = supplier
-    if @purchase_order.save
+    # @purchase_order = PurchaseOrder.new(purchase_order_params)
+    # @purchase_order.user = current_user
+    # @purchase_order.material = get_material
+    # @purchase_order.material.purchase_supplier = get_purchase_supplier(params[:purchase_order][:purchase_suppliers][:name])
+    @purchase_order = PurchaseOrderCreateForm.new
+    # @purchase_order.user_id = current_user.id
+    if @purchase_order.submit(params[:purchase_order])
       flash[:success] = "创建成功"
       redirect_to purchase_order_index_path
     else
@@ -44,14 +44,14 @@ class PurchaseOrderController < ApplicationController
   end
 
   def update
-    @purchase_order.purchase_supplier = get_purchase_supplier(params[:purchase_order][:purchase_supplier][:name])
-    if @purchase_order.update(purchase_order_params)
-      flash[:success] = "成功更新供应订单信息"
-      redirect_to purchase_order_url(@purchase_order)
-    else
-      flash[:warning] = "#{@purchase_order.errors.full_messages.to_s}"
-      render "purchase_order/edit"
-    end
+    # @purchase_order.purchase_supplier = get_purchase_supplier(params[:purchase_order][:purchase_suppliers][:name])
+    # if @purchase_order.update(purchase_order_params)
+    #   flash[:success] = "成功更新供应订单信息"
+    #   redirect_to purchase_order_url(@purchase_order)
+    # else
+    #   flash[:warning] = "#{@purchase_order.errors.full_messages.to_s}"
+    #   render "purchase_order/edit"
+    # end
   end
 
   def destroy
@@ -67,6 +67,10 @@ class PurchaseOrderController < ApplicationController
     PurchaseSupplier.find_by_name(name) || PurchaseSupplier.create(name: name)
   end
 
+  def get_material
+    Material.where("name=? AND specification=?", params[:purchase_order][:name], params[:purchase_order][:specification]) || Material.create(material_params)
+  end
+
   #得到有权限制作和修改销售订单的人
   def handlers
     @salers = User.joins(:roles).where(roles: {name: "sale"})
@@ -76,10 +80,16 @@ class PurchaseOrderController < ApplicationController
     @purchase_order = PurchaseOrder.find(params[:id])
   end
 
+  # def material_params
+  #   params.require(:purchase_order).permit(:name, :specification)
+  # end
+
   def purchase_order_params
     params.require(:purchase_order).permit(:name, :specification, :batch_number, :description, :purchase_supplier,
                                            :repo_id, :user_id, :number, :measuring_unit, :weight, :price, :tax_rate,
-                                           :deposit, :freight, :picture, :is_return, purchase_supplier_attributes: [:id, :name])
+                                           :deposit, :freight, :picture, :is_return, :material, :purchase_supplier,
+                                           purchase_supplier_attributes: [:id, :name],
+                                           materials_attributes: [:id, :name, :specification])
   end
 
 

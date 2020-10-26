@@ -2,7 +2,7 @@
 <div class="offset-md-4">
   <%= render "shard/errors", object: object %>
 
-  <%= form_for(object, url: url) do |f| %>
+  <%= form_for(object, url: url,html: {class: 'form-horizontal'}) do |f| %>
 
     <% if type == "sale_customer" %>
       <%= render 'sale_customer/form_content', f: f, type_2: type_2, object: object %>

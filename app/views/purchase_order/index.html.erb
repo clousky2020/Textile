@@ -20,8 +20,8 @@
   <% @purchase_orders.each do |purchase_order| %>
     <tr>
       <td><%= link_to purchase_order.order_id, purchase_order_path(purchase_order) %></td>
-      <td><%= link_to purchase_order.purchase_supplier.name, purchase_supplier_path(purchase_order.purchase_supplier) %></td>
-      <td><%= purchase_order.name %></td>
+      <td><%= link_to purchase_order.material.purchase_supplier.name, purchase_supplier_path(purchase_order.material.purchase_supplier) %></td>
+      <td><%= purchase_order.material.name %></td>
       <td><%= purchase_order.batch_number %></td>
       <% if can? :destroy, PurchaseOrder %>
         <td>

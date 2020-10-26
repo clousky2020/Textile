@@ -10,6 +10,7 @@
   <%= f.label :batch_number, "批号" %>
   <%= f.text_field :batch_number, class: "form-control" %>
 </div>
+
 <div class="form-inline">
   <%= f.label :description, "描述" %>
   <%= f.text_field :description, class: "form-control" %>
@@ -23,15 +24,12 @@
   <%= f.select :measuring_unit, options_for_select([['包', '包'], ['件', '件'], ['箱', '箱'],]), class: "form-control" %>
 </div>
 <div class="form-inline">
-  <% if type_2 != "eidt" %>
-    <%= f.fields_for :purchase_supplier, object.purchase_supplier do |ff| %>
-      <%= ff.label :name, "供应商" %>
-      <%= ff.text_field :name, class: "form-control" %>
-    <% end %>
-  <% else %>
-    <%= f.label :purchase_supplier, "供应商" %>
-    <%= f.text_field :purchase_supplier, class: "form-control" %>
-  <% end %>
+  <%#= f.fields_for :materials do |f| %>
+  <%#= f.fields_for :purchase_supplier do |f| %>
+  <%= f.label :purchase_supplier, "供应商" %>
+  <%= f.text_field :purchase_supplier, class: "form-control" %>
+  <%# end %>
+  <%# end %>
 </div>
 
 <div class="form-inline">

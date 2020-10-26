@@ -1,11 +1,7 @@
 class PurchaseOrder < ApplicationRecord
   belongs_to :user
   belongs_to :repo
-
-  belongs_to :purchase_supplier
-  has_one :material
-  accepts_nested_attributes_for :purchase_supplier
-
+  belongs_to :material
   validates :order_id, uniqueness: true
 
   after_create :generate_order_id
