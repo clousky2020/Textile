@@ -3,6 +3,7 @@ class PurchaseOrder < ApplicationRecord
   belongs_to :repo
   belongs_to :material
   belongs_to :purchase_supplier
+  mount_uploader :picture, PictureUploader
 
   validates :order_id, uniqueness: true
 

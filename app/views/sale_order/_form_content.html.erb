@@ -52,9 +52,13 @@
 <% if type_2 == "edit" %>
   <div class="form-inline">
     <%= f.label :user_id, "经手人" %>
-    <%= f.select(:user_id, options_for_select(User.all.map {|n| [n.name, n.id] if n.has_role?(:sale)},object.user_id), class: "form-control") %>
+    <%= f.select(:user_id, options_for_select(User.all.map {|n| [n.name, n.id] if n.has_role?(:sale)}, object.user_id), class: "form-control") %>
   </div>
 <% end %>
 
+<div class="picture">
+  <%= label_tag "上传相关图片" %>
+  <%= f.file_field :picture %>
+</div>
 
 

@@ -37,6 +37,7 @@ class PurchaseOrderCreateForm
     self.repo_id = params[:repo_id]
     self.user_id = params[:user_id]
     self.is_return = params[:is_return]
+    self.picture = params[:picture]
     self.purchase_supplier = params[:purchase_supplier]
     if valid?
       purchase_supplier = PurchaseSupplier.find_or_create_by(name: self.purchase_supplier)
@@ -46,7 +47,7 @@ class PurchaseOrderCreateForm
                                                measuring_unit: self.measuring_unit, material_id: material.id, repo_id: self.repo_id,
                                                user_id: self.user_id, number: self.number, weight: self.weight, price: self.price,
                                                tax_rate: self.tax_rate, deposit: self.deposit, freight: self.freight, picture: self.picture,
-                                               is_return: self.is_return)
+                                               is_return: self.is_return, picture: self.picture)
 
       true
     else

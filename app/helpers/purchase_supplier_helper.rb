@@ -1,0 +1,2 @@
+module PurchaseSupplierHelper
+end

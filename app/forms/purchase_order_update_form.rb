@@ -108,10 +108,11 @@ class PurchaseOrderUpdateForm
     @freight = params[:freight]
     @repo_id = params[:repo_id]
     @user_id = params[:user_id]
+    @picture = params[:picture]
     @is_return = params[:is_return]
-    # @purchase_supplier = params[:purchase_supplier]
+    @purchase_supplier = params[:purchase_supplier]
     if valid?
-      # @purchase_order.material.purchase_supplier.update(name: self.purchase_supplier)
+      @purchase_order.material.purchase_supplier.update(name: self.purchase_supplier)
       @purchase_order.material.update(name: self.name, specification: self.specification)
       @purchase_order.update(material_id: self.material_id, description: self.description, batch_number: self.batch_number,
                              measuring_unit: self.measuring_unit, repo_id: self.repo_id, user_id: self.user_id,

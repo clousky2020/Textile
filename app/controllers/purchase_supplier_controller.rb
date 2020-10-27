@@ -6,7 +6,7 @@ class PurchaseSupplierController < ApplicationController
     if params.has_key?(:search) && params[:search] != ""
       @suppliers = PurchaseSupplier.where("name LIKE?", "%#{params[:search]}%").order("name").page(params[:page])
     else
-      @suppliers = PurchaseSupplier.order("name").page(params[:page])
+      @suppliers = PurchaseSupplier.order("created_at DESC").page(params[:page])
     end
   end
 

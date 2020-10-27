@@ -67,3 +67,6 @@
   <th>描述</th>
   <td><%= object.description %></td>
 </tr>
+<tr>
+  <td colspan="2"><%= image_tag object.picture.url, size: "125x160" if object.picture? %></td>
+</tr>

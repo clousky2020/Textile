@@ -1,6 +1,4 @@
 class Repo < ApplicationRecord
-  has_many :materials_stocks
-  has_many :products_stocks
   has_many :sale_orders
   has_many :purchase_orders
   belongs_to :user
