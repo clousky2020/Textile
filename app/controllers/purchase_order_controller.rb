@@ -6,7 +6,11 @@ class PurchaseOrderController < ApplicationController
       type = params[:type].split(":")
       @purchase_orders = PurchaseOrder.includes(:purchase_supplier, :material).purchase_suppliers_search(params[:search]).
           where("#{type[0]}=?", type[1]).references(:purchase_supplier, :material).order('bill_time DESC').page(params[:page])
-    elsif params.has_key?(:search)
+    elsif params.has_key?(:type)
+      type = params[:type].split(":")
+      @purchase_orders = PurchaseOrder.includes(:purchase_supplier, :material).is_not_invalid.
+          where("#{type[0]}=?", type[1]).references(:purchase_supplier, :material).page(params[:page])
+   elsif params.has_key?(:search)
       @purchase_orders = PurchaseOrder.includes(:purchase_supplier, :material).is_not_invalid.
           purchase_suppliers_search(params[:search]).references(:purchase_supplier, :material).page(params[:page])
     else

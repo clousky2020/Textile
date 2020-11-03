@@ -40,9 +40,12 @@ gem 'rails-i18n', '~> 6.0.0'
 gem 'carrierwave-i18n'
 # 图标
 gem 'font-awesome-sass', '~> 5.15.1'
+# 图表
+gem 'lazy_high_charts'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
-
+# 自动部署
 gem 'mina'
 gem 'mina-puma', require: false
 

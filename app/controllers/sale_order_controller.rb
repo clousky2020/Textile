@@ -7,6 +7,10 @@ class SaleOrderController < ApplicationController
       type = params[:type].split(":")
       @sale_orders = SaleOrder.includes(:sale_customer, :product).sale_order_search(params[:search]).
           where("#{type[0]}=?", type[1]).references(:sale_customer, :product).order("bill_time DESC").page(params[:page])
+    elsif params.has_key?(:type) && params[:type] != ""
+      type = params[:type].split(":")
+      @sale_orders = SaleOrder.includes(:sale_customer, :product).where(is_invalid: false).where("#{type[0]}=?", type[1]).
+          references(:sale_customer, :product).order("check_status").page(params[:page])
     elsif params.has_key?(:search) && params[:search] != ""
       @sale_orders = SaleOrder.includes(:sale_customer, :product).where(is_invalid: false).sale_order_search(params[:search]).
           references(:sale_customer, :product).order("check_status").page(params[:page])

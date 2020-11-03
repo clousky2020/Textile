@@ -6,6 +6,9 @@ class ExpenseController < ApplicationController
       type = params[:type].split(":")
       @expenses = Expense.left_outer_joins(:purchase_suppliers).search(params[:search]).where("#{type[0]}=?", type[1]).
           where(expense_type: params[:expense_type]).references(:purchase_suppliers).order(params[:order]).page(params[:page])
+    elsif params.has_key?(:type) && params[:type] != ""
+      type = params[:type].split(":")
+      @expenses = Expense.left_outer_joins(:purchase_suppliers).where("#{type[0]}=?", type[1]).references(:purchase_suppliers).order("created_at DESC").page(params[:page])
     elsif params.has_key?(:search) && params[:search] != ""
       @expenses = Expense.left_outer_joins(:purchase_suppliers).search(params[:search]).references(:purchase_suppliers).order("created_at DESC").page(params[:page])
     else

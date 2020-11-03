@@ -6,6 +6,9 @@ class ProceedController < ApplicationController
       type = params[:type].split(":")
       @proceeds = Proceed.includes(:sale_customer).sale_customer_search(params[:search]).where("#{type[0]}=?", type[1]).
           references(:sale_customer).order(params[:order]).page(params[:page])
+    elsif params.has_key?(:type) && params[:type] != ""
+      type = params[:type].split(":")
+      @proceeds = Proceed.includes(:sale_customer).where("#{type[0]}=?", type[1]).references(:sale_customer).page(params[:page])
     elsif params.has_key?(:search) && params[:search] != ""
       @proceeds = Proceed.includes(:sale_customer).sale_customer_search(params[:search]).references(:sale_customer).page(params[:page])
     else
