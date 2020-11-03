@@ -1,0 +1,83 @@
+<table class="table">
+  <tbody>
+
+  <tr>
+    <th>交易方</th>
+    <td><%= object.counterparty %></td>
+  </tr>
+  <% if object.purchase_suppliers.any? %>
+    <tr>
+      <th>关联地址</th>
+      <td><%= link_to object.purchase_suppliers[0].name, purchase_supplier_path(object.purchase_suppliers[0]) %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <th>账面金额</th>
+    <td><%= object.paper_amount %>元</td>
+  </tr>
+
+  <tr>
+    <th>实际金额</th>
+    <td><%= object.actual_amount %>元</td>
+  </tr>
+
+  <tr>
+    <th>备注</th>
+    <td><%= object.remark %></td>
+  </tr>
+  <tr>
+    <th>账户名称</th>
+    <td><%= object.account_name %></td>
+  </tr>
+  <tr>
+    <th>账户号码</th>
+    <td><%= object.account_number %></td>
+  </tr>
+  <tr>
+    <th>账户类型</th>
+    <td><%= object.account_from %></td>
+  </tr>
+  <tr>
+    <th>经手人</th>
+    <td><%= object.user.name %></td>
+  </tr>
+
+  <tr>
+    <th>付款时间</th>
+    <td><%= object.bill_time %></td>
+  </tr>
+
+
+  <% if object.create_person != object.user.name %>
+    <tr>
+      <th>创建者</th>
+      <td><%= object.create_person %></td>
+    </tr>
+  <% end %>
+  <% if object.check_status %>
+    <tr>
+      <th>审核人</th>
+      <td> <%= object.check_person %></td>
+    </tr>
+    <tr>
+      <th>审核时间</th>
+      <td> <%= object.check_time.localtime %></td>
+    </tr>
+  <% end %>
+  <% if object.need_reimburse %>
+    <tr>
+      <th class="alert-danger">需要报销</th>
+      <td class="alert-danger"> <%= object.user.name %></td>
+    </tr>
+  <% end %>
+  <% if object.reimbursed %>
+    <tr>
+      <th class="alert-success">报销情况</th>
+      <td class="alert-success">已报销</td>
+    </tr>
+  <% end %>
+  <tr>
+    <td colspan="2"><%= image_tag object.picture.url, size: "125x160" if object.picture? %></td>
+  </tr>
+  </tbody>
+</table>

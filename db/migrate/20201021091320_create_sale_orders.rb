@@ -15,14 +15,16 @@ class CreateSaleOrders < ActiveRecord::Migration[6.0]
       t.decimal :total_price, default: 0
       t.integer :freight, default: 0
       t.string :picture
-      t.string :check_status
-      t.boolean :check_result, default: false
+      t.string :create_person
       t.string :check_person
+      t.boolean :check_status, default: false
       t.datetime :check_time
-      t.datetime :create_person
-      t.datetime :update_person
+      t.datetime :bill_time
+      t.string :declare_invalid_person
+      t.boolean :is_invalid, default: false
+      t.datetime :declare_invalid_time
       t.boolean :is_return, default: false
-      t.boolean :status, default: true
+
       t.timestamps
     end
   end

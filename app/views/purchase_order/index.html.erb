@@ -3,35 +3,45 @@
 <% provide :new_url, new_purchase_order_path %>
 
 <%= render 'shard/index_header', page: "purchase_order" %>
-
-<table class="table table-hover table-active">
-  <thead>
-  <tr>
-    <td>订单号</td>
-    <td>供应商</td>
-    <td>品名</td>
-    <td>批号</td>
-    <% if can? :destroy, PurchaseOrder %>
-      <td>作废</td>
-    <% end %>
-  </tr>
-  </thead>
-  <tbody>
+<% if @purchase_orders.blank? %>
+  <div class="alert-info text-center">空空如也</div>
+<% else %>
   <% @purchase_orders.each do |purchase_order| %>
-    <tr>
-      <td><%= link_to purchase_order.order_id, purchase_order_path(purchase_order) %></td>
-      <td><%= link_to purchase_order.material.purchase_supplier.name, purchase_supplier_path(purchase_order.material.purchase_supplier) %></td>
-      <td><%= purchase_order.material.name %></td>
-      <td><%= purchase_order.batch_number %></td>
-      <% if can? :destroy, PurchaseOrder %>
-        <td>
-          <%= link_to "作废", purchase_order_path(purchase_order), method: :delete, data: {confirm: "确定删除吗？"} %>
-        </td>
-      <% end %>
-    </tr>
+    <div class="purchase_order_info">
+      <div class="content_left">
+        <div class="row no-gutters">
+          <div class="purchase_order_id">订单号:<%= link_to purchase_order.order_id, purchase_order_path(purchase_order) %></div>
+          <% if purchase_order.is_return? %>
+            <div class="is_return ml-auto">退货单</div>
+          <% end %>
+        </div>
+        <div class="row no-gutters m-auto">
+          <div class="purchase_order_supplier">供应商:<%= link_to purchase_order.purchase_supplier.name, purchase_supplier_path(purchase_order.purchase_supplier) %></div>
+          <div class="check_status ml-auto">
+            <% if !purchase_order.check_status %>
+              未审核
+            <% end %>
+          </div>
+        </div>
+        <div class="row no-gutters">
+          <div class="purchase_order_material_info col-auto">品名:<%= purchase_order.material.name %></div>
+          <div class="purchase_order_material_info col-auto">规格:<%= purchase_order.material.specification %></div>
+          <% if can? :destroy, PurchaseOrder %>
+            <div class="operation_right col-auto">
+              <% if !purchase_order.is_invalid %>
+                <%= link_to "作废", purchase_order_path(purchase_order), method: :delete, data: {confirm: "确定作废吗？"} %>
+              <% else %>
+                <%= purchase_order.declare_invalid_person %>已将其作废
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
   <% end %>
-  </tbody>
-</table>
+<% end %>
+
+
 <%= render 'shard/paginate', object: @purchase_orders %>
 
 

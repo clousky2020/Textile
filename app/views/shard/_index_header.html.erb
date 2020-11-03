@@ -1,23 +1,51 @@
 <h2 class="text-center"><%= yield(:index_title) %></h2>
 <div class="row no-gutters">
 
-  <% if can? :edit, yield(:manage_object) %>
+  <% if can? :create, yield(:manage_object) %>
     <div>
-      <%= link_to "新建", yield(:new_url), class: "btn btn-default" %>
+      <%= link_to "新建", yield(:new_url) %>
     </div>
   <% end %>
-
   <% if page != "user" %>
-    <%= render "shard/search", action: :index %>
-  <% end %>
-  <% if page == "employee" %>
-    <div class="filer">
-      <% if request.filtered_parameters['order'] == "all" %>
-        <%= link_to "在职人员", employee_index_path %>
-      <% else %>
-        <%= link_to "全部人员", employee_index_path(:order => "all") %>
+    <div class="search ml-auto">
+
+      <%= form_tag({action: :index}, method: "get") do %>
+        <div class="input-group">
+          <%= text_field_tag :search, '', placeholder: "页面上的内容都可以查询得到", size: 25 %>
+          <% if page == "expense" %>
+            <%= select_tag :expense_type, options_for_select(Expense.all.collect(&:expense_type).uniq) %>
+            <%= select_tag :type, options_for_select([['未作废订单', 'is_invalid: false'], ['已作废订单', 'is_invalid: true'], ['未审核订单', 'check_status:false'], ['已审核订单', 'check_status:true']]) %>
+            <%= select_tag :order, options_for_select([['账单时间降序', 'bill_time DESC'], ['账单时间升序', 'bill_time'], ['订单号', 'order_id DESC']]) %>
+            <%= link_to "清空全部条件", expense_index_path %>
+          <% elsif page == "proceed" %>
+            <%= select_tag :type, options_for_select([['未作废订单', 'is_invalid: false'], ['已作废订单', 'is_invalid: true'], ['未审核订单', 'check_status:false'], ['已审核订单', 'check_status:true'], ['退货单', 'is_return: true']]) %>
+            <%= select_tag :order, options_for_select([['账单时间降序', 'bill_time DESC'], ['账单时间升序', 'bill_time'], ['订单号', 'order_id DESC']]) %>
+            <%= link_to "清空全部条件", proceed_index_path %>
+          <% elsif page == "purchase_order" %>
+            <%= select_tag :type, options_for_select([['未作废订单', 'is_invalid: false'], ['已作废订单', 'is_invalid: true'], ['未审核订单', 'check_status:false'], ['已审核订单', 'check_status:true'], ['退货单', 'is_return: true']]) %>
+            <%= link_to "清空全部条件", purchase_order_index_path %>
+          <% elsif page == "sale_order" %>
+            <%= select_tag :type, options_for_select([['未作废订单', 'is_invalid: false'], ['已作废订单', 'is_invalid: true'], ['未审核订单', 'check_status:false'], ['已审核订单', 'check_status:true'], ['退货单', 'is_return: true']]) %>
+            <%= link_to "清空全部条件", sale_order_index_path %>
+          <% end %>
+          <div class="input-group-append">
+            <%= submit_tag '搜索' %>
+          </div>
+        </div>
       <% end %>
+
     </div>
+
+
+    <% if page == "employee" %>
+      <div class="filter">
+        <% if request.filtered_parameters['order'] == "all" %>
+          <%= link_to "在职人员", employee_index_path %>
+        <% else %>
+          <%= link_to "全部人员", employee_index_path(:order => "all") %>
+        <% end %>
+      </div>
+    <% end %>
   <% end %>
 </div>
 

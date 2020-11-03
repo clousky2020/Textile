@@ -1,5 +1,5 @@
 class UserController < ApplicationController
-  before_action :get_user, only: :lock
+  # before_action :get_user, only: :lock
   load_and_authorize_resource
 
   def index
@@ -19,7 +19,6 @@ class UserController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
     if @user.save
       flash[:success] = "创建成功"
       redirect_to user_index_url
@@ -31,7 +30,6 @@ class UserController < ApplicationController
 
 
   def update
-
     if params[:roles]
       @user.roles.clear
       params[:roles].each do |permission|
@@ -59,9 +57,17 @@ class UserController < ApplicationController
     redirect_to user_index_path
   end
 
+  def reset
+    @user.password = "123456"
+    if @user.save
+      flash[:success] = "密码已经重置为#{@user.password}"
+    else
+      flash[:danger] = "#{@user.errors.full_messages.to_s}"
+    end
+    redirect_to user_index_path
+  end
+
   private
-
-
 
   def get_user
     @user = User.find(params[:id])

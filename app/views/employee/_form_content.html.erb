@@ -43,7 +43,7 @@
 </div>
 <div class="form-inline">
   <%= f.label :entry_date, "入职日期" %>
-  <%= f.date_field :entry_date, value: f.object.entry_date||Date.today.to_s(:db),class: "form-control" %>
+  <%= f.date_field :entry_date, value: f.object.entry_date || Date.today.to_s(:db), class: "form-control" %>
 </div>
 <div class="form-inline">
   <%= f.label :daparture_date, "离职日期" %>
@@ -53,3 +53,20 @@
   <%= f.label :remarks, "备注" %>
   <%= f.text_area :remarks, class: "form-control" %>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        //编辑员工页面，如果有新的工种，添加
+        $(document).on('click', "#edit_new_work_type", function () {
+            $(".work_type_now").addClass("d-none ");
+            $(".new_work_type").removeClass("d-none ");
+            $(".new_work_type").find("input[name='employee[work_type]']").attr('disabled', false);
+        })
+        $(document).on('click', "#edit_old_work_type", function () {
+            $(".work_type_now").removeClass("d-none ");
+            $(".new_work_type").addClass("d-none ");
+            $(".new_work_type").find("input[name='employee[work_type]']").attr('disabled', true);
+        })
+    })
+</script>

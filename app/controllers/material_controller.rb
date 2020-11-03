@@ -4,7 +4,7 @@ class MaterialController < ApplicationController
 
   def index
     if params.has_key?(:search) && params[:search] != ""
-      @materials = Material.where("name LIKE?", "%#{params[:search]}%").order("created_at DESC").page(params[:page])
+      @materials = Material.where("name LIKE? or specification LIKE?", "%#{params[:search]}%", "%#{params[:search]}%").order("created_at DESC").page(params[:page])
     else
       @materials = Material.order("created_at DESC").page(params[:page])
     end
@@ -48,6 +48,17 @@ class MaterialController < ApplicationController
     redirect_to material_index_path
   end
 
+  def check_material_name
+    @material_names = Material.search_name(params[:term]).map(&:name)
+    render json: @material_names
+  end
+
+  def check_material_specification
+    @material_specifications = Material.search_specification(params[:term]).map(&:specification)
+    render json: @material_specifications
+  end
+
+
   private
 
   def get_material
@@ -56,7 +67,7 @@ class MaterialController < ApplicationController
 
   def material_params
     params.require(:material).permit(:name, :description, :type, :specification, :batch_number, :measuring_unit, :tax_rate,
-                                     :preset_price, :remarks, :status, :picture,  :purchase_supplier_attributes=>[:id,:name])
+                                     :preset_price, :remarks, :status, :picture, :purchase_supplier_attributes => [:id, :name])
   end
 
 end

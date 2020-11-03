@@ -7,7 +7,11 @@ class CreateSaleCustomers < ActiveRecord::Migration[6.0]
       t.string :address
       t.string :description
       t.string :status
-
+      t.decimal :check_money, precision: 10, scale: 2
+      t.datetime :check_money_time
+      t.decimal :total_collection_required, precision: 10, scale: 2
+      t.decimal :received, precision: 10, scale: 2
+      t.decimal :uncollected, precision: 10, scale: 2
       t.timestamps
     end
   end

@@ -2,17 +2,14 @@
 <% provide :manage_object, Material %>
 <% provide :new_url, new_material_path %>
 
-<%= render 'shard/index_header',page:"material" %>
+<%= render 'shard/index_header', page: "material" %>
 
 <table class="table table-hover table-active">
   <thead>
   <tr>
     <td>品名</td>
     <td>型号</td>
-
-    <% if can? :destroy, Material %>
-      <td>作废</td>
-    <% end %>
+    <td>供应商</td>
   </tr>
   </thead>
   <tbody>
@@ -20,11 +17,7 @@
     <tr>
       <td><%= link_to material.name, material_path(material) %></td>
       <td><%= material.specification %></td>
-      <% if can? :destroy, Material %>
-        <td>
-          <%= link_to "删除", material_path(material), method: :delete, data: {confirm: "确定删除吗？"} %>
-        </td>
-      <% end %>
+      <td><%= link_to material.purchase_supplier.name, purchase_supplier_path(material.purchase_supplier.id) %></td>
     </tr>
   <% end %>
   </tbody>

@@ -1,63 +1,78 @@
-<tr>
-  <th>品名</th>
-  <td><%= object.product.name %></td>
-</tr>
-<tr>
-  <th>型号规格</th>
-  <td><%= object.product.specification %></td>
-</tr>
-
-<tr>
-  <th>重量</th>
-  <td><%= object.weight %>千克</td>
-</tr>
-
-<tr>
-  <th>数量</th>
-  <td><%= object.number %><%= object.measuring_unit %></td>
-</tr>
-
-<% if object.freight %>
+<table class="table">
+  <tbody>
   <tr>
-    <th>运费</th>
-    <td><%= object.freight %>元</td>
+    <th>品名</th>
+    <td><%= object.product.name %></td>
   </tr>
-<% end %>
+  <tr>
+    <th>型号规格</th>
+    <td><%= object.product.specification %></td>
+  </tr>
 
-<tr>
-  <th>单价</th>
-  <td><%= object.price %>元</td>
-</tr>
-<% if object.tax_rate %>
+  <tr>
+    <th>重量</th>
+    <td><%= object.weight %>千克</td>
+  </tr>
+
+  <tr>
+    <th>数量</th>
+    <td><%= object.number %><%= object.measuring_unit %></td>
+  </tr>
+
+  <% if object.freight %>
+    <tr>
+      <th>运费</th>
+      <td><%= object.freight %>元</td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <th>单价</th>
+    <td><%= object.price %>元</td>
+  </tr>
+
   <tr>
     <th>税率</th>
-    <td><%= object.tax_rate * 100 %>%</td>
+    <td><%= object.tax_rate * 100 if object.tax_rate %>%</td>
   </tr>
-<% end %>
-<tr>
-  <th>总价(税后)</th>
-  <td><%= object.total_price %>元</td>
-</tr>
-<tr>
-  <th>客户名称</th>
-  <td><%= object.sale_customer.name %></td>
-</tr>
-<tr>
-  <th>存放的仓库</th>
-  <td><%= object.repo.name %></td>
-</tr>
-<tr>
-  <th>创建时间</th>
-  <td><%= object.created_at %></td>
-</tr>
-<tr>
-  <th>经手人</th>
-  <td><%= object.user.name %></td>
-</tr>
-<tr>
-  <th>描述</th>
-  <td><%= object.description %></td>
-</tr>
-<tr>
-  <td colspan="2"><%= image_tag object.picture.url, size: "125x160" if object.picture? %></td>
-</tr>
+
+  <tr>
+    <th>总价(税后)</th>
+    <td><%= object.total_price %>元</td>
+  </tr>
+  <tr>
+    <th>客户名称</th>
+    <td><%= object.sale_customer.name %></td>
+  </tr>
+  <tr>
+    <th>存放的仓库</th>
+    <td><%= object.repo.name %></td>
+  </tr>
+  <tr>
+    <th>账单时间</th>
+    <td><%= object.bill_time %></td>
+  </tr>
+  <tr>
+    <th>经手人</th>
+    <td><%= object.user.name %></td>
+  </tr>
+  <tr>
+    <th>描述</th>
+    <td><%= object.description %></td>
+  </tr>
+  <% if object.check_status %>
+
+    <tr>
+      <th>审核人</th>
+      <td> <%= object.check_person %></td>
+    </tr>
+    <tr>
+      <th>审核时间</th>
+      <td> <%= object.check_time.localtime %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td colspan="2"><%= image_tag object.picture.url, size: "125x160" if object.picture? %></td>
+  </tr>
+  </tbody>
+</table>

@@ -1,8 +1,10 @@
 class DashboardController < ApplicationController
 
-  before_action :authenticate_user
 
   def index
+    # 还未审核的订单
+    @purchase_orders = PurchaseOrder.where(check_status: false)
+
   end
 
 end

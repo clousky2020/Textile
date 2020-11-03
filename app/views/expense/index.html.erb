@@ -1,0 +1,46 @@
+<% provide :index_title, "付款单界面" %>
+<% provide :manage_object, Expense %>
+<% provide :new_url, new_expense_path %>
+
+<%= render 'shard/index_header', page: "expense" %>
+<% if @expenses.blank? %>
+  <div class="alert-info text-center">空空如也</div>
+<% else %>
+  <% @expenses.each do |expense| %>
+    <div class="expense_info">
+      <div class="content_left">
+        <div class="row no-gutters">
+          <div class="expense_date">单号:<%= link_to expense.order_id, expense_path(expense) %></div>
+          <div class="check_status ml-auto"><%= expense.expense_type %></div>
+        </div>
+        <div class="row no-gutters">
+          <div class="expense_supplier">交易方:<%= expense.counterparty %></div>
+          <div class="check_status ml-auto">
+            <% if !expense.check_status %>
+              未审核
+            <% end %>
+          </div>
+        </div>
+        <div class="row no-gutters">
+          <div class="expense_remark col-auto">备注:<%= expense.remark %></div>
+          <% if can? :destroy, Expense %>
+            <div class="operation_right ml-auto">
+              <% if !expense.is_invalid %>
+                <%= link_to "作废", expense_path(expense), method: :delete, data: {confirm: "确定作废吗？"} %>
+              <% else %>
+                <%= expense.declare_invalid_person %>已将其作废
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<%= render 'shard/paginate', object: @expenses %>
+
+
+
+
+

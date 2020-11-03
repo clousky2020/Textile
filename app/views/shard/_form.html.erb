@@ -6,7 +6,11 @@
       <%= render 'sale_customer/form_content', f: f, type_2: type_2, object: object %>
     <% elsif type == "purchase_supplier" %>
       <%= render 'purchase_supplier/form_content', f: f, type_2: type_2, object: object %>
-    <% elsif type == "user" %>
+    <% elsif type == "proceed" %>
+      <%= render 'proceed/form_content', f: f, type_2: type_2, object: object %>
+  <% elsif type == "expense" %>
+      <%= render 'expense/form_content', f: f, type_2: type_2, object: object %>
+   <% elsif type == "user" %>
       <%= render 'user/form_content', f: f, type_2: type_2, object: object %>
     <% elsif type == "repo" %>
       <%= render 'repo/form_content', f: f, type_2: type_2, object: object %>

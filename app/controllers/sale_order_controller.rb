@@ -3,46 +3,57 @@ class SaleOrderController < ApplicationController
   load_and_authorize_resource
 
   def index
-    if params.has_key?(:search) && params[:search] != ""
-      @sale_orders = SaleOrder.where.not(status: false).search(params[:search]).order("created_at DESC").page(params[:page])
-    elsif params[:order] == "all"
-      @sale_orders = SaleOrder.search(params[:search]).order("created_at DESC").page(params[:page])
+    if params.has_key?(:search) && params.has_key?(:type)
+      type = params[:type].split(":")
+      @sale_orders = SaleOrder.includes(:sale_customer, :product).sale_order_search(params[:search]).
+          where("#{type[0]}=?", type[1]).references(:sale_customer, :product).order("bill_time DESC").page(params[:page])
+    elsif params.has_key?(:search) && params[:search] != ""
+      @sale_orders = SaleOrder.includes(:sale_customer, :product).where(is_invalid: false).sale_order_search(params[:search]).
+          references(:sale_customer, :product).order("check_status").page(params[:page])
     else
-      @sale_orders = SaleOrder.where.not(status: false).order("created_at DESC").page(params[:page])
+      @sale_orders = SaleOrder.where(is_invalid: false).order("updated_at DESC").page(params[:page])
     end
   end
 
   def new
-    @sale_order = SaleOrder.new
-    @sale_order.build_sale_customer
-    @sale_order.build_product
-    @sale_order.build_user
-    @sale_order.build_repo
+    @sale_order = SaleOrderCreateForm.new
   end
 
   def edit
-
+    if !@sale_order.is_invalid
+      if !@sale_order.check_status
+        @sale_order = SaleOrderUpdateForm.new(@sale_order)
+      else
+        flash[:warning] = "订单已审核，不可更改"
+        render "sale_order/show"
+      end
+    else
+      flash[:warning] = "订单已作废，不可更改"
+      render "sale_order/show"
+    end
   end
 
   def show
-
+    store_referrer_location
   end
 
   def create
-    @sale_order = SaleOrder.new(sale_order_params)
-    if @sale_order.save
-      flash[:success] = "创建成功"
+    @sale_order = SaleOrderCreateForm.new
+    info = @sale_order.submit(params[:sale_orders])
+    if info[0]
+      flash[:success] = info[1]
       redirect_to sale_order_index_path
     else
-      flash[:warning] = "#{@sale_order.errors.full_messages}"
+      flash[:warning] = "#{@sale_order.errors.full_messages << info[1]}"
       render "sale_order/new"
     end
   end
 
   def update
-    if @sale_order.update(sale_order_params)
+    @sale_order = SaleOrderUpdateForm.new @sale_order
+    if @sale_order.update(params[:sale_orders])
       flash[:success] = "成功更新供应订单信息"
-      redirect_to sale_order_url(@sale_order)
+      redirect_to sale_order_url(@sale_order.id)
     else
       flash[:warning] = "#{@sale_order.errors.full_messages.to_s}"
       render "sale_order/edit"
@@ -50,10 +61,21 @@ class SaleOrderController < ApplicationController
   end
 
   def destroy
-    @sale_order.update_columns(status: false)
+    store_referrer_location
+    @sale_order.order_declare_invalid(current_user)
     flash[:success] = "#{@sale_order.sale_customer.name}的订单#{@sale_order.order_id}已作废"
-    # SaleOrder.delete(@sale_order)
-    redirect_to sale_order_index_path
+    redirect_back_referrer_for sale_order_index_path
+  end
+
+  def pass_check
+    if !@sale_order.is_invalid
+      @sale_order.pass_check_result(current_user)
+      flash[:success] = "订单号#{@sale_order.order_id}已审核"
+      redirect_back_referrer_for sale_order_path(@sale_order.id)
+    else
+      flash[:warning] = "订单已作废，不用审核了"
+      render "sale_order/show"
+    end
   end
 
   private
@@ -63,11 +85,12 @@ class SaleOrderController < ApplicationController
     @sale_order = SaleOrder.find(params[:id])
   end
 
-  def sale_order_params
-    params.require(:sale_order).permit(:name, :specification, :description, :repo_id, :user_id, :number, :freight,
-                                       :measuring_unit, :price, :tax_rate, :deposit, :weight, :picture, :is_return,
-                                       sale_customer_attributes: [:id, :name], product_attributes: [:id, :name, :specification])
-  end
+  # def sale_order_params
+  #   params.require(:sale_order).permit(:name, :specification, :description, :repo_id, :user_id, :number, :freight,
+  #                                      :measuring_unit, :price, :tax_rate, :deposit, :weight, :picture, :is_return,
+  #                                      sale_customer_attributes: [:id, :name],
+  #                                      product_attributes: [:id, :name, :specification])
+  # end
 
 
 end

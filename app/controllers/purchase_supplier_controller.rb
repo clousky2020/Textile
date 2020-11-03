@@ -4,7 +4,7 @@ class PurchaseSupplierController < ApplicationController
 
   def index
     if params.has_key?(:search) && params[:search] != ""
-      @suppliers = PurchaseSupplier.where("name LIKE?", "%#{params[:search]}%").order("name").page(params[:page])
+      @suppliers = PurchaseSupplier.search_name(params[:search]).order("name").page(params[:page])
     else
       @suppliers = PurchaseSupplier.order("created_at DESC").page(params[:page])
     end
@@ -19,7 +19,8 @@ class PurchaseSupplierController < ApplicationController
   end
 
   def show
-
+    @supplier.calcu_total_payment_required
+    @supplier.calcu_paid
   end
 
   def create
@@ -54,6 +55,11 @@ class PurchaseSupplierController < ApplicationController
     end
   end
 
+  def check_purchase_supplier
+    @purchase_supplier = PurchaseSupplier.search_name(params[:term]).map(&:name)
+    render json: @purchase_supplier
+  end
+
   private
 
   def get_supplier
@@ -61,7 +67,8 @@ class PurchaseSupplierController < ApplicationController
   end
 
   def purchase_supplier_params
-    params.require(:purchase_supplier).permit(:name, :contacts, :phone, :address, :description, :status)
+    params.require(:purchase_supplier).permit(:name, :contacts, :phone, :address, :description, :status,
+                                              :check_money, :check_money_time)
   end
 
 end

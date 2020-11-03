@@ -1,33 +1,42 @@
-<tr>
-  <th>品名</th>
-  <td><%= object.name %></td>
-</tr>
-<tr>
-  <th>型号规格</th>
-  <td><%= object.specification %></td>
-</tr>
+<table class="table">
+  <tbody>
 
-<tr>
-  <th>描述</th>
-  <td><%= object.description %></td>
-</tr>
-<tr>
-  <th>费用</th>
-  <td><%= object.preset_cost %></td>
-</tr>
-<tr>
-  <th>预设价格</th>
-  <td><%= object.preset_price %></td>
-</tr>
-<tr>
-  <th>计量单位</th>
-  <td><%= object.measuring_unit %></td>
-</tr>
-<tr>
-  <th>创建时间</th>
-  <td><%= object.created_at %></td>
-</tr>
-<tr>
-  <th>备注</th>
-  <td><%= object.remarks %></td>
-</tr>
+  <tr>
+    <th>品名</th>
+    <td><%= object.name %></td>
+  </tr>
+  <tr>
+    <th>型号规格</th>
+    <td><%= object.specification %></td>
+  </tr>
+
+  <tr>
+    <th>描述</th>
+    <td><%= object.description %></td>
+  </tr>
+  <tr>
+    <th>人工费用</th>
+    <td><%= object.labor_cost %>元/万转</td>
+  </tr>
+  <tr>
+    <th>下布圈数</th>
+    <td><%= object.turns_number %>转/匹</td>
+  </tr>
+  <tr>
+    <th>预设价格</th>
+    <td><%= object.preset_price %></td>
+  </tr>
+  <tr>
+    <th>计量单位</th>
+    <td><%= object.measuring_unit %></td>
+  </tr>
+  <tr>
+    <th>创建时间</th>
+    <td><%= object.created_at.localtime %></td>
+  </tr>
+  <tr>
+    <th>备注</th>
+    <td><%= object.remarks %></td>
+  </tr>
+  </tbody>
+</table>

@@ -4,7 +4,7 @@ class SaleCustomerController < ApplicationController
 
   def index
     if params.has_key?(:search) && params[:search] != ""
-      @customers = SaleCustomer.where("name LIKE?", "%#{params[:search]}%").order("name").page(params[:page])
+      @customers = SaleCustomer.where("name LIKE? ", "%#{params[:search]}%").order("name").page(params[:page])
     else
       @customers = SaleCustomer.order("name").page(params[:page])
     end
@@ -19,6 +19,8 @@ class SaleCustomerController < ApplicationController
   end
 
   def show
+    @customer.calcu_total_collection_required
+    @customer.calcu_received
 
   end
 
@@ -43,6 +45,11 @@ class SaleCustomerController < ApplicationController
     end
   end
 
+  def check_sale_customer
+    @sale_customer = SaleCustomer.search_name(params[:term]).map(&:name)
+    render json: @sale_customer
+  end
+
   def destroy
     if @customer.sale_orders.blank?
       SaleCustomer.delete(@customer)
@@ -53,6 +60,7 @@ class SaleCustomerController < ApplicationController
       redirect_to sale_customer_index_path
     end
   end
+
 
   private
 

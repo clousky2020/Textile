@@ -1,14 +1,13 @@
 class User < ApplicationRecord
-
   has_one :repo
-
   has_many :purchase_orders
   has_many :sale_orders
   has_many :products
   has_many :materials
-
-
+  has_many :expenses
+  has_many :proceeds
   rolify
+
   has_secure_password
   # after_create :assign_default_role
 

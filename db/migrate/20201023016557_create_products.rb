@@ -5,7 +5,8 @@ class CreateProducts < ActiveRecord::Migration[6.0]
       t.string :description
       t.string :specification
       t.string :measuring_unit
-      t.decimal :preset_cost, precision: 8, scale: 2, default: 0
+      t.integer :turns_number
+      t.decimal :labor_cost, precision: 8, scale: 2, default: 0
       t.decimal :preset_price, precision: 8, scale: 2, default: 0
       t.string :remarks
       t.string :picture

@@ -1,24 +1,21 @@
-<%= f.fields_for :product do |f2| %>
-  <div class="form-inline">
-    <%= f2.label :name, "品名" %>
-    <%= f2.text_field :name, class: "form-control" %>
-  </div>
-  <div class="form-inline">
-    <%= f2.label :specification, "型号规格" %>
-    <%= f2.text_field :specification, class: "form-control" %>
-  </div>
-<% end %>
-
+<div class="form-inline">
+  <%= f.label :specification, "型号规格" %>
+  <a class="fas fa-question-circle" data-toggle="tooltip" title="在这里找不到型号的话，在生产资料--产品管理中新增吧。"> </a>
+  <%= f.select :specification, options_for_select(Product.order("specification").collect {|n| [n.specification, n.id]}, object.product_id), class: "form-control" %>
+</div>
+<div class="form-inline">
+  <%= f.label :name, "品名" %>
+  <%= f.text_field(:name, readonly: true, class: "form-control") %>
+</div>
 <div class="form-inline">
   <%= f.label :repo_id, "存入仓库" %>
   <%= f.select(:repo_id, Repo.all.map {|n| [n.name, n.id]}, class: "form-control") %>
 </div>
-<%= f.fields_for :sale_customer do |f4| %>
-  <div class="form-inline">
-    <%= f4.label :name, "客户名称" %>
-    <%= f4.text_field :name, class: "form-control" %>
-  </div>
-<% end %>
+<div class="form-inline">
+  <%= f.label :sale_customer, "客户名称" %>
+  <a class="fas fa-magic" data-toggle="tooltip" title="已设定自动填充"> </a>
+  <%= f.text_field :sale_customer,placeholder:"必需，可自动填充", class: "form-control", data: {autocomplete_source: check_sale_customer_sale_customer_index_path} %>
+</div>
 <div class="form-inline">
   <%= f.label :weight, "重量" %>
   <%= f.number_field :weight, min: 0, step: 0.1, class: "form-control" %>
@@ -29,7 +26,7 @@
 </div>
 <div class="form-inline">
   <%= f.label :measuring_unit, "计量单位" %>
-  <%= f.select :measuring_unit, options_for_select([['包', '包'], ['件', '件'], ['箱', '箱'],]), class: "form-control" %>
+  <%= f.select :measuring_unit, options_for_select([['匹', '匹']]), class: "form-control" %>
 </div>
 <div class="form-inline">
   <%= f.label :price, "单价" %>
@@ -44,7 +41,11 @@
   <%= f.label :freight, "运费" %>
   <%= f.number_field :freight, min: 0, step: 1, class: "form-control" %>
 </div>
-
+<div class="form-inline">
+  <%= f.label :bill_time, "账单时间" %>
+  <a class="far fa-question-circle" data-toggle="tooltip" title="该销售单的时间记录"> </a>
+  <%= f.datetime_field :bill_time, value: default_time_now, class: "form-control" %>
+</div>
 <div class="form-inline">
   <%= f.label :description, "描述" %>
   <%= f.text_area :description, class: "form-control" %>
@@ -52,13 +53,37 @@
 <% if type_2 == "edit" %>
   <div class="form-inline">
     <%= f.label :user_id, "经手人" %>
-    <%= f.select(:user_id, options_for_select(User.all.map {|n| [n.name, n.id] if n.has_role?(:sale)}, object.user_id), class: "form-control") %>
+    <%= f.select(:user_id, options_for_select(User.all.collect {|n| [n.name, n.id]}, object.user_id), class: "form-control") %>
+  </div>
+<% elsif type_2 == "create" %>
+  <div class="form-inline d-none">
+    <%= f.label :user_id, "经手人ID" %>
+    <%= f.number_field(:user_id, readonly: true, value: current_user.id, class: "form-control") %>
   </div>
 <% end %>
-
+<div class="form-inline">
+  <%= f.label :is_return, "是退货吗？" %>
+  <a class="far fa-question-circle" data-toggle="tooltip" title="退货的话要减少需要从客户那里收的钱"> </a>
+  <%= f.check_box :is_return, class: "form-control" %>
+</div>
 <div class="picture">
   <%= label_tag "上传相关图片" %>
   <%= f.file_field :picture %>
 </div>
 
-
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        //销售单页面select选择产品型号规格后，填充下面的产品品名
+        $("#sale_orders_specification").on("change", function () {
+            $.post("/product/get_options", {id: this.value})
+        }).change();
+        // 销售单页面搜索客户名称自动填充
+        $("#sale_orders_sale_customer").autocomplete(
+            {source: $('#sale_orders_sale_customer').data('autocomplete-source')},
+            {
+                mustContain: true
+            }
+        )
+    })
+</script>

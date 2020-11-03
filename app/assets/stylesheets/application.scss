@@ -10,10 +10,29 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
+
  *= require bootstrap/dist/css/bootstrap
  *= require_tree .
  *= require_self
  */
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
 body{
   margin-bottom: 60px;
+}
+.check_status{
+  color: #B00100;
+}
+
+.pagination {
+  span{
+    margin: 0 5px;
+  }
+}
+
+.ui-autocomplete{
+  overflow-y:scroll;
+  overflow-x:hidden;
+  max-height: 200px;
 }

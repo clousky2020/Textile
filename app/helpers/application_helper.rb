@@ -9,5 +9,9 @@ module ApplicationHelper
     end
   end
 
+  def default_time_now
+    Time.current.strftime("%Y-%m-%dT%H:%M")
+  end
+
 
 end

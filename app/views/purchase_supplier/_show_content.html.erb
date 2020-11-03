@@ -1,24 +1,54 @@
-<tr>
-  <th>供应商名称</th>
-  <td><%= object.name %></td>
-</tr>
-<tr>
-  <th>描述</th>
-  <td><%= object.description %></td>
-</tr>
-<tr>
-  <th>联系人</th>
-  <td><%= object.contacts %></td>
-</tr>
-<tr>
-  <th>联系电话</th>
-  <td><%= object.phone %></td>
-</tr>
-<tr>
-  <th>地址</th>
-  <td><%= object.address %></td>
-</tr>
-<tr>
-  <th>已有订单数</th>
-  <td><%=link_to object.purchase_orders.where(status:true).count,purchase_order_index_path(:search_company=>"#{object.name}") %></td>
-</tr>
+<table class="table">
+  <tbody>
+  <tr>
+    <th>供应商名称</th>
+    <td><%= object.name %></td>
+  </tr>
+  <tr>
+    <th>描述</th>
+    <td><%= object.description %></td>
+  </tr>
+  <tr>
+    <th>联系人</th>
+    <td><%= object.contacts %></td>
+  </tr>
+  <tr>
+    <th>联系电话</th>
+    <td><%= object.phone %></td>
+  </tr>
+  <tr>
+    <th>地址</th>
+    <td><%= object.address %></td>
+  </tr>
+  <tr>
+    <th>总计货款</th>
+    <td><%= object.total_payment_required %></td>
+  </tr>
+  <tr>
+    <th>已付</th>
+    <td><%= object.paid %></td>
+  </tr>
+  <tr>
+    <th>未付</th>
+    <td><%= object.unpaid %></td>
+  </tr>
+  <% if object.check_money %>
+    <tr>
+      <th>清算金额</th>
+      <td><%= object.check_money %></td>
+    </tr>
+    <tr>
+      <th>清算日期</th>
+      <td><%= object.check_money_time %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <th>已有订单数</th>
+    <td><%= link_to object.purchase_orders.where(is_invalid: false).count, purchase_order_index_path(:search => "#{object.name}") %></td>
+  </tr>
+  <tr>
+    <th>已有付款单数</th>
+    <td><%= link_to object.expenses.where(is_invalid: false).count, expense_index_path(:search => "#{object.name}") %></td>
+  </tr>
+  </tbody>
+</table>

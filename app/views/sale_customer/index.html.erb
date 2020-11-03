@@ -12,29 +12,20 @@
   <tr>
     <td>编号</td>
     <td>公司名</td>
-    <td>查看</td>
-    <% if can? :manage, SaleCustomer %>
-      <td>删除</td>
-    <% end %>
+
   </tr>
   </thead>
   <tbody>
   <% @customers.each do |customer| %>
     <tr>
       <td><%= customer.id %></td>
-      <td><%= customer.name %></td>
-      <td><%= link_to "详情", sale_customer_path(customer) %></td>
-      <% if can? :manage, SaleCustomer %>
-        <td>
-          <%= link_to "删除", sale_customer_path(customer), method: :delete, data: {confirm: "确定删除吗？"} %>
-        </td>
-      <% end %>
+      <td><%= link_to customer.name, sale_customer_path(customer) %></td>
     </tr>
 
   <% end %>
   </tbody>
 </table>
-<%=render 'shard/paginate',object:@customers %>
+<%= render 'shard/paginate', object: @customers %>
 
 
 

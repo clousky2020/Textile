@@ -25,12 +25,21 @@ gem 'bcrypt', '~> 3.1.7'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
-gem 'cancancan'
+# 操作Excel
 gem 'creek'
+# 分页
 gem 'kaminari'
+# 权限管理
+gem 'cancancan'
 gem 'rolify'
+# 上传图片
 gem 'carrierwave'
 gem 'mini_magick'
+# 通用i18包
+gem 'rails-i18n', '~> 6.0.0'
+gem 'carrierwave-i18n'
+# 图标
+gem 'font-awesome-sass', '~> 5.15.1'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
@@ -52,7 +61,9 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-
+  gem 'guard'
+  gem 'guard-rspec', require: false
+  gem 'guard-bundler', require: false
 
 end
 

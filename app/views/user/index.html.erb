@@ -9,6 +9,7 @@
   <tr>
     <td>姓名</td>
     <td>身份</td>
+    <td>状态</td>
     <td>操作</td>
 
   </tr>
@@ -18,10 +19,18 @@
     <tr>
       <td><%= user.name %></td>
       <td><%= user.roles.map {|n| n.to_chinese}.join(",") %></td>
+      <% if user.is_lock %>
+        <td> 已锁</td>
+      <% else %>
+        <td> 正常</td>
+      <% end %>
       <td>
         <%= link_to "查看详情", user_path(user) %>
-        <% if can? :manage, User %>
-          <%= link_to "重置密码", reset_password_reset_path(user) %>
+        <% if can? :reset, User %>
+          <%= link_to "重置密码", reset_user_path(user) %>
+        <% end %>
+
+        <% if can? :lock, User %>
           <% if user.id != current_user.id %>
             <% if user.is_lock %>
               <%= link_to "解锁", lock_user_path(user) %>
@@ -29,12 +38,14 @@
               <%= link_to "锁定", lock_user_path(user) %>
             <% end %>
           <% end %>
-          <% if can? :destroy, User %>
-            <%= link_to "删除", user_path(user), method: :delete, data: {confirm: "确定删除吗？"} %>
-          <% end %>
-          </td>
         <% end %>
-        </tr>
+
+        <% if can? :destroy, User %>
+          <%= link_to "删除", user_path(user), method: :delete, data: {confirm: "确定删除吗？"} %>
+        <% end %>
+      </td>
+
+    </tr>
   <% end %>
   </tbody>
 </table>

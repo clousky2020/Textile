@@ -1,0 +1,13 @@
+
+
+<% provide :title, "收款信息详情" %>
+<% provide :edit_url, edit_proceed_path(@proceed) %>
+<% provide :pass_check_url, pass_check_proceed_path(@proceed) %>
+<% provide :model, Proceed %>
+<% provide :back_url, proceed_index_path %>
+
+<%= render 'shard/show_form', object: @proceed, type: "proceed" %>
+
+
+
+

@@ -12,6 +12,9 @@ import jquery from 'jquery';
 
 window.$ = window.jquery = jquery;
 import 'bootstrap'
+
+require("jquery-ui")
+
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
 // or the `imagePath` JavaScript helper below.
@@ -19,19 +22,56 @@ import 'bootstrap'
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-
 $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
 
-    //编辑员工页面，如果有新的工种，添加
-    $(document).on('click', "#edit_new_work_type", function () {
-        $(".work_type_now").addClass("d-none ");
-        $(".new_work_type").removeClass("d-none ");
-        $(".new_work_type").find("input[name='employee[work_type]']").attr('disabled', false);
-    })
-    $(document).on('click', "#edit_old_work_type", function () {
-        $(".work_type_now").removeClass("d-none ");
-        $(".new_work_type").addClass("d-none ");
-        $(".new_work_type").find("input[name='employee[work_type]']").attr('disabled', true);
-    })
+    // // 采购单页面搜索供应商名称自动填充
+    // $("#purchase_orders_purchase_supplier").autocomplete(
+    //     {source: $('#purchase_orders_purchase_supplier').data('autocomplete-source')},
+    //     {
+    //         mustContain: true
+    //     }
+    // )
+    // // 采购单页面搜索原料名称自动填充
+    // $("#purchase_orders_name").autocomplete(
+    //     {source: $('#purchase_orders_name').data('autocomplete-source')},
+    //     {
+    //         mustContain: true
+    //     }
+    // )
+    // // 采购单页面搜索原料规格型号自动填充
+    // $("#purchase_orders_specification").autocomplete(
+    //     {source: $('#purchase_orders_specification').data('autocomplete-source')},
+    //     {
+    //         mustContain: true,
+    //     }
+    // )
+    // // 付款单页面搜索交易方自动填充
+    // $("#expense_counterparty").autocomplete(
+    //     {source: $('#expense_counterparty').data('autocomplete-source')},
+    //     {
+    //         minChars: 0,
+    //         mustContain: true,
+    //     }
+    // )
+    // // 付款单页面搜索类别自动填充
+    // $("#expense_expense_type").autocomplete(
+    //     {source: $('#expense_expense_type').data('autocomplete-source')},
+    //     {
+    //         minChars: 0,
+    //         mustContain: true,
+    //     }
+    // )
+    // //销售单页面select选择产品型号规格后，填充下面的产品品名
+    // $("#sale_orders_specification").on("change", function () {
+    //     $.post("/product/get_options", {id: this.value})
+    // }).change();
+    // // 销售单页面搜索客户名称自动填充
+    // $("#sale_orders_sale_customer").autocomplete(
+    //     {source: $('#sale_orders_sale_customer').data('autocomplete-source')},
+    //     {
+    //         mustContain: true
+    //     }
+    // )
 
-})
+});

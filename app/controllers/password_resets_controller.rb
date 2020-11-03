@@ -1,6 +1,9 @@
 class PasswordResetsController < ApplicationController
   before_action :get_user, only: [:edit, :update, :reset]
 
+  # load_and_authorize_resource
+  # skip_authorization_check :only => [:reset]
+
   def edit
   end
 
@@ -24,15 +27,7 @@ class PasswordResetsController < ApplicationController
     end
   end
 
-  def reset
-    @user.password = "123456"
-    if @user.save
-      flash[:success] = "密码已经重置"
-    else
-      flash[:danger] = "#{@user.errors.full_messages.to_s}"
-    end
-    redirect_to user_index_path
-  end
+
 
   private
 

@@ -1,18 +1,20 @@
 <div class="form-inline">
-    <%= f.label :name, "品名" %>
-    <%= f.text_field :name, class: "form-control" %>
+  <%= f.label :name, "品名" %>
+  <%= f.text_field :name, class: "form-control" %>
 </div>
 <div class="form-inline">
-    <%= f.label :specification, "型号规格" %>
-    <%= f.text_field :specification, class: "form-control" %>
+  <%= f.label :specification, "型号规格" %>
+  <%= f.text_field :specification, class: "form-control" %>
 </div>
 
 <div class="form-inline">
   <%= f.label :measuring_unit, "计量单位" %>
-  <%= f.select :measuring_unit, options_for_select([['包', '包'], ['件', '件'], ['箱', '箱'],]), class: "form-control" %>
+
+  <%= f.select :measuring_unit, options_for_select([['包', '包'], ['件', '件'], ['箱', '箱']]), class: "form-control" %>
 </div>
 <div class="form-inline">
   <%= f.label :preset_price, "预设价格(元)" %>
+  <a class="fas fa-question-circle" data-toggle="tooltip" title="预估设定的进价"> </a>
   <%= f.number_field :preset_price, step: 0.01, class: "form-control" %>
 </div>
 <div class="form-inline">
@@ -37,8 +39,5 @@
     <%= f.select(:user_id, @salers.map {|n| [n.name, n.id]}, class: "form-control") %>
   </div>
 <% end %>
-<!--<div class="form-inline">-->
-<%#= f.label :status, "状态" %>
-<%#= f.check_box :status, class: "form-control" %>
-<!--</div>-->
+
 

@@ -1,0 +1,8 @@
+<% provide :button_text, "创建" %>
+<% provide :title, "创建新的收款信息" %>
+<% provide :method, :post %>
+<% provide :back_url, proceed_index_path %>
+
+<%= render 'shard/form', object: @proceed, url: proceed_index_path, type: "proceed", type_2: "create" %>
+
+

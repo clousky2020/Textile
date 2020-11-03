@@ -1,11 +1,12 @@
 class ProductController < ApplicationController
 
-  before_action :get_product, only: [:edit, :show, :update, :destroy]
+  # before_action :get_product, only: [:edit, :show, :update, :destroy]
   load_and_authorize_resource
+  skip_before_action :verify_authenticity_token, :only => :get_options
 
   def index
     if params.has_key?(:search) && params[:search] != ""
-      @products = Product.where("name LIKE?", "%#{params[:search]}%").order("created_at DESC").page(params[:page])
+      @products = Product.where("name LIKE? or specification LIKE?", "%#{params[:search]}%", "%#{params[:search]}%").order("created_at DESC").page(params[:page])
     else
       @products = Product.order("created_at DESC").page(params[:page])
     end
@@ -44,8 +45,16 @@ class ProductController < ApplicationController
   end
 
   def destroy
-    Product.delete(@product)
+    if @product.sale_orders.blank?
+      Product.delete(@product)
+    else
+      flash[:warning] = "该产品还有相关的订单，无法删除"
+    end
     redirect_to product_index_path
+  end
+
+  def get_options
+    @product_names = Product.find(params[:id])
   end
 
   private

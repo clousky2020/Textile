@@ -1,0 +1,8 @@
+<% provide :button_text, "更新" %>
+<% provide :title, "修改付款信息" %>
+<% provide :method, :patch %>
+<% provide :back_url, proceed_path(@proceed) %>
+
+<%= render 'shard/form', object: @proceed, url: proceed_path, type: "proceed", type_2: "edit" %>
+
+

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_23_016557) do
+ActiveRecord::Schema.define(version: 2020_10_31_123448) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,40 @@ ActiveRecord::Schema.define(version: 2020_10_23_016557) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "expenses", force: :cascade do |t|
+    t.string "order_id"
+    t.string "expense_type"
+    t.string "counterparty"
+    t.bigint "user_id"
+    t.decimal "paper_amount", precision: 10, scale: 2, default: "0.0"
+    t.decimal "actual_amount", precision: 10, scale: 2, default: "0.0"
+    t.string "remark"
+    t.string "account_number"
+    t.string "account_name"
+    t.string "account_from"
+    t.string "picture"
+    t.string "create_person"
+    t.string "check_person"
+    t.boolean "check_status", default: false
+    t.datetime "check_time"
+    t.datetime "bill_time"
+    t.string "declare_invalid_person"
+    t.boolean "is_invalid", default: false
+    t.datetime "declare_invalid_time"
+    t.boolean "need_reimburse", default: false
+    t.boolean "reimbursed", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_expenses_on_user_id"
+  end
+
+  create_table "expenses_purchase_suppliers", id: false, force: :cascade do |t|
+    t.bigint "expense_id"
+    t.bigint "purchase_supplier_id"
+    t.index ["expense_id"], name: "index_expenses_purchase_suppliers_on_expense_id"
+    t.index ["purchase_supplier_id"], name: "index_expenses_purchase_suppliers_on_purchase_supplier_id"
+  end
+
   create_table "materials", force: :cascade do |t|
     t.string "name"
     t.string "specification"
@@ -62,12 +96,39 @@ ActiveRecord::Schema.define(version: 2020_10_23_016557) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "proceeds", force: :cascade do |t|
+    t.string "order_id"
+    t.bigint "sale_customer_id"
+    t.bigint "user_id"
+    t.decimal "paper_amount", precision: 10, scale: 2, default: "0.0"
+    t.decimal "actual_amount", precision: 10, scale: 2, default: "0.0"
+    t.string "remark"
+    t.string "account_number"
+    t.string "account_name"
+    t.string "account_from"
+    t.string "picture"
+    t.string "create_person"
+    t.string "check_person"
+    t.boolean "check_status", default: false
+    t.datetime "check_time"
+    t.datetime "bill_time"
+    t.string "declare_invalid_person"
+    t.boolean "is_invalid", default: false
+    t.datetime "declare_invalid_time"
+    t.boolean "is_return", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["sale_customer_id"], name: "index_proceeds_on_sale_customer_id"
+    t.index ["user_id"], name: "index_proceeds_on_user_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.string "specification"
     t.string "measuring_unit"
-    t.decimal "preset_cost", precision: 8, scale: 2, default: "0.0"
+    t.integer "turns_number"
+    t.decimal "labor_cost", precision: 8, scale: 2, default: "0.0"
     t.decimal "preset_price", precision: 8, scale: 2, default: "0.0"
     t.string "remarks"
     t.string "picture"
@@ -92,14 +153,15 @@ ActiveRecord::Schema.define(version: 2020_10_23_016557) do
     t.integer "deposit", default: 0
     t.integer "freight", default: 0
     t.string "picture"
-    t.string "check_status"
-    t.boolean "check_result", default: false
+    t.string "create_person"
     t.string "check_person"
+    t.boolean "check_status", default: false
     t.datetime "check_time"
-    t.datetime "create_person"
-    t.datetime "update_person"
+    t.datetime "bill_time"
+    t.string "declare_invalid_person"
+    t.boolean "is_invalid", default: false
+    t.datetime "declare_invalid_time"
     t.boolean "is_return", default: false
-    t.boolean "status", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["material_id"], name: "index_purchase_orders_on_material_id"
@@ -116,6 +178,11 @@ ActiveRecord::Schema.define(version: 2020_10_23_016557) do
     t.string "address"
     t.string "description"
     t.string "status"
+    t.decimal "check_money", precision: 10, scale: 2
+    t.datetime "check_money_time"
+    t.decimal "total_payment_required", precision: 10, scale: 2
+    t.decimal "paid", precision: 10, scale: 2
+    t.decimal "unpaid", precision: 10, scale: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -148,6 +215,11 @@ ActiveRecord::Schema.define(version: 2020_10_23_016557) do
     t.string "address"
     t.string "description"
     t.string "status"
+    t.decimal "check_money", precision: 10, scale: 2
+    t.datetime "check_money_time"
+    t.decimal "total_collection_required", precision: 10, scale: 2
+    t.decimal "received", precision: 10, scale: 2
+    t.decimal "uncollected", precision: 10, scale: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -167,14 +239,15 @@ ActiveRecord::Schema.define(version: 2020_10_23_016557) do
     t.decimal "total_price", default: "0.0"
     t.integer "freight", default: 0
     t.string "picture"
-    t.string "check_status"
-    t.boolean "check_result", default: false
+    t.string "create_person"
     t.string "check_person"
+    t.boolean "check_status", default: false
     t.datetime "check_time"
-    t.datetime "create_person"
-    t.datetime "update_person"
+    t.datetime "bill_time"
+    t.string "declare_invalid_person"
+    t.boolean "is_invalid", default: false
+    t.datetime "declare_invalid_time"
     t.boolean "is_return", default: false
-    t.boolean "status", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["order_id"], name: "index_sale_orders_on_order_id"

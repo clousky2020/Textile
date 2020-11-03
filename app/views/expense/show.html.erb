@@ -1,0 +1,12 @@
+<% provide :title, "付款单详情" %>
+<% provide :edit_url, edit_expense_path(@expense) %>
+<% provide :pass_reimburse_url, pass_reimburse_expense_path(@expense) %>
+<% provide :pass_check_url, pass_check_expense_path(@expense) %>
+<% provide :model, Expense %>
+<% provide :back_url, expense_index_path %>
+
+<%= render 'shard/show_form', object: @expense, type: "expense" %>
+
+
+
+

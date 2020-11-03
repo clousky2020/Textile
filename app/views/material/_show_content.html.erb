@@ -1,3 +1,5 @@
+<table class="table">
+  <tbody>
 <tr>
   <th>品名</th>
   <td><%= object.name %></td>
@@ -21,5 +23,7 @@
 </tr>
 <tr>
   <th>创建时间</th>
-  <td><%= object.created_at %></td>
+  <td><%= object.created_at.localtime %></td>
 </tr>
+</tbody>
+</table>

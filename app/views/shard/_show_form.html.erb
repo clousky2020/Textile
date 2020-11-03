@@ -1,34 +1,47 @@
 <div class="text-center">
   <h2><%= yield(:title) %></h2>
-  <table class="table">
-    <tbody>
 
-    <% if type == "purchase_supplier" %>
-      <%= render 'purchase_supplier/show_content', object: object %>
-    <% elsif type == "sale_customer" %>
-      <%= render 'sale_customer/show_content', object: object %>
-    <% elsif type == "user" %>
-      <%= render 'user/show_content', object: object %>
-    <% elsif type == "repo" %>
-      <%= render 'repo/show_content', object: object %>
-    <% elsif type == "employee" %>
-      <%= render 'employee/show_content', object: object %>
-    <% elsif type == "purchase_orders" %>
-      <%= render 'purchase_order/show_content', object: object %>
-    <% elsif type == "sale_orders" %>
-      <%= render 'sale_order/show_content', object: object %>
-    <% elsif type == "material" %>
-      <%= render 'material/show_content', object: object %>
-    <% elsif type == "product" %>
-      <%= render 'product/show_content', object: object %>
+  <% if type == "purchase_supplier" %>
+    <%= render 'purchase_supplier/show_content', object: object %>
+  <% elsif type == "sale_customer" %>
+    <%= render 'sale_customer/show_content', object: object %>
+  <% elsif type == "user" %>
+    <%= render 'user/show_content', object: object %>
+  <% elsif type == "repo" %>
+    <%= render 'repo/show_content', object: object %>
+  <% elsif type == "employee" %>
+    <%= render 'employee/show_content', object: object %>
+  <% elsif type == "purchase_orders" %>
+    <%= render 'purchase_order/show_content', object: object %>
+  <% elsif type == "sale_orders" %>
+    <%= render 'sale_order/show_content', object: object %>
+  <% elsif type == "material" %>
+    <%= render 'material/show_content', object: object %>
+  <% elsif type == "product" %>
+    <%= render 'product/show_content', object: object %>
+  <% elsif type == "proceed" %>
+    <%= render 'proceed/show_content', object: object %>
+  <% elsif type == "expense" %>
+    <%= render 'expense/show_content', object: object %>
+  <% end %>
+
+
+  <div>
+    <% if (object.has_attribute?(:is_invalid) && !object.is_invalid) && (object.has_attribute?(:check_status) && !object.check_status) %>
+      <% if can? :pass_check, yield(:model) %>
+        <%= link_to "通过审核", yield(:pass_check_url), class: "btn btn-primary" %>
+      <% end %>
+    <% end %>
+    <% if type == "expense" %>
+
+      <% if object.need_reimburse %>
+        <%= link_to "已报销", yield(:pass_reimburse_url), class: "btn btn-primary" %>
+      <% end %>
     <% end %>
 
-    </tbody>
-  </table>
-  <div>
-    <% if can? :manage, yield(:model) %>
+    <% if can? :updata, yield(:model) %>
       <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary" %>
     <% end %>
-    <%= link_to "返回", yield(:back_url), class: "btn btn-primary" %>
+    <%= link_to "返回主页", yield(:back_url), class: "btn btn-primary" %>
   </div>
 </div>

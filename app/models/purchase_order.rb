@@ -10,17 +10,19 @@ class PurchaseOrder < ApplicationRecord
   after_create :generate_order_id
   after_create :calcuate_total_price
   after_create :created_person
+  after_create :check_result_initial
   after_update :calcuate_total_price
 
-  def created_person
-    self.update(create_person: User.find(self.user_id).name)
-  end
+  scope :is_invalid, -> {where(is_invalid: true)}
+  scope :is_not_invalid, -> {where(is_invalid: false)}
 
-  def self.search(search)
+
+  def self.purchase_suppliers_search(search)
     if search
-      where("order_id LIKE ? or description LIKE ?", "%#{search}%", "%#{search}%")
+      where("purchase_suppliers.name LIKE :term or order_id LIKE :term or batch_number LIKE :term or materials.name LIKE :term or materials.specification LIKE :term", term: "%#{search}%")
     else
       all
     end
   end
+
 end

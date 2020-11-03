@@ -12,7 +12,7 @@ class PurchaseOrderUpdateForm
     end
   end
 
-  validates :name, :specification, :measuring_unit, :number, :weight, :user_id, :repo_id, presence: true
+  validates :name, :specification, :measuring_unit, :number, :weight, :user_id, :repo_id,:bill_time, presence: true
 
   def initialize(purchase_order)
     @purchase_order = purchase_order
@@ -88,6 +88,9 @@ class PurchaseOrderUpdateForm
   def user_id
     @user_id ||= @user.id
   end
+  def bill_time
+    @bill_time ||= @purchase_order.bill_time
+  end
 
   def purchase_supplier
     @purchase_supplier ||= @material.purchase_supplier.name
@@ -109,13 +112,14 @@ class PurchaseOrderUpdateForm
     @repo_id = params[:repo_id]
     @user_id = params[:user_id]
     @picture = params[:picture]
+    @bill_time = params[:bill_time]
     @is_return = params[:is_return]
     @purchase_supplier = params[:purchase_supplier]
     if valid?
-      @purchase_order.material.purchase_supplier.update(name: self.purchase_supplier)
-      @purchase_order.material.update(name: self.name, specification: self.specification)
-      @purchase_order.update(material_id: self.material_id, description: self.description, batch_number: self.batch_number,
-                             measuring_unit: self.measuring_unit, repo_id: self.repo_id, user_id: self.user_id,
+      purchase_supplier = PurchaseSupplier.find_or_create_by(name: self.purchase_supplier.strip)
+      @purchase_order.material.update(name: self.name.strip, specification: self.specification.strip, purchase_supplier_id: purchase_supplier.id)
+      @purchase_order.update(material_id: self.material_id, description: self.description.strip, batch_number: self.batch_number.strip,
+                             measuring_unit: self.measuring_unit, repo_id: self.repo_id, user_id: self.user_id,bill_time:self.bill_time,
                              number: self.number, weight: self.weight, price: self.price, tax_rate: self.tax_rate,
                              deposit: self.deposit, freight: self.freight, picture: self.picture, is_return: self.is_return)
       true

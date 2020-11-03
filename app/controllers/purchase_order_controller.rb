@@ -1,17 +1,16 @@
 class PurchaseOrderController < ApplicationController
-  before_action :get_purchase_order, only: [:show, :destroy]
-  # before_action :handlers, only: [:edit, :new]
   load_and_authorize_resource
 
   def index
-    if params.has_key?(:search) && params[:search] != ""
-      @purchase_orders = PurchaseOrder.where.not(status: false).search(params[:search]).order("created_at DESC").page(params[:page])
-    elsif params.has_key?(:search_comapny) && params[:search_comapny] != ""
-      @purchase_orders = PurchaseOrder.where(status: true).includes(:material).includes(:purchase_supplier).where("name=?", params[:search_comapny]).order("created_at").page(params[:page])
-    elsif params[:order] == "all"
-      @purchase_orders = PurchaseOrder.search(params[:search]).order("created_at DESC").page(params[:page])
+    if params.has_key?(:search) && params.has_key?(:type)
+      type = params[:type].split(":")
+      @purchase_orders = PurchaseOrder.includes(:purchase_supplier, :material).purchase_suppliers_search(params[:search]).
+          where("#{type[0]}=?", type[1]).references(:purchase_supplier, :material).order('bill_time DESC').page(params[:page])
+    elsif params.has_key?(:search)
+      @purchase_orders = PurchaseOrder.includes(:purchase_supplier, :material).is_not_invalid.
+          purchase_suppliers_search(params[:search]).references(:purchase_supplier, :material).page(params[:page])
     else
-      @purchase_orders = PurchaseOrder.where.not(status: false).order("created_at DESC").page(params[:page])
+      @purchase_orders = PurchaseOrder.is_not_invalid.order("updated_at DESC").page(params[:page])
     end
   end
 
@@ -20,62 +19,76 @@ class PurchaseOrderController < ApplicationController
   end
 
   def edit
-    @purchase_order = PurchaseOrderUpdateForm.new(@purchase_order)
+    if !@purchase_order.is_invalid
+      if !@purchase_order.check_status
+        @purchase_order = PurchaseOrderUpdateForm.new(@purchase_order)
+      else
+        flash[:warning] = "订单已审核，不可更改"
+        render "purchase_order/show"
+      end
+    else
+      flash[:warning] = "订单已作废，不可更改"
+      render "purchase_order/show"
+    end
   end
 
   def show
-
+    store_referrer_location
   end
 
   def create
     @purchase_order = PurchaseOrderCreateForm.new
-    params[:purchase_orders][:user_id] = current_user.id
-    if @purchase_order.submit(params[:purchase_orders])
-      flash[:success] = "创建成功"
+    info = @purchase_order.submit(params[:purchase_orders])
+    if info[0]
+      flash[:success] = info[1]
       redirect_to purchase_order_index_path
     else
-      flash[:warning] = "#{@purchase_order.errors.full_messages}"
+      flash[:warning] = "#{@purchase_order.errors.full_messages << info[1]}"
       render "purchase_order/new"
     end
   end
 
   def update
-    @purchase_order = PurchaseOrderUpdateForm.new @purchase_order
-    if @purchase_order.update(params[:purchase_orders])
-      flash[:success] = "成功更新供应订单信息"
-      redirect_to purchase_order_url(@purchase_order.id)
+    if !@purchase_order.check_status
+      @purchase_order = PurchaseOrderUpdateForm.new @purchase_order
+      if @purchase_order.update(params[:purchase_orders])
+        flash[:success] = "成功更新供应订单信息"
+        redirect_to purchase_order_url(@purchase_order.id)
+      else
+        flash[:warning] = "#{@purchase_order.errors.full_messages.to_s}"
+        render "purchase_order/edit"
+      end
     else
-      flash[:warning] = "#{@purchase_order.errors.full_messages.to_s}"
-      render "purchase_order/edit"
+      flash[:warning] = "订单已审核，不可更改"
+      redirect_to purchase_order_url(@purchase_order.id)
     end
   end
 
   def destroy
-    @purchase_order.update_columns(status: false)
+    store_referrer_location
+    @purchase_order.order_declare_invalid(current_user)
     flash[:success] = "#{@purchase_order.material.purchase_supplier.name}的订单#{@purchase_order.order_id}已作废"
     # PurchaseOrder.delete(@purchase_order)
-    redirect_to purchase_order_index_path
+    redirect_back_referrer_for purchase_order_index_path
+  end
+
+  def pass_check
+    if !@purchase_order.is_invalid
+      @purchase_order.pass_check_result(current_user)
+      flash[:success] = "订单号#{@purchase_order.order_id}已审核"
+      redirect_back_referrer_for purchase_order_url(@purchase_order.id)
+    else
+      flash[:warning] = "订单已作废，不可更改"
+      render "purchase_order/show"
+    end
   end
 
   private
 
-  #得到有权限制作和修改销售订单的人
-  def handlers
-    @salers = User.joins(:roles).where(roles: {name: "sale"})
-  end
 
   def get_purchase_order
     @purchase_order = PurchaseOrder.find(params[:id])
   end
-
-
-  # def purchase_order_params
-  #   params.require(:purchase_order).permit(:name, :specification, :batch_number, :description, :purchase_supplier,
-  #                                          :repo_id, :user_id, :number, :measuring_unit, :weight, :price, :tax_rate,
-  #                                          :deposit, :freight, :picture, :is_return, :material, :purchase_supplier,
-  #                                          purchase_supplier_attributes: [:id, :name],
-  #                                          materials_attributes: [:id, :name, :specification])
-  # end
 
 
 end
