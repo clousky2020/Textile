@@ -37,7 +37,7 @@ class ProceedController < ApplicationController
       flash[:success] = "创建成功"
       redirect_to proceed_path(@proceed)
     else
-      flash[:warning] = "#{@proceed.errors.full_messages}"
+      flash[:warning] = "#{@proceed.errors.full_messages.join(',')}"
       render "proceed/new"
     end
   end
