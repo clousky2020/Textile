@@ -1,17 +1,6 @@
-class Role < ApplicationRecord
-  has_and_belongs_to_many :users, :join_table => :users_roles
-
-  belongs_to :resource,
-             :polymorphic => true,
-             :optional => true
-
-
-  validates :resource_type,
-            :inclusion => {:in => Rolify.resource_types},
-            :allow_nil => true
-
-  scopify
-
+class Role < RoleCore ::Role
+  has_many :role_assignments, dependent: :destroy
+  has_many :users, through: :role_assignments
 
 
   # RESERVED = [:admin, :guest]

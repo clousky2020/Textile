@@ -4,6 +4,7 @@ class Proceed < ApplicationRecord
 
   mount_uploader :picture, PictureUploader
   validates :order_id, uniqueness: true
+  validates :paper_amount, :actual_amount, numericality: {greater_than: 0}
 
   after_create :check_result_initial
   after_create :created_person

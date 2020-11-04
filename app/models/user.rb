@@ -6,8 +6,9 @@ class User < ApplicationRecord
   has_many :materials
   has_many :expenses
   has_many :proceeds
-  rolify
-
+  has_many :role_assignments, dependent: :destroy
+  has_many :roles, through: :role_assignments
+  delegate :computed_permissions, to: :role
   has_secure_password
   # after_create :assign_default_role
 
@@ -18,6 +19,10 @@ class User < ApplicationRecord
   validates :email, length: {maximum: 255},
             format: {with: VALID_EMAIL_REGEX},
             uniqueness: {case_sensitive: false}
+
+  def computed_permissions
+    roles.map(&:computed_permissions).reduce(RoleCore::ComputedPermissions.new, &:concat)
+  end
 
   #创建用户后，设定初始的role
   def assign_default_role

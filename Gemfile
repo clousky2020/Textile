@@ -31,7 +31,7 @@ gem 'creek'
 gem 'kaminari'
 # 权限管理
 gem 'cancancan'
-gem 'rolify'
+gem 'role_core'
 # 上传图片
 gem 'carrierwave'
 gem 'mini_magick'

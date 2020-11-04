@@ -5,9 +5,9 @@ class SaleOrder < ApplicationRecord
   belongs_to :product
 
   mount_uploader :picture, PictureUploader
-
-
   validates :order_id, uniqueness: true
+  validates :weight, :price, numericality: {greater_than: 0, message: "必须大于零"}
+
 
   after_create :generate_order_id
   after_create :created_person

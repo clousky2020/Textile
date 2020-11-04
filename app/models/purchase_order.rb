@@ -6,6 +6,7 @@ class PurchaseOrder < ApplicationRecord
   mount_uploader :picture, PictureUploader
 
   validates :order_id, uniqueness: true
+  validates :weight, :price, numericality: {greater_than: 0}
 
   after_create :generate_order_id
   after_create :calcuate_total_price

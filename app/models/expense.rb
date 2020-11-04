@@ -4,6 +4,8 @@ class Expense < ApplicationRecord
 
   validates :order_id, uniqueness: true
   validates :counterparty, :expense_type, :paper_amount, :actual_amount, presence: true
+  validates :paper_amount, :actual_amount, numericality: {greater_than: 0}
+
   mount_uploader :picture, PictureUploader
 
   after_create :check_result_initial
