@@ -40,7 +40,7 @@ class ExpenseController < ApplicationController
       flash[:success] = "创建成功"
       redirect_to expense_path(@expense)
     else
-      flash[:warning] = "#{@expense.errors.full_messages}"
+      flash[:warning] = "#{@expense.errors.full_messages.join(',')}"
       render "expense/new"
     end
   end
@@ -53,7 +53,7 @@ class ExpenseController < ApplicationController
         build_purchase_supplier
         redirect_to expense_path(@expense.id)
       else
-        flash[:warning] = "#{@expense.errors.full_messages.to_s}"
+        flash[:warning] = "#{@expense.errors.full_messages.join(',')}"
         render "expense/edit"
       end
     else

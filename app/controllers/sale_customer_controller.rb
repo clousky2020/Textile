@@ -30,7 +30,7 @@ class SaleCustomerController < ApplicationController
       flash[:success] = "创建成功"
       redirect_to sale_customer_index_path
     else
-      flash[:warning] = "#{@customer.errors.full_messages.to_s}"
+      flash[:warning] = "#{@customer.errors.full_messages.join(',')}"
       render "sale_customer/new"
     end
   end
@@ -40,7 +40,7 @@ class SaleCustomerController < ApplicationController
       flash[:success] = "成功更新客户信息"
       redirect_to sale_customer_path(@customer)
     else
-      flash[:warning] = "#{@customer.errors.full_messages.to_s}"
+      flash[:warning] = "#{@customer.errors.full_messages.join(',')}"
       render "sale_customer/edit"
     end
   end

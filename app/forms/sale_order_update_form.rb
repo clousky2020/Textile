@@ -13,6 +13,7 @@ class SaleOrderUpdateForm
   end
 
   validates :name, :specification, :measuring_unit, :number, :weight, :user_id, :repo_id, :sale_customer, :bill_time, presence: true
+  validates :weight, :price, numericality: {greater_than: 0,message: "必须大于零"}
 
   def initialize(sale_order)
     @sale_order = sale_order

@@ -29,7 +29,7 @@ class PurchaseSupplierController < ApplicationController
       flash[:success] = "创建成功"
       redirect_to purchase_supplier_index_path
     else
-      flash[:warning] = "#{@supplier.errors.full_messages.to_s}"
+      flash[:warning] = "#{@supplier.errors.full_messages.join(',')}"
       render "purchase_supplier/new"
     end
   end
@@ -39,7 +39,7 @@ class PurchaseSupplierController < ApplicationController
       flash[:success] = "成功更新供应商信息"
       redirect_to purchase_supplier_url(@supplier)
     else
-      flash[:warning] = "#{@supplier.errors.full_messages.to_s}"
+      flash[:warning] = "#{@supplier.errors.full_messages.join(',')}"
       render "purchase_supplier/edit"
     end
   end

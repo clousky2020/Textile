@@ -29,7 +29,7 @@ class EmployeeController < ApplicationController
       flash[:success] = "创建成功"
       redirect_to employee_index_url
     else
-      flash[:warning] = "#{@employee.errors.full_messages.to_s}"
+      flash[:warning] = "#{@employee.errors.full_messages.join(',')}"
       render "employee/new"
     end
   end
@@ -40,7 +40,7 @@ class EmployeeController < ApplicationController
       flash[:success] = "成功更新员工信息"
       redirect_to employee_url(@employee)
     else
-      flash[:warning] = "#{@employee.errors.full_messages.to_s}"
+      flash[:warning] = "#{@employee.errors.full_messages.join(',')}"
       render "employee/edit"
     end
   end

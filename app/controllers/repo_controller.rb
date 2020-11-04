@@ -28,7 +28,7 @@ class RepoController < ApplicationController
       flash[:success] = "创建成功"
       redirect_to repo_index_path
     else
-      flash[:warning] = "#{@repo.errors.full_messages.to_s}"
+      flash[:warning] = "#{@repo.errors.full_messages.join(',')}"
       render "repo/new"
     end
   end
@@ -38,7 +38,7 @@ class RepoController < ApplicationController
       flash[:success] = "成功更新仓库信息"
       redirect_to repo_url(@repo)
     else
-      flash[:warning] = "#{@repo.errors.full_messages.to_s}"
+      flash[:warning] = "#{@repo.errors.full_messages.join(',')}"
       render "repo/edit"
     end
   end

@@ -48,7 +48,7 @@ class SaleOrderController < ApplicationController
       flash[:success] = info[1]
       redirect_to sale_order_index_path
     else
-      flash[:warning] = "#{@sale_order.errors.full_messages << info[1]}"
+      flash[:warning] = "#{(@sale_order.errors.full_messages << info[1]).join(',')}"
       render "sale_order/new"
     end
   end
@@ -59,7 +59,7 @@ class SaleOrderController < ApplicationController
       flash[:success] = "成功更新供应订单信息"
       redirect_to sale_order_url(@sale_order.id)
     else
-      flash[:warning] = "#{@sale_order.errors.full_messages.to_s}"
+      flash[:warning] = "#{@sale_order.errors.full_messages.join(',')}"
       render "sale_order/edit"
     end
   end

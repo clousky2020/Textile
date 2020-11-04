@@ -23,7 +23,7 @@ class UserController < ApplicationController
       flash[:success] = "创建成功"
       redirect_to user_index_url
     else
-      flash[:warning] = "#{@user.errors.full_messages.to_s}"
+      flash[:warning] = "#{@user.errors.full_messages.join(',')}"
       render "user/new"
     end
   end
@@ -42,7 +42,7 @@ class UserController < ApplicationController
       flash[:success] = "成功更新用户信息"
       redirect_to user_url(@user)
     else
-      flash[:warning] = "#{@user.errors.full_messages.to_s}"
+      flash[:warning] = "#{@user.errors.full_messages.join(',')}"
       render "user/edit"
     end
   end
@@ -62,7 +62,7 @@ class UserController < ApplicationController
     if @user.save
       flash[:success] = "密码已经重置为#{@user.password}"
     else
-      flash[:danger] = "#{@user.errors.full_messages.to_s}"
+      flash[:danger] = "#{@user.errors.full_messages.join(',')}"
     end
     redirect_to user_index_path
   end

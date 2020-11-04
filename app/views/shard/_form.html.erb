@@ -1,5 +1,5 @@
 <h2 class="text-center"><%= yield(:title) %></h2>
-<%= render "shard/errors", object: object %>
+<%#= render "shard/errors", object: object %>
 <div class="offset-md-4">
   <%= form_for(object, url: url, method: yield(:method)) do |f| %>
     <% if type == "sale_customer" %>

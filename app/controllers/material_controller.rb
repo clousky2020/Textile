@@ -27,7 +27,7 @@ class MaterialController < ApplicationController
       flash[:success] = "创建成功"
       redirect_to material_index_url
     else
-      flash[:warning] = "#{@material.errors.full_messages.to_s}"
+      flash[:warning] = "#{@material.errors.full_messages.join(',')}"
       render "material/new"
     end
   end
@@ -38,7 +38,7 @@ class MaterialController < ApplicationController
       flash[:success] = "成功更新原材料信息"
       redirect_to material_url(@material)
     else
-      flash[:warning] = "#{@material.errors.full_messages.to_s}"
+      flash[:warning] = "#{@material.errors.full_messages.join(',')}"
       render "material/edit"
     end
   end

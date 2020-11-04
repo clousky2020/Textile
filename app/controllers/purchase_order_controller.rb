@@ -10,7 +10,7 @@ class PurchaseOrderController < ApplicationController
       type = params[:type].split(":")
       @purchase_orders = PurchaseOrder.includes(:purchase_supplier, :material).is_not_invalid.
           where("#{type[0]}=?", type[1]).references(:purchase_supplier, :material).page(params[:page])
-   elsif params.has_key?(:search)
+    elsif params.has_key?(:search)
       @purchase_orders = PurchaseOrder.includes(:purchase_supplier, :material).is_not_invalid.
           purchase_suppliers_search(params[:search]).references(:purchase_supplier, :material).page(params[:page])
     else
@@ -47,7 +47,7 @@ class PurchaseOrderController < ApplicationController
       flash[:success] = info[1]
       redirect_to purchase_order_index_path
     else
-      flash[:warning] = "#{@purchase_order.errors.full_messages << info[1]}"
+      flash[:warning] = "#{(@purchase_order.errors.full_messages << info[1]).join(',')}"
       render "purchase_order/new"
     end
   end
@@ -59,7 +59,7 @@ class PurchaseOrderController < ApplicationController
         flash[:success] = "成功更新供应订单信息"
         redirect_to purchase_order_url(@purchase_order.id)
       else
-        flash[:warning] = "#{@purchase_order.errors.full_messages.to_s}"
+        flash[:warning] = "#{@purchase_order.errors.full_messages.join(',')}"
         render "purchase_order/edit"
       end
     else

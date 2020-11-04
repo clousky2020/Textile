@@ -21,7 +21,7 @@ class PasswordResetsController < ApplicationController
         flash[:success] = "密码已经更改"
         redirect_to root_url
       else
-        flash[:danger] = "#{@user.errors.full_messages.to_s}"
+        flash[:danger] = "#{@user.errors.full_messages.join(',')}"
         render 'password_resets/edit'
       end
     end

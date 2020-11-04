@@ -48,7 +48,7 @@ class ProceedController < ApplicationController
         flash[:success] = "成功更新收款单信息"
         redirect_to proceed_path(@proceed.id)
       else
-        flash[:warning] = "#{@proceed.errors.full_messages.to_s}"
+        flash[:warning] = "#{@proceed.errors.full_messages.join(',')}"
         render "proceed/edit"
       end
     else

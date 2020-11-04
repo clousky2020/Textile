@@ -28,7 +28,7 @@ class ProductController < ApplicationController
       flash[:success] = "创建成功"
       redirect_to product_index_url
     else
-      flash[:warning] = "#{@product.errors.full_messages.to_s}"
+      flash[:warning] = "#{@product.errors.full_messages.join(',')}"
       render "product/new"
     end
   end
@@ -39,7 +39,7 @@ class ProductController < ApplicationController
       flash[:success] = "成功更新产品信息"
       redirect_to product_url(@product)
     else
-      flash[:warning] = "#{@product.errors.full_messages.to_s}"
+      flash[:warning] = "#{@product.errors.full_messages.join(',')}"
       render "product/edit"
     end
   end

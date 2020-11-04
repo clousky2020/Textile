@@ -16,6 +16,7 @@ class SaleOrderCreateForm
   attr_accessor(:name, :specification, :description, :measuring_unit, :number, :weight, :price,:bill_time,
                 :tax_rate, :freight, :picture, :is_return, :user_id, :repo_id, :product_id, :sale_customer)
   validates :name, :measuring_unit, :number, :weight, :user_id, :repo_id, :sale_customer,:bill_time, presence: true
+  validates :weight, :price, numericality: {greater_than: 0,message: "必须大于零"}
 
   def initialize
   end
