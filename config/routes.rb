@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     end
   end
   resources :employee
+  resources :roles
   resources :purchase_supplier do
     collection do
       get :check_purchase_supplier

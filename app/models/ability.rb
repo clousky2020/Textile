@@ -7,9 +7,9 @@ class Ability
     # Define abilities for the passed in user here. For example:
     # Define abilities for the passed in user here. For example:
     #
-    # user.computed_permissions.call(self, user)
+    user.computed_permissions.call(self, user)
 
-    can :manage, :all
+    # can :manage, :all
 
 
     # The first argument to `can` is the action you are giving the user
