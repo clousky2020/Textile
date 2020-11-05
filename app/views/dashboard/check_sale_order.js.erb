@@ -1,0 +1,28 @@
+<%unless @sale_orders.blank? %>
+var ctx = $('#sale_chart');
+var myChart = new Chart(ctx, {
+    type: "line",
+    data: {
+        labels: <%= raw @sale_orders.keys  %>,
+        datasets: [
+
+            {
+                label: '销售额',
+                data: <%= raw @sale_orders.values %>,
+                backgroundColor: 'yellow',
+                borderColor: 'red',
+                borderWidth: 1
+            },
+
+
+        ]
+    },
+    options: {
+        showlines: false,
+        spanGaps: true,
+        fill: false,
+        bezierCurve: false,
+        datasetFill: false
+    }
+});
+<%end %>

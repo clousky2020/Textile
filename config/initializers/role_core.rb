@@ -43,19 +43,20 @@ RoleCore.permission_set_class.draw do
     permission :destroy
     permission :update
     permission :read, _priority: 1, default: true
+    # permission :get_options, default: true, subject: :all
   end
   group :materials, model_name: "Material" do
     permission :create
     permission :destroy
     permission :update
     permission :read, _priority: 1, default: true
+    # permission :check_material_specification, default: true, subject: :all
   end
   group :sale_customers, model_name: "SaleCustomer" do
     permission :create
     permission :destroy, _priority: 1
     permission :update, _priority: 1
     permission :read, _priority: 1, default: true
-    permission :read_public, action: :read, is_public: true
     permission :get_expense_type, default: true, subject: :all
   end
   group :sale_orders, model_name: "SaleOrder" do
@@ -64,7 +65,6 @@ RoleCore.permission_set_class.draw do
     permission :update, _priority: 1
     permission :pass_check
     permission :read, _priority: 1, default: true
-    permission :read_public, action: :read, is_public: true
     permission :update_my_own, action: :update, default: true do |user, task|
       task.user_id == user.id
     end
@@ -78,7 +78,6 @@ RoleCore.permission_set_class.draw do
     permission :update, _priority: 1
     permission :pass_check
     permission :read, _priority: 1, default: true
-    permission :read_public, action: :read, is_public: true
     permission :update_my_own, action: :update, default: true do |user, task|
       task.user_id == user.id
     end
@@ -91,8 +90,7 @@ RoleCore.permission_set_class.draw do
     permission :destroy, _priority: 1
     permission :update, _priority: 1
     permission :read, _priority: 1, default: true
-    permission :read_public, action: :read, is_public: true
-    permission :check_purchase_supplier, default: true, subject: :all
+    # permission :check_purchase_supplier, default: true, subject: :all
   end
   group :params, model_name: "Param" do
     permission :update, _priority: 1
@@ -105,7 +103,7 @@ RoleCore.permission_set_class.draw do
     permission :pass_check
     permission :pass_reimburse
     permission :read, _priority: 1, default: true
-    permission :read_public, action: :read, is_public: true
+    # permission :get_expense_type, default: true, subject: :all
     permission :update_my_own, action: :update, default: true do |user, task|
       task.user_id == user.id
     end
@@ -119,7 +117,7 @@ RoleCore.permission_set_class.draw do
     permission :update, _priority: 1
     permission :pass_check
     permission :read, _priority: 1, default: true
-    permission :read_public, action: :read, is_public: true
+
     permission :update_my_own, action: :update, default: true do |user, task|
       task.user_id == user.id
     end

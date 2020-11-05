@@ -22,6 +22,11 @@ class Expense < ApplicationRecord
     end
   end
 
+  #查找expense_type的值
+  def self.search_expense_type(term)
+    where('expense_type LIKE ?', "%#{term.strip}%")
+  end
+
   # 如果是已经存在的供货商，则建立联系
   def build_purchase_supplier
     purchase_supplier = PurchaseSupplier.find_by_name(self.counterparty.strip)

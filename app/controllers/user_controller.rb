@@ -3,7 +3,7 @@ class UserController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @users = User.where("id !=?", 1).order("id").page(params[:page])
+    @users = User.order("id").page(params[:page])
   end
 
   def new
@@ -30,14 +30,6 @@ class UserController < ApplicationController
 
 
   def update
-    if params[:roles]
-      @user.roles.clear
-      params[:roles].each do |permission|
-        role = Role.new(name: permission)
-        @user.roles << role
-      end
-    end
-
     if @user.update(user_params)
       flash[:success] = "成功更新用户信息"
       redirect_to user_url(@user)
@@ -74,6 +66,6 @@ class UserController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :password, :password_confirmation, :is_lock, :email)
+    params.require(:user).permit(:name, :password, :password_confirmation, :is_lock, :email, role_ids: [])
   end
 end

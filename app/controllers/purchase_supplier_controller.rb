@@ -1,6 +1,7 @@
 class PurchaseSupplierController < ApplicationController
   before_action :get_supplier, only: [:edit, :show, :update, :destroy]
   load_and_authorize_resource
+  skip_authorization_check :only => :check_purchase_supplier
 
   def index
     if params.has_key?(:search) && params[:search] != ""

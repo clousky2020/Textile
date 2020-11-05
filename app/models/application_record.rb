@@ -46,13 +46,15 @@ class ApplicationRecord < ActiveRecord::Base
 
   #查找name的值
   def self.search_name(term)
-    where('name LIKE ?', "%#{term}%")
+    where('name LIKE ?', "%#{term.strip}%")
   end
 
-  #查找name的值
+  #查找specification的值
   def self.search_specification(term)
-    where('specification LIKE ?', "%#{term}%")
+    where('specification LIKE ?', "%#{term.strip}%")
   end
+
+
 
 
 end

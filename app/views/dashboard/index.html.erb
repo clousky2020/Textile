@@ -1,62 +1,59 @@
-<h2>欢迎进入纺织进销存系统</h2>
+<h2>欢迎你</h2>
 
 
-<!--<div class="left-side col-12 col-sm-4">-->
-<!--  <div class="select_list">-->
-<%#= link_to "还有", "#" %>
-<%#= link_to "按钮2", "#" %>
-<%#= link_to "按钮3", "#" %>
-<!--  </div>-->
-<!--</div>-->
-
-<div class="not_pass_content">
-  <% if @not_pass_expenses.count %>
-    <div>
-      还有<%= link_to @not_pass_expenses.count, expense_index_path(type: "check_status:false") %>张付款单需要审核
-    </div>
+<div class="not_pass_content  row no-gutters">
+  <% if can? :pass_check, Expense %>
+    <% if @not_pass_expenses.count %>
+      <div>
+        未审核付款单<span class="badge badge-warning">
+        <%= link_to @not_pass_expenses.count, expense_index_path(type: "check_status:false") %> </span>
+      </div>
+    <% end %>
   <% end %>
-  <% if @not_pass_proceeds.count %>
-    <div>
-      还有<%= link_to @not_pass_proceeds.count, proceed_index_path(type: "check_status:false") %>张收款单需要审核
-    </div>
+  <% if can? :pass_check, Proceed %>
+    <% if @not_pass_proceeds.count %>
+      <div>
+        未审核收款单<span class="badge badge-warning">
+        <%= link_to @not_pass_proceeds.count, proceed_index_path(type: "check_status:false") %></span>
+      </div>
+    <% end %>
   <% end %>
-  <% if @not_pass_sale_orders.count %>
-    <div>
-      还有<%= link_to @not_pass_sale_orders.count, sale_order_index_path(type: "check_status:false") %>张销售单需要审核
-    </div>
+  <% if can? :pass_check, SaleOrder %>
+    <% if @not_pass_sale_orders.count %>
+      <div>
+        未审核销售单<span class="badge badge-warning">
+        <%= link_to @not_pass_sale_orders.count, sale_order_index_path(type: "check_status:false") %></span>
+      </div>
+    <% end %>
   <% end %>
-  <% if @not_pass_purchase_orders.count %>
-    <div>
-      还有<%= link_to @not_pass_purchase_orders.count, purchase_order_index_path(type: "check_status:false") %>
-      张采购单需要审核
-    </div>
-  <% end %>
-</div>
-
-<div class="daily_content">
-  <% if @daily_expenses.count %>
-    <div>
-      今天有<%= link_to @daily_expenses.count, expense_index_path(type: "check_status:false") %>张付款单
-    </div>
-  <% end %>
-  <% if @daily_proceeds.count %>
-    <div>
-      今天有<%= link_to @daily_proceeds.count, proceed_index_path(type: "check_status:false") %>张收款单
-    </div>
-  <% end %>
-  <% if @daily_sale_orders.count %>
-    <div>
-      今天有<%= link_to @daily_sale_orders.count, sale_order_index_path(type: "check_status:false") %>张销售单
-    </div>
-  <% end %>
-  <% if @daily_purchase_orders.count %>
-    <div>
-      今天有<%= link_to @daily_purchase_orders.count, purchase_order_index_path(type: "check_status:false") %>
-      张采购单
-    </div>
+  <% if can? :pass_check, PurchaseOrder %>
+    <% if @not_pass_purchase_orders.count %>
+      <div>
+        未审核采购单<span class="badge badge-warning">
+        <%= link_to @not_pass_purchase_orders.count, purchase_order_index_path(type: "check_status:false") %></span>
+      </div>
+    <% end %>
   <% end %>
 </div>
 
 
+<div class="">
+  <div class="btn-group">
+    <%= form_with url: check_sale_order_url do |f| %>
+      <div class="form-inline">
+        <%= f.label :start_date, "开始日期" %>
+        <%= f.date_field :start_date, value: (Time.current - 1.year).strftime("%Y-%m-%d") %>
+      </div>
+      <div class="form-inline">
+        <%= f.label :end_date, "结束日期" %>
+        <%= f.date_field :end_date, value: default_date_now %>
+      </div>
+      <%= f.submit "查询" %>
+    <% end %>
+  </div>
 
+  <div class="chart-container col-md-12 sale_chart">
+    <canvas id="sale_chart"></canvas>
+  </div>
 
+</div>

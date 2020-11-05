@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
+
   root 'dashboard#index'
+  post 'check_sale_order', to: 'dashboard#check_sale_order'
+
 
   resources :session, :only => [:new, :create, :destroy]
   resources :param, only: [:index, :update]

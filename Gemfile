@@ -1,7 +1,7 @@
 source 'https://gems.ruby-china.com'
 git_source(:github) {|repo| "https://github.com/#{repo}.git"}
 
-ruby '2.5.7'
+ruby '2.7.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
@@ -41,7 +41,7 @@ gem 'carrierwave-i18n'
 # 图标
 gem 'font-awesome-sass', '~> 5.15.1'
 # 图表
-gem 'lazy_high_charts'
+# gem 'echarts-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false

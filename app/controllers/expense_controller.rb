@@ -82,7 +82,7 @@ class ExpenseController < ApplicationController
   end
 
   def get_expense_type
-    @expense = Expense.where("expense_type LIKE ?", "%#{params[:term].strip}%").map(&:expense_type).uniq
+    @expense = Expense.search_expense_type(params[:term]).map(&:expense_type).uniq
     render json: @expense
   end
 

@@ -3,17 +3,30 @@ class SaleOrderController < ApplicationController
   load_and_authorize_resource
 
   def index
-    if params.has_key?(:search) && params.has_key?(:type)
-      type = params[:type].split(":")
-      @sale_orders = SaleOrder.includes(:sale_customer, :product).sale_order_search(params[:search]).
-          where("#{type[0]}=?", type[1]).references(:sale_customer, :product).order("bill_time DESC").page(params[:page])
-    elsif params.has_key?(:type) && params[:type] != ""
-      type = params[:type].split(":")
-      @sale_orders = SaleOrder.includes(:sale_customer, :product).where(is_invalid: false).where("#{type[0]}=?", type[1]).
-          references(:sale_customer, :product).order("check_status").page(params[:page])
-    elsif params.has_key?(:search) && params[:search] != ""
-      @sale_orders = SaleOrder.includes(:sale_customer, :product).where(is_invalid: false).sale_order_search(params[:search]).
-          references(:sale_customer, :product).order("check_status").page(params[:page])
+    # if params.has_key?(:search) && params.has_key?(:type)
+    #   type = params[:type].split(":")
+    #   @sale_orders = SaleOrder.includes(:sale_customer, :product).sale_order_search(params[:search]).
+    #       where("#{type[0]}=?", type[1]).references(:sale_customer, :product).order("bill_time DESC").page(params[:page])
+    # elsif params.has_key?(:type) && params[:type] != ""
+    #   type = params[:type].split(":")
+    #   @sale_orders = SaleOrder.includes(:sale_customer, :product).where(is_invalid: false).where("#{type[0]}=?", type[1]).
+    #       references(:sale_customer, :product).order("check_status").page(params[:page])
+    # elsif params.has_key?(:search) && params[:search] != ""
+    #   @sale_orders = SaleOrder.includes(:sale_customer, :product).where(is_invalid: false).sale_order_search(params[:search]).
+    #       references(:sale_customer, :product).order("check_status").page(params[:page])
+    # else
+    #   @sale_orders = SaleOrder.where(is_invalid: false).order("updated_at DESC").page(params[:page])
+    # end
+    if params.has_key?(:search) || params.has_key?(:type)
+      @sale_orders = SaleOrder.includes(:sale_customer, :product).references(:sale_customer, :product)
+      if params.has_key?(:search) && params[:search] != ""
+        @sale_orders = @sale_orders.sale_order_search(params[:search])
+      end
+      if params.has_key?(:type) && params[:type] != ""
+        type = params[:type].split(":")
+        @sale_orders = @sale_orders.where("#{type[0]}=?", type[1])
+      end
+      @sale_orders = @sale_orders.page(params[:page])
     else
       @sale_orders = SaleOrder.where(is_invalid: false).order("updated_at DESC").page(params[:page])
     end

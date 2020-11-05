@@ -1,4 +1,3 @@
-
 require 'creek'
 
 creek = Creek::Book.new "顾丰.xlsm"
@@ -32,8 +31,10 @@ users.each do |name|
   end
 end
 
+
 # 添加默认参数配置
 params_list = {
+    "权限认证": "开启后全系统具有认证体系",
     "采购账单自动审核": "有财务权限者录入的采购订单自动完成审核",
     "销售账单自动审核": "有仓管权限者录入的销售订单自动完成审核"
 }

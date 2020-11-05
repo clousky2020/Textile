@@ -8,8 +8,11 @@ class Ability
     # Define abilities for the passed in user here. For example:
     #
     user.computed_permissions.call(self, user)
-
-    # can :manage, :all
+    can :check_material_specification, :all
+    can :get_options, :all
+    can :get_expense_type, :all
+    can :check_purchase_supplier, :all
+    can :get_expense_type, :all
 
 
     # The first argument to `can` is the action you are giving the user

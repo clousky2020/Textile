@@ -1,4 +1,4 @@
-<% provide :title, "出货订单详情" %>
+<% provide :title, "销售订单详情" %>
 <% provide :edit_url, edit_sale_order_path(@sale_order) %>
 <% provide :pass_check_url, pass_check_sale_order_path(@sale_order) %>
 <% provide :back_url, sale_order_index_path %>
@@ -14,10 +14,12 @@
         <%= link_to "通过审核", yield(:pass_check_url), class: "btn btn-primary" %>
       <% end %>
     <% end %>
-
-    <% if can? :update, SaleOrder %>
-      <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary" %>
+    <% if !@sale_order.check_status %>
+      <% if can? :update, SaleOrder %>
+        <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary" %>
+      <% end %>
     <% end %>
+
     <%= link_to "返回主页", yield(:back_url), class: "btn btn-primary" %>
   </div>
 </div>

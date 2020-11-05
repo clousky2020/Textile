@@ -53,7 +53,7 @@ class ProductController < ApplicationController
     redirect_to product_index_path
   end
 
-  def get_options
+    def get_options
     @product_names = Product.find(params[:id])
   end
 

@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   include SessionHelper
   before_action :authenticate_user
 
+
   def authenticate_user
     if !session[:user_id]
       flash[:warning] = "请先登录！"
@@ -14,6 +15,5 @@ class ApplicationController < ActionController::Base
     flash[:warning] = "没有权限执行此操作"
     redirect_to root_url
   end
-
 
 end
