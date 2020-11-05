@@ -1,13 +1,13 @@
 <div class="section">
   <div class="container">
     <p content="content">
-      <%= link_to 'New role', new_roles_path, class: 'button is-primary' %>
+      <%= link_to '创建新的角色', new_role_path, class: 'button is-primary' %>
     </p>
     <table class="table is-fullwidth">
       <thead>
       <tr>
-        <th>Id</th>
-        <th>Name</th>
+        <th>角色ID</th>
+        <th>角色名</th>
         <th></th>
       </tr>
       </thead>
@@ -17,8 +17,8 @@
           <td><%= role.id %></td>
           <td><%= role.name %></td>
           <td>
-            <%= link_to 'Edit', edit_role_path(role) %> |
-            <%= link_to 'Destroy', role, method: :delete, data: {confirm: 'Are you sure?'} %>
+            <%= link_to '编辑', edit_role_path(role) %> |
+            <%= link_to '删除', role, method: :delete, data: {confirm: '确定删除?'} %>
           </td>
         </tr>
       <% end %>

@@ -2,8 +2,15 @@
 <% provide :manage_object, PurchaseSupplier %>
 <% provide :new_url, new_purchase_supplier_path %>
 
-<%= render 'shard/index_header', page: "purchase_supplier" %>
-
+<h2 class="text-center"><%= yield(:index_title) %></h2>
+<div class="row no-gutters">
+  <% if can? :create, PurchaseSupplier %>
+    <div>
+      <%= link_to "新建", yield(:new_url) %>
+    </div>
+  <% end %>
+  <%= render 'shard/index_header', page: "purchase_supplier" %>
+</div>
 <table class="table table-hover table-active">
   <thead>
   <tr>

@@ -1,13 +1,25 @@
-
-
 <% provide :title, "出货订单详情" %>
 <% provide :edit_url, edit_sale_order_path(@sale_order) %>
 <% provide :pass_check_url, pass_check_sale_order_path(@sale_order) %>
-<% provide :model, SaleOrder %>
 <% provide :back_url, sale_order_index_path %>
 
-<%= render 'shard/show_form', object: @sale_order, type: "sale_orders" %>
+<div class="text-center">
+  <h2><%= yield(:title) %></h2>
 
+  <%= render 'sale_order/show_content', object: @sale_order %>
 
+  <div>
+    <% if !@sale_order.is_invalid && !@sale_order.check_status %>
+      <% if can? :pass_check, SaleOrder %>
+        <%= link_to "通过审核", yield(:pass_check_url), class: "btn btn-primary" %>
+      <% end %>
+    <% end %>
+
+    <% if can? :update, SaleOrder %>
+      <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary" %>
+    <% end %>
+    <%= link_to "返回主页", yield(:back_url), class: "btn btn-primary" %>
+  </div>
+</div>
 
 

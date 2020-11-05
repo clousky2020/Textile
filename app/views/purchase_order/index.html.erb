@@ -2,7 +2,15 @@
 <% provide :manage_object, PurchaseOrder %>
 <% provide :new_url, new_purchase_order_path %>
 
-<%= render 'shard/index_header', page: "purchase_order" %>
+<h2 class="text-center"><%= yield(:index_title) %></h2>
+<div class="row no-gutters">
+  <% if can? :create, PurchaseOrder %>
+    <div>
+      <%= link_to "新建", yield(:new_url) %>
+    </div>
+  <% end %>
+  <%= render 'shard/index_header', page: "purchase_order" %>
+</div>
 <% if @purchase_orders.blank? %>
   <div class="alert-info text-center">空空如也</div>
 <% else %>

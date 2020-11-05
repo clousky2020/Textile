@@ -1,14 +1,23 @@
 <% provide :index_title, "用户账号管理界面" %>
-<% provide :manage_object, User %>
 <% provide :new_url, new_user_path %>
 
-<%= render 'shard/index_header', page: "user" %>
-
+<h2 class="text-center"><%= yield(:index_title) %></h2>
+<div class="row no-gutters">
+  <% if can? :create, User %>
+    <div>
+      <%= link_to "新建", yield(:new_url),class: "btn"%>
+    </div>
+  <% end %>
+  <%= render 'shard/index_header', page: "user" %>
+  <% if can? :create, Role %>
+    <%= link_to "角色权限设定", roles_url,class: "btn" %>
+  <% end %>
+</div>
 <table class="table table-hover table-active">
   <thead>
   <tr>
     <td>姓名</td>
-    <td>身份</td>
+    <td>角色</td>
     <td>状态</td>
     <td>操作</td>
 
@@ -18,28 +27,28 @@
   <% @users.each do |user| %>
     <tr>
       <td><%= user.name %></td>
-      <td><%= user.roles.map {|n| n.to_chinese}.join(",") %></td>
+      <td><%= user.roles.map(& :name).join(",") %></td>
       <% if user.is_lock %>
         <td> 已锁</td>
       <% else %>
         <td> 正常</td>
       <% end %>
       <td>
-        <%= link_to "查看详情", user_path(user) %>
+        <%= link_to "详情", user_path(user) %>|
+
         <% if can? :reset, User %>
-          <%= link_to "重置密码", reset_user_path(user) %>
+          <%= link_to "重置密码", reset_user_path(user) %> |
         <% end %>
 
         <% if can? :lock, User %>
           <% if user.id != current_user.id %>
             <% if user.is_lock %>
-              <%= link_to "解锁", lock_user_path(user) %>
+              <%= link_to "解锁", lock_user_path(user) %> |
             <% else %>
-              <%= link_to "锁定", lock_user_path(user) %>
+              <%= link_to "锁定", lock_user_path(user) %> |
             <% end %>
           <% end %>
         <% end %>
-
         <% if can? :destroy, User %>
           <%= link_to "删除", user_path(user), method: :delete, data: {confirm: "确定删除吗？"} %>
         <% end %>

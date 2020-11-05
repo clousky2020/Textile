@@ -1,8 +1,16 @@
 <% provide :index_title, "销售订单管理界面" %>
-<% provide :manage_object, SaleOrder %>
 <% provide :new_url, new_sale_order_path %>
 
-<%= render 'shard/index_header', page: "sale_order" %>
+
+<h2 class="text-center"><%= yield(:index_title) %></h2>
+<div class="row no-gutters">
+  <% if can? :create, SaleOrder %>
+    <div>
+      <%= link_to "新建", yield(:new_url) %>
+    </div>
+  <% end %>
+  <%= render 'shard/index_header', page: "sale_order" %>
+</div>
 <% if @sale_orders.blank? %>
   <div class="alert-info text-center">空空如也</div>
 <% else %>
@@ -32,7 +40,7 @@
                 <%= link_to "作废", sale_order_path(sale_order), method: :delete, data: {confirm: "确定作废吗？"} %>
               <% else %>
                 <%= sale_order.declare_invalid_person %>已将其作废
-            <% end %>
+              <% end %>
             </div>
           <% end %>
         </div>

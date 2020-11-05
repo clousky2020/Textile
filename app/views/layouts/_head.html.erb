@@ -1,57 +1,80 @@
-<nav class="navbar navbar-expand-md bg-light navbar-light" role="navigation">
-  <%= link_to "顾丰纺织", root_url, class: "navbar-brand mr-auto" %>
-  <!-- Toggler/collapsibe Button -->
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<% if current_user %>
+  <nav class="navbar navbar-expand-md bg-light navbar-light" role="navigation">
+    <%= link_to "顾丰纺织", root_url, class: "navbar-brand mr-auto" %>
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="collapsibleNavbar">
-    <ul class="navbar-nav">
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
 
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-          人事管理
-        </a>
-        <div class="dropdown-menu">
-          <%= link_to "员工管理", employee_index_path, class: "dropdown-item" %>
-          <%= link_to "用户管理", user_index_path, class: "dropdown-item" %>
-          <% if current_user %>
-            <%= link_to "个人信息", user_path(current_user), class: "dropdown-item" %>
-          <% end %>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-          财务管理
-        </a>
-        <div class="dropdown-menu">
-          <%= link_to "收款单", proceed_index_path, class: "dropdown-item" %>
-          <%= link_to "付款单", expense_index_path, class: "dropdown-item" %>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-          生产资料
-        </a>
-        <div class="dropdown-menu">
-          <%= link_to "仓库管理", repo_index_path, class: "dropdown-item" %>
-          <%= link_to "原料管理", material_index_path, class: "dropdown-item " %>
-          <%= link_to "产品管理", product_index_path, class: "dropdown-item " %>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-          订单管理
-        </a>
-        <div class="dropdown-menu">
-          <%= link_to "采购单", purchase_order_index_path, class: "dropdown-item" %>
-          <%= link_to "供应商", purchase_supplier_index_path, class: "dropdown-item" %>
-          <div class="dropdown-divider"></div>
-          <%= link_to "销售单", sale_order_index_path, class: "dropdown-item" %>
-          <%= link_to "客户", sale_customer_index_path, class: "dropdown-item" %>
-        </div>
-      </li>
-      <% if current_user %>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+            人事管理
+          </a>
+          <div class="dropdown-menu">
+            <% if can? :read, Employee %>
+              <%= link_to "员工管理", employee_index_path, class: "dropdown-item" %>
+            <% end %>
+            <% if can? :read, User %>
+              <%= link_to "用户管理", user_index_path, class: "dropdown-item" %>
+            <% end %>
+            <% if current_user %>
+              <%= link_to "个人信息", user_path(current_user), class: "dropdown-item" %>
+            <% end %>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+            财务管理
+          </a>
+          <div class="dropdown-menu">
+            <% if can? :read, Proceed %>
+              <%= link_to "收款单", proceed_index_path, class: "dropdown-item" %>
+            <% end %>
+            <% if can? :read, Expense %>
+              <%= link_to "付款单", expense_index_path, class: "dropdown-item" %>
+            <% end %>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+            生产资料
+          </a>
+          <div class="dropdown-menu">
+            <% if can? :read, Repo %>
+              <%= link_to "仓库管理", repo_index_path, class: "dropdown-item" %>
+            <% end %>
+            <% if can? :read, Material %>
+              <%= link_to "原料管理", material_index_path, class: "dropdown-item " %>
+            <% end %>
+            <% if can? :read, Product %>
+              <%= link_to "产品管理", product_index_path, class: "dropdown-item " %>
+            <% end %>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+            订单管理
+          </a>
+          <div class="dropdown-menu">
+            <% if can? :read, PurchaseOrder %>
+              <%= link_to "采购单", purchase_order_index_path, class: "dropdown-item" %>
+            <% end %>
+            <% if can? :read, PurchaseSupplier %>
+              <%= link_to "供应商", purchase_supplier_index_path, class: "dropdown-item" %>
+            <% end %>
+            <div class="dropdown-divider"></div>
+            <% if can? :read, SaleOrder %>
+              <%= link_to "销售单", sale_order_index_path, class: "dropdown-item" %>
+            <% end %>
+            <% if can? :read, SaleCustomer %>
+              <%= link_to "客户", sale_customer_index_path, class: "dropdown-item" %>
+            <% end %>
+          </div>
+        </li>
+
         <div class="dropdown btn">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <%= current_user.name %>
@@ -62,10 +85,11 @@
             <%= link_to "退出", session_path(current_user), method: :delete, class: "dropdown-item " %>
           </ul>
         </div>
-      <% end %>
-    </ul>
-  </div>
 
-</nav>
+      </ul>
+    </div>
+
+  </nav>
+<% end %>
 
 

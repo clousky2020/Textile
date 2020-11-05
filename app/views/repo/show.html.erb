@@ -1,9 +1,15 @@
 <% provide :title, "仓库档案" %>
 <% provide :edit_url, edit_repo_path(@repo) %>
-<% provide :model, Repo %>
 <% provide :back_url, repo_index_path %>
+<div class="text-center">
+  <h2><%= yield(:title) %></h2>
 
-<%= render 'shard/show_form', object: @repo, type: "repo" %>
+  <%= render 'repo/show_content', object: @repo %>
 
-
-
+  <div>
+    <% if can? :update, Repo %>
+      <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary" %>
+    <% end %>
+    <%= link_to "返回主页", yield(:back_url), class: "btn btn-primary" %>
+  </div>
+</div>

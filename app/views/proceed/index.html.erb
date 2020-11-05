@@ -2,7 +2,16 @@
 <% provide :manage_object, Proceed %>
 <% provide :new_url, new_proceed_path %>
 
-<%= render 'shard/index_header', page: "proceed" %>
+<h2 class="text-center"><%= yield(:index_title) %></h2>
+<div class="row no-gutters">
+
+  <% if can? :create, Proceed %>
+    <div>
+      <%= link_to "新建", yield(:new_url) %>
+    </div>
+  <% end %>
+  <%= render 'shard/index_header', page: "proceed" %>
+</div>
 <% if @proceeds.blank? %>
   <div class="alert-info text-center">空空如也</div>
 <% else %>

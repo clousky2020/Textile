@@ -1,13 +1,18 @@
-
-
 <% provide :title, "收款信息详情" %>
-<% provide :edit_url, edit_proceed_path(@proceed) %>
-<% provide :pass_check_url, pass_check_proceed_path(@proceed) %>
-<% provide :model, Proceed %>
-<% provide :back_url, proceed_index_path %>
-
-<%= render 'shard/show_form', object: @proceed, type: "proceed" %>
 
 
-
-
+<div class="text-center">
+  <h2><%= yield(:title) %></h2>
+  <%= render 'proceed/show_content', object: @proceed, type: "proceed" %>
+  <div>
+    <% if !@proceed.is_invalid && !@proceed.check_status %>
+      <% if can? :pass_check, Proceed %>
+        <%= link_to "通过审核", pass_check_proceed_path(@proceed), class: "btn btn-primary" %>
+      <% end %>
+    <% end %>
+    <% if can? :update, Proceed %>
+      <%= link_to "编辑", edit_proceed_path(@proceed), class: "btn btn-primary" %>
+    <% end %>
+    <%= link_to "返回主页", proceed_index_path, class: "btn btn-primary" %>
+  </div>
+</div>

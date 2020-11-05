@@ -1,9 +1,15 @@
 <% provide :index_title, "仓库管理界面" %>
-<% provide :manage_object, Repo %>
 <% provide :new_url, new_repo_path %>
 
-<%= render 'shard/index_header', page: "repo" %>
-
+<h2 class="text-center"><%= yield(:index_title) %></h2>
+<div class="row no-gutters">
+  <% if can? :create, Repo %>
+    <div>
+      <%= link_to "新建", yield(:new_url) %>
+    </div>
+  <% end %>
+  <%= render 'shard/index_header', page: "repo" %>
+</div>
 
 <table class="table table-hover table-active">
   <thead>
@@ -19,13 +25,12 @@
       <td><%= repo.id %></td>
       <td><%= link_to repo.name, repo_path(repo) %></td>
       <td>
-        <% if can? :edit, Repo %>
+        <% if can? :update, Repo %>
           <%= link_to "编辑", edit_repo_path(repo) %>
         <% end %>
         <% if can? :destroy, Repo %>
           <%= link_to "删除", repo_path(repo), method: :delete, data: {confirm: "确定删除吗？"} %>
         <% end %>
-
       </td>
     </tr>
   <% end %>

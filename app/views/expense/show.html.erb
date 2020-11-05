@@ -2,11 +2,33 @@
 <% provide :edit_url, edit_expense_path(@expense) %>
 <% provide :pass_reimburse_url, pass_reimburse_expense_path(@expense) %>
 <% provide :pass_check_url, pass_check_expense_path(@expense) %>
-<% provide :model, Expense %>
 <% provide :back_url, expense_index_path %>
 
-<%= render 'shard/show_form', object: @expense, type: "expense" %>
+<%#= render 'shard/show_form', object: @expense, type: "expense" %>
 
 
 
+<div class="text-center">
+  <h2><%= yield(:title) %></h2>
 
+  <%= render 'expense/show_content', object: @expense, type: "expense" %>
+
+  <div>
+    <% if !@expense.is_invalid && !@expense.check_status %>
+      <% if can? :pass_check, Expense %>
+        <%= link_to "通过审核", yield(:pass_check_url), class: "btn btn-primary" %>
+      <% end %>
+    <% end %>
+
+    <% if @expense.need_reimburse %>
+      <% if can? :pass_check, Expense %>
+        <%= link_to "已报销", yield(:pass_reimburse_url), class: "btn btn-primary" %>
+      <% end %>
+    <% end %>
+
+    <% if can? :update, Expense %>
+      <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary" %>
+    <% end %>
+    <%= link_to "返回主页", yield(:back_url), class: "btn btn-primary" %>
+  </div>
+</div>

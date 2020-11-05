@@ -1,9 +1,16 @@
 <% provide :index_title, "原料管理界面" %>
-<% provide :manage_object, Material %>
 <% provide :new_url, new_material_path %>
 
-<%= render 'shard/index_header', page: "material" %>
+<h2 class="text-center"><%= yield(:index_title) %></h2>
+<div class="row no-gutters">
 
+  <% if can? :create, Material %>
+    <div>
+      <%= link_to "新建", yield(:new_url) %>
+    </div>
+  <% end %>
+  <%= render 'shard/index_header', page: "material" %>
+</div>
 <table class="table table-hover table-active">
   <thead>
   <tr>

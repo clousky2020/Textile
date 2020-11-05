@@ -1,9 +1,16 @@
 <% provide :title, "供应商档案" %>
 <% provide :edit_url, edit_purchase_supplier_path(@supplier) %>
-<% provide :model, PurchaseSupplier %>
 <% provide :back_url, purchase_supplier_index_path %>
 
-<%= render 'shard/show_form', object: @supplier, type: "purchase_supplier" %>
+<div class="text-center">
+  <h2><%= yield(:title) %></h2>
 
+  <%= render 'purchase_supplier/show_content', object: @supplier %>
 
-
+  <div>
+    <% if can? :update, PurchaseSupplier %>
+      <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary" %>
+    <% end %>
+    <%= link_to "返回主页", yield(:back_url), class: "btn btn-primary" %>
+  </div>
+</div>

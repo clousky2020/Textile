@@ -15,7 +15,7 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name, class: 'label' %>
+    <%= f.label :name, '角色名', class: 'label' %>
     <p class="control">
       <%= f.text_field :name, id: :role_name, class: 'input', required: 'required' %>
     </p>
@@ -25,10 +25,10 @@
 
   <div class="field is-grouped">
     <p class="control">
-      <%= f.submit class: 'button is-primary' %>
+      <%= f.submit "提交", class: 'button is-primary' %>
     </p>
     <p class="control">
-      <%= link_to 'Back', url_for(:back), class: 'button is-link' %>
+      <%= link_to '后退', url_for(:back), class: 'button is-link' %>
     </p>
   </div>
 <% end %>

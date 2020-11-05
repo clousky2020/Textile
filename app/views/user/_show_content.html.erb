@@ -9,8 +9,8 @@
     <td><%= object.email %></td>
   </tr>
   <tr>
-    <th>权限</th>
-    <td><%= object.roles.map {|n| n.to_chinese}.join(",") %></td>
+    <th>角色</th>
+    <td><%= object.roles.map(& :name).join(",") %></td>
   </tr>
   <% if object.is_lock %>
     <tr>

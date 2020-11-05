@@ -1,6 +1,16 @@
 <% provide :title, "客户档案" %>
 <% provide :edit_url, edit_sale_customer_path(@customer) %>
-<% provide :model, SaleCustomer %>
 <% provide :back_url, sale_customer_index_path %>
 
-<%= render 'shard/show_form', object: @customer, type: "sale_customer" %>
+<div class="text-center">
+  <h2><%= yield(:title) %></h2>
+
+  <%= render 'sale_customer/show_content', object: @customer %>
+
+  <div>
+    <% if can? :update, SaleCustomer %>
+      <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary" %>
+    <% end %>
+    <%= link_to "返回主页", yield(:back_url), class: "btn btn-primary" %>
+  </div>
+</div>

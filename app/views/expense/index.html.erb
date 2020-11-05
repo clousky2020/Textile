@@ -1,8 +1,18 @@
 <% provide :index_title, "付款单界面" %>
-<% provide :manage_object, Expense %>
 <% provide :new_url, new_expense_path %>
 
-<%= render 'shard/index_header', page: "expense" %>
+<h2 class="text-center"><%= yield(:index_title) %></h2>
+<div class="row no-gutters">
+
+  <% if can? :create, Expense %>
+    <div>
+      <%= link_to "新建", yield(:new_url) %>
+    </div>
+  <% end %>
+  <%= render 'shard/index_header', page: "expense" %>
+
+</div>
+
 <% if @expenses.blank? %>
   <div class="alert-info text-center">空空如也</div>
 <% else %>
@@ -11,7 +21,12 @@
       <div class="content_left">
         <div class="row no-gutters">
           <div class="expense_date">单号:<%= link_to expense.order_id, expense_path(expense) %></div>
-          <div class="check_status ml-auto"><%= expense.expense_type %></div>
+          <p class=" ml-auto">
+            <% if expense.need_reimburse %>
+            <div class="need_reimburse">未报销|</div>
+          <% end %>
+          <div class="check_status "><%= expense.expense_type %></div>
+          </p>
         </div>
         <div class="row no-gutters">
           <div class="expense_supplier">交易方:<%= expense.counterparty %></div>
