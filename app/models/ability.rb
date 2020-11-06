@@ -7,6 +7,8 @@ class Ability
     # Define abilities for the passed in user here. For example:
     # Define abilities for the passed in user here. For example:
     #
+
+
     user.computed_permissions.call(self, user)
     can :check_material_specification, :all
     can :get_options, :all
@@ -14,7 +16,11 @@ class Ability
     can :check_purchase_supplier, :all
     can :get_expense_type, :all
 
-
+    # 当第一位用户没有管理员权限时，开放所有权限
+    user = User.first
+    unless user.roles.any? {|role| role.permissions.super?}
+      can :manage, :all
+    end
     # The first argument to `can` is the action you are giving the user
     # permission to do.
     # If you pass :manage it will apply to every action. Other common actions
