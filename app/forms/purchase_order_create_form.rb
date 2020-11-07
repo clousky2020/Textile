@@ -14,9 +14,9 @@ class PurchaseOrderCreateForm
   end
 
   attr_accessor(:name, :specification, :description, :batch_number, :measuring_unit, :number, :weight, :price, :purchase_supplier,
-                :tax_rate, :deposit, :freight, :picture, :is_return, :user_id, :repo_id, :material_id,:bill_time)
-  validates :name, :specification, :measuring_unit, :number, :weight, :user_id, :repo_id, :purchase_supplier,:bill_time, presence: true
-  validates :weight, :price, numericality: {greater_than: 0,message: "必须大于零"}
+                :tax_rate, :deposit, :freight, :picture, :is_return, :user_id, :repo_id, :material_id, :bill_time)
+  validates :name, :specification, :measuring_unit, :number, :weight, :user_id, :repo_id, :purchase_supplier, :bill_time, presence: true
+  validates :weight, :price, numericality: {greater_than_or_equal_to: 0, message: "必须大于等于零"}
 
   def initialize
   end
@@ -44,26 +44,28 @@ class PurchaseOrderCreateForm
       purchase_supplier = PurchaseSupplier.find_or_create_by(name: self.purchase_supplier.strip)
       material = Material.find_or_create_by(name: self.name.strip, specification: self.specification.strip, purchase_supplier_id: purchase_supplier.id)
       @order = PurchaseOrder.find_by(purchase_supplier_id: purchase_supplier.id, description: self.description.strip, batch_number: self.batch_number.strip,
-                                     measuring_unit: self.measuring_unit, material_id: material.id, repo_id: self.repo_id,bill_time:self.bill_time,
+                                     measuring_unit: self.measuring_unit, material_id: material.id, repo_id: self.repo_id, bill_time: self.bill_time,
                                      user_id: self.user_id, number: self.number, weight: self.weight, price: self.price,
                                      tax_rate: self.tax_rate, deposit: self.deposit, freight: self.freight, is_return: self.is_return)
       if !@order
-        @order = PurchaseOrder.create(purchase_supplier_id: purchase_supplier.id, description: self.description.strip, batch_number: self.batch_number.strip,
-                                      measuring_unit: self.measuring_unit, material_id: material.id, repo_id: self.repo_id,bill_time:self.bill_time,
+        @order = PurchaseOrder.create!(purchase_supplier_id: purchase_supplier.id, description: self.description.strip, batch_number: self.batch_number.strip,
+                                      measuring_unit: self.measuring_unit, material_id: material.id, repo_id: self.repo_id, bill_time: self.bill_time,
                                       user_id: self.user_id, number: self.number, weight: self.weight, price: self.price,
                                       tax_rate: self.tax_rate, deposit: self.deposit, freight: self.freight, is_return: self.is_return)
+        # 有图片则另外记录进去
         if @order && self.picture
           @order.picture = self.picture
           @order.save
         end
+
       else
         flash = "已经有相同的订单了,订单号#{@order.order_id}"
-        return false, flash
+        return false, flash,@order
       end
       flash = "创建成功,订单号#{@order.order_id}"
-      return true, flash
+      return true, flash,@order
     else
-      return false, ""
+      return false, "",@order
     end
   end
 

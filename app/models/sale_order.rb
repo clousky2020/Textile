@@ -27,7 +27,7 @@ class SaleOrder < ApplicationRecord
 
   # 得到销售单的日期和金额
   def self.check_date(start_date, end_date)
-    sale_orders = self.where("bill_time >:s_d and bill_time < :e_d", s_d: start_date, e_d: end_date).select(:bill_time, :total_price)
+    sale_orders = self.where(bill_time: start_date..end_date).select(:bill_time, :total_price)
     h = Hash.new
     sale_orders.each do |sale_order|
       bill_date = sale_order.bill_time.strftime("%Y-%m-%d")

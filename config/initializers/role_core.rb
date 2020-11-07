@@ -64,6 +64,7 @@ RoleCore.permission_set_class.draw do
     permission :destroy, _priority: 1
     permission :update, _priority: 1
     permission :pass_check
+    permission :export
     permission :read, _priority: 1, default: true
     permission :update_my_own, action: :update, default: true do |user, task|
       task.user_id == user.id
@@ -90,7 +91,7 @@ RoleCore.permission_set_class.draw do
     permission :destroy, _priority: 1
     permission :update, _priority: 1
     permission :read, _priority: 1, default: true
-    # permission :check_purchase_supplier, default: true, subject: :all
+    permission :export
   end
   group :params, model_name: "Param" do
     permission :update, _priority: 1

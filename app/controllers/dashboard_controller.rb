@@ -17,6 +17,9 @@ class DashboardController < ApplicationController
 
   def check_sale_order
     @sale_orders = SaleOrder.check_date(params[:start_date], params[:end_date])
-    @proceeds=Proceed.check_date(params[:start_date], params[:end_date])
+    @proceeds = Proceed.check_date(params[:start_date], params[:end_date])
   end
+
+
+
 end

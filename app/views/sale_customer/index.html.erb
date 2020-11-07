@@ -7,7 +7,7 @@
       <%= link_to "新建", yield(:new_url) %>
     </div>
   <% end %>
-  <%= render 'shard/index_header', page: "repo" %>
+  <%= render 'shard/index_header', page: "sale_customer" %>
 </div>
 
 <table class="table table-hover table-active">
@@ -15,7 +15,6 @@
   <tr>
     <td>编号</td>
     <td>公司名</td>
-    <td></td>
 
   </tr>
   </thead>
@@ -24,7 +23,6 @@
     <tr>
       <td><%= customer.id %></td>
       <td><%= link_to customer.name, sale_customer_path(customer) %></td>
-      <td><%= link_to '删除', customer,method: :delete,data:{confirm:"确定删除吗？"} %></td>
     </tr>
 
   <% end %>

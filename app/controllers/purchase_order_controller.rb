@@ -38,6 +38,7 @@ class PurchaseOrderController < ApplicationController
 
   def show
     store_referrer_location
+    @purchase_order.purchase_supplier.calcu_total_payment_required
   end
 
   def create
@@ -45,7 +46,7 @@ class PurchaseOrderController < ApplicationController
     info = @purchase_order.submit(params[:purchase_orders])
     if info[0]
       flash[:success] = info[1]
-      redirect_to purchase_order_index_path
+      redirect_to purchase_order_url(info[2].id)
     else
       flash[:warning] = "#{(@purchase_order.errors.full_messages << info[1]).join(',')}"
       render "purchase_order/new"
@@ -79,6 +80,7 @@ class PurchaseOrderController < ApplicationController
   def pass_check
     if !@purchase_order.is_invalid
       @purchase_order.pass_check_result(current_user)
+      @purchase_order.purchase_supplier.calcu_total_payment_required
       flash[:success] = "订单号#{@purchase_order.order_id}已审核"
       redirect_back_referrer_for purchase_order_url(@purchase_order.id)
     else

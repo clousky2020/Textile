@@ -79,6 +79,12 @@
       <td> <%= object.check_time.localtime %></td>
     </tr>
   <% end %>
+  <% if object.is_return %>
+    <tr>
+
+      <td colspan="2" class="alert-warning">这是退货单</td>
+    </tr>
+  <% end %>
   <tr>
     <td colspan="2"><%= image_tag object.picture.url, size: "125x160" if object.picture? %></td>
   </tr>

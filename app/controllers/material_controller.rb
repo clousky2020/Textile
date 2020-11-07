@@ -4,7 +4,7 @@ class MaterialController < ApplicationController
 
   def index
     if params.has_key?(:search) && params[:search] != ""
-      @materials = Material.where("name LIKE? or specification LIKE?", "%#{params[:search]}%", "%#{params[:search]}%").order("created_at DESC").page(params[:page])
+      @materials = Material.where("name LIKE :term or specification LIKE :term", term: "%#{params[:search]}%").order("created_at DESC").page(params[:page])
     else
       @materials = Material.order("created_at DESC").page(params[:page])
     end

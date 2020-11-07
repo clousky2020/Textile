@@ -1,7 +1,6 @@
 class PurchaseSupplierController < ApplicationController
   before_action :get_supplier, only: [:edit, :show, :update, :destroy]
   load_and_authorize_resource
-  skip_authorization_check :only => :check_purchase_supplier
 
   def index
     if params.has_key?(:search) && params[:search] != ""
@@ -12,7 +11,7 @@ class PurchaseSupplierController < ApplicationController
   end
 
   def new
-    @suppliers = PurchaseSupplier.new
+    @supplier = PurchaseSupplier.new
   end
 
   def edit
@@ -20,6 +19,7 @@ class PurchaseSupplierController < ApplicationController
   end
 
   def show
+    @deposit = @supplier.calcu_deposit
     @supplier.calcu_total_payment_required
     @supplier.calcu_paid
   end
@@ -59,6 +59,29 @@ class PurchaseSupplierController < ApplicationController
   def check_purchase_supplier
     @purchase_supplier = PurchaseSupplier.search_name(params[:term]).map(&:name)
     render json: @purchase_supplier
+  end
+
+  def export
+    @purchase_supplier = PurchaseSupplier.find(params[:id])
+    if @purchase_supplier.check_money_time
+      @purchase_orders = PurchaseOrder.includes(:material).where(purchase_supplier_id: params[:id])
+                             .where("bill_time >=?", @purchase_supplier.check_money_time).where(is_return: false, check_status: true)
+      @purchase_orders_return = PurchaseOrder.includes(:material).where(purchase_supplier_id: params[:id])
+                                    .where("bill_time >=?", @purchase_supplier.check_money_time).where(is_return: true, check_status: true)
+      @expenses = PurchaseSupplier.select("expenses.bill_time,expenses.paper_amount").joins(:expenses)
+                      .where(id: params[:id]).where("bill_time >=? and expenses.check_status=?", @purchase_supplier.check_money_time, true)
+
+    else
+      @purchase_orders = PurchaseOrder.includes(:material).where(purchase_supplier_id: params[:id]).where(is_return: false, check_status: true)
+      @purchase_orders_return = PurchaseOrder.includes(:material).where(purchase_supplier_id: params[:id]).where(is_return: true, check_status: true)
+      @expenses = PurchaseSupplier.select("expenses.bill_time,expenses.paper_amount").joins(:expenses).where(id: params[:id]).where("check_status=?", true)
+    end
+    @rows_count = @purchase_orders.size + @purchase_orders_return.size + @expenses.size + 1
+    respond_to do |format|
+      format.html
+      # format.csv {send_data @purchase_order.to_csv}
+      format.xls #{send_data @purchase_order.to_csv(col_sep: "\t")}
+    end
   end
 
   private

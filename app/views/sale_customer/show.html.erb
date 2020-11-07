@@ -8,6 +8,9 @@
   <%= render 'sale_customer/show_content', object: @customer %>
 
   <div>
+    <% if can? :export, SaleCustomer %>
+      <%= link_to "导出对账单", export_sale_customer_path(@customer, format: "xls"), class: "btn btn-primary" %>
+    <% end %>
     <% if can? :update, SaleCustomer %>
       <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary" %>
     <% end %>

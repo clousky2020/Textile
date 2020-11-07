@@ -5,9 +5,8 @@ class SaleCustomerController < ApplicationController
   skip_authorize_resource :only => :check_sale_customer
 
   def index
-
     if params.has_key?(:search) && params[:search] != ""
-      @customers = SaleCustomer.where("name LIKE? ", "%#{params[:search]}%").order("name").page(params[:page])
+      @customers = SaleCustomer.where("name LIKE ?", "%#{params[:search]}%").order("id").page(params[:page])
     else
       @customers = SaleCustomer.order("name").page(params[:page])
     end
@@ -64,6 +63,31 @@ class SaleCustomerController < ApplicationController
     end
   end
 
+  def export
+    @sale_customer = SaleCustomer.find(params[:id])
+    # 获取该客户下的所有已经审核的订单
+    @sale_orders = SaleOrder.includes(:product).where(sale_customer_id: params[:id]).where(check_status: true)
+    if @sale_customer.check_money_time
+      # 获取在清算日期后的订单
+      @sale_orders = @sale_orders.where("bill_time >=?", @sale_customer.check_money_time)
+      # 获取该客户的所有收款单
+      @proceeds = SaleCustomer.select("proceeds.bill_time,proceeds.paper_amount").joins(:proceeds)
+                      .where(id: params[:id]).where("bill_time >=? and proceeds.check_status=?", @sale_customer.check_money_time, true)
+    else
+      @proceeds = SaleCustomer.select("proceeds.bill_time,proceeds.paper_amount").joins(:proceeds).where(id: params[:id]).where("check_status=?", true)
+    end
+    # 得到所有退货单
+    @sale_orders_return = @sale_orders.where(is_return: true)
+    # 得到所有正常销售订单
+    @sale_orders_normal = @sale_orders.where(is_return: false)
+
+    @rows_count = @sale_orders.size + @sale_orders_return.size + @proceeds.size + 1
+    respond_to do |format|
+      format.html
+      # format.csv {send_data @purchase_order.to_csv}
+      format.xls #{send_data @purchase_order.to_csv(col_sep: "\t")}
+    end
+  end
 
   private
 

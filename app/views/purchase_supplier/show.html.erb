@@ -8,6 +8,9 @@
   <%= render 'purchase_supplier/show_content', object: @supplier %>
 
   <div>
+    <% if can? :export, PurchaseSupplier %>
+      <%= link_to "导出对账单", export_purchase_supplier_path(@supplier, format: "xls"), class: "btn btn-primary" %>
+    <% end %>
     <% if can? :update, PurchaseSupplier %>
       <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary" %>
     <% end %>

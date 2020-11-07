@@ -52,6 +52,7 @@ class SaleOrderController < ApplicationController
 
   def show
     store_referrer_location
+    @sale_order.sale_customer.calcu_total_collection_required
   end
 
   def create
@@ -87,6 +88,7 @@ class SaleOrderController < ApplicationController
   def pass_check
     if !@sale_order.is_invalid
       @sale_order.pass_check_result(current_user)
+      @sale_order.sale_customer.calcu_total_collection_required
       flash[:success] = "订单号#{@sale_order.order_id}已审核"
       redirect_back_referrer_for sale_order_path(@sale_order.id)
     else

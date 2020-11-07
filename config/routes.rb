@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   root 'dashboard#index'
   post 'check_sale_order', to: 'dashboard#check_sale_order'
 
-
   resources :session, :only => [:new, :create, :destroy]
   resources :param, only: [:index, :update]
   resources :user do
@@ -18,10 +17,16 @@ Rails.application.routes.draw do
     collection do
       get :check_purchase_supplier
     end
+    member do
+      get :export
+    end
   end
   resources :sale_customer do
     collection do
       get :check_sale_customer
+    end
+    member do
+      get :export
     end
   end
   resources :purchase_order do
