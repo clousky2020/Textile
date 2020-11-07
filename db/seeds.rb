@@ -18,11 +18,13 @@ creek.sheets.each do |sheet|
   end
 end
 
+
 #新建账户
 users = ['李文强', '王朝辉', '姚一夫', '顾晁诚', '顾乐峰', '赵海英']
 n = 1
 users.each do |name|
   user = User.new(name: name, password: "123456", email: "123456#{n}@qq.com")
+
   user.save
   if user.save
     # 新建一个受管理的本地仓库
@@ -31,6 +33,14 @@ users.each do |name|
   end
 end
 
+# 新建一个管理员角色，并赋予第一个用户
+role = Role.new
+role.name = "管理员"
+role.permissions.super = true
+role.save
+user = User.first
+user.roles << role
+user.save
 
 # 添加默认参数配置
 params_list = {
