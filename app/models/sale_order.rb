@@ -6,7 +6,7 @@ class SaleOrder < ApplicationRecord
 
   mount_uploader :picture, PictureUploader
   validates :order_id, uniqueness: true
-  validates :weight, :price, numericality: {greater_than: 0, message: "必须大于零"}
+  validates :weight, :number, :price, numericality: {greater_than: 0}
 
 
   after_create :generate_order_id

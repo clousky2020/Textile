@@ -16,7 +16,7 @@ class PurchaseOrderCreateForm
   attr_accessor(:name, :specification, :description, :batch_number, :measuring_unit, :number, :weight, :price, :purchase_supplier,
                 :tax_rate, :deposit, :freight, :picture, :is_return, :user_id, :repo_id, :material_id, :bill_time)
   validates :name, :specification, :measuring_unit, :number, :weight, :user_id, :repo_id, :purchase_supplier, :bill_time, presence: true
-  validates :weight, :price, numericality: {greater_than_or_equal_to: 0, message: "必须大于等于零"}
+  validates :weight, :price, numericality: {greater_than_or_equal_to: 0}
 
   def initialize
   end

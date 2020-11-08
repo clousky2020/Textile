@@ -10,10 +10,14 @@
   <%= f.label :description, "描述" %>
   <%= f.text_field :description, class: "form-control" %>
 </div>
+
+
 <div class="form-group">
   <%= f.label :user_id, "管理员" %>
-  <%= f.select(:user_id, @warehouses.map {|n| [n.name, n.id]}, class: "form-control") %>
+  <%= f.select :user_id, options_for_select(User.select(:id, :name).map {|n| [n.name, n.id]}, object.user_id), class: "form-control  " %>
 </div>
+
+
 <div class="form-group">
   <%= f.label :status, "状态" %>
   <%= f.text_field :status, class: "form-control" %>

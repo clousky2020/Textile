@@ -3,5 +3,5 @@ class Material < ApplicationRecord
   has_many :purchase_orders
 
   validates :name, presence: true, uniqueness: {scope: :specification}
-
+  validates :name, :specification, presence: true
 end

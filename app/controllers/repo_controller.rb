@@ -60,7 +60,7 @@ class RepoController < ApplicationController
   end
 
   def repo_params
-    params.require(:repo).permit(:name, :address, :description, :admin_id, :admin_name, :status)
+    params.require(:repo).permit(:name, :address, :description, :admin_id, :user_id, :status)
   end
 
 end

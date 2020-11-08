@@ -39,3 +39,120 @@ en:
       previous: "&laquo; 上一页"
       next: "下一页 &raquo;"
       truncate: "..."
+
+  activerecord:
+    attributes:
+      purchase_orders:
+        name: "品名"
+        specification: "规格型号"
+        batch_number: "批号"
+        number: "数量"
+        weight: "重量"
+        price: "单价"
+        purchase_supplier: "供应商名字"
+
+      sale_orders:
+        name: "品名"
+        specification: "规格型号"
+        number: "数量"
+        weight: "重量"
+        price: "单价"
+        sale_customer: "客户名称"
+
+      user:
+        name: "用户名"
+        password: "密码"
+        email: "邮箱"
+
+      repo:
+        name: "仓库名称"
+        address: "地址"
+
+      role:
+        name: "角色名"
+        permissions: "权限"
+
+      employee:
+        name: "员工姓名"
+        gender: "性别"
+        work_id: "工号"
+        work_type: "工种"
+        phone: "手机号码"
+        bank_card: "银行卡号"
+      proceed:
+        paper_amount: "账面金额"
+        actual_amount: "实际金额"
+
+      expense:
+        paper_amount: "账面金额"
+        actual_amount: "实际金额"
+        expense_type: "类型"
+        counterparty: "交易方"
+
+      purchase_supplier:
+        name: "公司名"
+
+      sale_customer:
+        name: "公司名"
+
+      material:
+        name: "品名"
+        specification: "规格型号"
+        purchase_supplier: "供应商名字"
+
+      product:
+        name: "品名"
+        specification: "规格型号"
+
+      purchase_order:
+        batch_number: "批号"
+        number: "数量"
+        weight: "重量"
+        price: "单价"
+        purchase_supplier: "供应商名字"
+
+      sale_order:
+        number: "数量"
+        weight: "重量"
+        price: "单价"
+        sale_customer: "供应商名字"
+
+
+
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: 必须是可被接受的
+      blank: 不能为空字符
+      confirmation: 与 %{attribute} 不匹配
+      empty: 不能留空
+      equal_to: 必须等于 %{count}
+      even: 必须为双数
+      exclusion: 是保留关键字
+      greater_than: 必须大于 %{count}
+      greater_than_or_equal_to: 必须大于或等于 %{count}
+      inclusion: 不包含于列表中
+      invalid: 是无效的
+      less_than: 必须小于 %{count}
+      less_than_or_equal_to: 必须小于或等于 %{count}
+      model_invalid: '验证失败: %{errors}'
+      not_a_number: 不是数字
+      not_an_integer: 必须是整数
+      odd: 必须为单数
+      other_than: 长度非法（不可为 %{count} 个字符
+      present: 必须是空白
+      required: 必须存在
+      taken: 已经被使用
+      too_long: 过长（最长为 %{count} 个字符）
+      too_short: 过短（最短为 %{count} 个字符）
+      wrong_length: 长度非法（必须为 %{count} 个字符）
+    template:
+      body: 如下字段出现错误：
+      header: 有 %{count} 个错误发生导致“%{model}”无法被保存。
+    helpers:
+      select:
+        prompt: 请选择
+      submit:
+        create: 新增%{model}
+        submit: 储存%{model}
+        update: 更新%{model}

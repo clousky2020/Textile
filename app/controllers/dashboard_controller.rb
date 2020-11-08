@@ -15,7 +15,7 @@ class DashboardController < ApplicationController
     @proceeds = Proceed.check_date(params[:start_date], params[:end_date], :paper_amount)
     @purchase_orders = PurchaseOrder.check_date(params[:start_date], params[:end_date], :total_price)
     @expenses = Expense.check_date(params[:start_date], params[:end_date], :paper_amount)
-    @ratio=Array.new
+    @ratio = Array.new
     @ratio << @proceeds.values.sum << @expenses.values.sum
   end
 
