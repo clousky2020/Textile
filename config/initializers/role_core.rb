@@ -15,7 +15,7 @@ RoleCore.permission_set_class.draw do
     permission :update
     permission :read, _priority: 1
     permission :read_my_own, action: :read, default: true do |user, task|
-      task.user_id == user.id
+      task.id == user.id
     end
     permission :reset
     permission :lock, _priority: 1
