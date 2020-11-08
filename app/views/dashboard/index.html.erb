@@ -59,12 +59,12 @@
         <% end %>
         <% if can? :create, PurchaseOrder %>
           <div class="btn">
-            <%= link_to "填写新的采购单", new_proceed_path %>
+            <%= link_to "填写新的采购单", new_purchase_order_path %>
           </div>
         <% end %>
         <% if can? :create, SaleOrder %>
           <div class="btn">
-            <%= link_to "填写新的销售单", new_proceed_path %>
+            <%= link_to "填写新的销售单", new_sale_order_path %>
           </div>
         <% end %>
       </div>
