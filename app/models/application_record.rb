@@ -55,6 +55,23 @@ class ApplicationRecord < ActiveRecord::Base
   end
 
 
-
-
+  # 按月份计算金额
+  def self.check_date(start_date, end_date, option)
+    orders = self.where(bill_time: start_date..end_date).select(:bill_time, option).where(is_invalid: false, check_status: true)
+    h = Hash.new
+    orders.each do |order|
+      if end_date.to_i - start_date.to_i > 30
+        bill_date = order.bill_time.strftime("%Y-%m")
+      else
+        bill_date = order.bill_time.strftime("%Y-%m-%d")
+      end
+      total_price = order["#{option}"]
+      if h.has_key? bill_date
+        h[bill_date] += total_price
+      else
+        h.store(bill_date, total_price)
+      end
+    end
+    h
+  end
 end

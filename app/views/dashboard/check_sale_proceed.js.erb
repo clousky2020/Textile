@@ -1,0 +1,93 @@
+var head = $(".chart-container")
+head.empty();
+head.append("<canvas id=\"check_sale_proceed_chart\"></canvas>\n" +
+    "      <canvas id=\"check_purchase_expense_chart\"></canvas>\n" +
+    "      <canvas id=\"check_proceed_expense_chart\"></canvas>")
+
+<%unless @sale_orders.blank? %>
+var ctx = $('#check_sale_proceed_chart');
+
+var myChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+        labels: <%= raw (@sale_orders.keys+@proceeds.keys).uniq.sort  %>,
+        datasets: [
+            {
+                label: '销售额',
+                data: <%= raw @sale_orders.values %>,
+                backgroundColor: 'yellow',
+
+                borderWidth: 1
+            }, {
+                label: '收款额',
+                data: <%= raw @proceeds.values %>,
+                backgroundColor: 'blue',
+
+                borderWidth: 1
+            },
+
+
+        ]
+    },
+    options: {
+        showlines: false,
+        spanGaps: true,
+        fill: false,
+        bezierCurve: false,
+        datasetFill: false
+    }
+});
+<%end %>
+
+<%unless @purchase_orders.blank? %>
+var ctx = $('#check_purchase_expense_chart');
+var myChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+        labels: <%= raw (@purchase_orders.keys+@expenses.keys).uniq.sort  %>,
+        datasets: [
+            {
+                label: '采购金额',
+                data: <%= raw @purchase_orders.values %>,
+                backgroundColor: 'yellow',
+
+                borderWidth: 1
+            }, {
+                label: '付款金额',
+                data: <%= raw @expenses.values %>,
+                backgroundColor: 'blue',
+
+                borderWidth: 1
+            },
+
+
+        ]
+    },
+    options: {
+        showlines: false,
+        spanGaps: true,
+        fill: false,
+        bezierCurve: false,
+        datasetFill: false
+    }
+});
+<%end %>
+
+//付款收款的比值
+
+var ctx = $('#check_proceed_expense_chart');
+var myChart = new Chart(ctx, {
+    type: "pie",
+    data: {
+
+        datasets: [
+            {
+                data: <%= raw @ratio %>,
+                backgroundColor: ["blue", "red"]
+            }
+        ],
+        labels: ['收款', '付款']
+
+    }
+
+});

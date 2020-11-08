@@ -4,9 +4,6 @@
 <% provide :pass_check_url, pass_check_expense_path(@expense) %>
 <% provide :back_url, expense_index_path %>
 
-<%#= render 'shard/show_form', object: @expense, type: "expense" %>
-
-
 
 <div class="text-center">
   <h2><%= yield(:title) %></h2>
@@ -20,7 +17,7 @@
       <% end %>
     <% end %>
 
-    <% if @expense.need_reimburse %>
+    <% if @expense.need_reimburse && @expense.check_status %>
       <% if can? :pass_check, Expense %>
         <%= link_to "已报销", yield(:pass_reimburse_url), class: "btn btn-primary" %>
       <% end %>

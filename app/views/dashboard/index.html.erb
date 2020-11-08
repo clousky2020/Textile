@@ -1,61 +1,80 @@
-<h2>欢迎你</h2>
-
-<%#= link_to "导出csv", download_purchase_supplier_index_path(format: "csv") %>
-<%#= link_to "导出xls", download_purchase_supplier_index_path(format: "xls",name:"福建万鸿") %>
-
-<div class="not_pass_content  row no-gutters">
-  <% if can? :pass_check, Expense %>
-    <% if @not_pass_expenses.count %>
-      <div>
-        未审核付款单<span class="badge badge-warning">
+<div class="row">
+  <div class="col-md-3">
+    <h2>可以做的操作</h2>
+    <div class="not_pass_content">
+      <% if can? :pass_check, Expense %>
+        <% if @not_pass_expenses.count > 0 %>
+          <div>
+            审核付款单<span class="badge badge-warning">
         <%= link_to @not_pass_expenses.count, expense_index_path(type: "check_status:false") %> </span>
-      </div>
-    <% end %>
-  <% end %>
-  <% if can? :pass_check, Proceed %>
-    <% if @not_pass_proceeds.count %>
-      <div>
-        未审核收款单<span class="badge badge-warning">
+          </div>
+        <% end %>
+      <% end %>
+      <% if can? :pass_check, Proceed %>
+        <% if @not_pass_proceeds.count > 0 %>
+          <div>
+            审核收款单<span class="badge badge-warning">
         <%= link_to @not_pass_proceeds.count, proceed_index_path(type: "check_status:false") %></span>
-      </div>
-    <% end %>
-  <% end %>
-  <% if can? :pass_check, SaleOrder %>
-    <% if @not_pass_sale_orders.count %>
-      <div>
-        未审核销售单<span class="badge badge-warning">
+          </div>
+        <% end %>
+      <% end %>
+      <% if can? :pass_check, SaleOrder %>
+        <% if @not_pass_sale_orders.count > 0 %>
+          <div>
+            审核销售单<span class="badge badge-warning">
         <%= link_to @not_pass_sale_orders.count, sale_order_index_path(type: "check_status:false") %></span>
-      </div>
-    <% end %>
-  <% end %>
-  <% if can? :pass_check, PurchaseOrder %>
-    <% if @not_pass_purchase_orders.count %>
-      <div>
-        未审核采购单<span class="badge badge-warning">
+          </div>
+        <% end %>
+      <% end %>
+      <% if can? :pass_check, PurchaseOrder %>
+        <% if @not_pass_purchase_orders.count > 0 %>
+          <div>
+            审核采购单<span class="badge badge-warning">
         <%= link_to @not_pass_purchase_orders.count, purchase_order_index_path(type: "check_status:false") %></span>
-      </div>
-    <% end %>
-  <% end %>
-</div>
+          </div>
+        <% end %>
+      <% end %>
+      <% if can? :pass_reimburse_expense, Expense %>
+        <% if @not_pass_purchase_orders.count > 0 %>
+          <div>
+            还有未报销单<span class="badge badge-warning">
+        <%= link_to @need_reimburses.count, expense_index_path(type: "need_reimburses:true") %></span>
+          </div>
+        <% end %>
+      <% end %>
+      <hr>
+    </div>
 
 
-<div>
-  <div class="btn-group">
-    <%= form_with url: check_sale_order_url do |f| %>
-      <div class="form-group">
+    <div class="create_order">
+      <% if can? :create, Expense %>
+        <div class="btn">
+          <%= link_to "新的付款单", new_expense_path %>
+        </div>
+      <% end %>
+      <% if can? :create, Proceed %>
+        <div class="btn">
+          <%= link_to "新的收款单", new_proceed_path %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-md-9">
+
+    <div class="row no-gutters">
+      <%= form_with url: check_sale_proceed_url do |f| %>
         <%= f.label :start_date, "开始日期" %>
         <%= f.date_field :start_date, value: (Time.current - 1.year).strftime("%Y-%m-%d") %>
-      </div>
-      <div class="form-group">
         <%= f.label :end_date, "结束日期" %>
         <%= f.date_field :end_date, value: default_date_now %>
-      </div>
-      <%= f.submit "查询" %>
-    <% end %>
-  </div>
+        <%= f.submit "查询" %>
+      <% end %>
+    </div>
+    <div class="chart-container">
+      <canvas id="check_sale_proceed_chart"></canvas>
+      <canvas id="check_purchase_expense_chart"></canvas>
+      <canvas id="check_proceed_expense_chart"></canvas>
+    </div>
 
-  <div class="chart-container col-md-12 sale_chart">
-    <canvas id="sale_chart"></canvas>
   </div>
-
 </div>
