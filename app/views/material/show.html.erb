@@ -6,15 +6,7 @@
 <div class="text-center">
   <h2><%= yield(:title) %></h2>
   <%= render 'material/show_content', object: @material, type: "material" %>
-
-
   <div>
-    <% if (@material.has_attribute?(:is_invalid) && !@material.is_invalid) && (@material.has_attribute?(:check_status) && !@material.check_status) %>
-      <% if can? :pass_check, Material %>
-        <%= link_to "通过审核", yield(:pass_check_url), class: "btn btn-primary" %>
-      <% end %>
-    <% end %>
-
     <% if can? :update, Material %>
       <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary" %>
     <% end %>
