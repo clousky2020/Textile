@@ -41,7 +41,9 @@
           <% if can? :destroy, Expense %>
             <div class="operation_right ml-auto">
               <% if !expense.is_invalid %>
-                <%= link_to "作废", expense_path(expense), method: :delete, data: {confirm: "确定作废吗？"} %>
+                <% if can? :destroy, Expense %>
+                  <%= link_to "作废", expense_path(expense), method: :delete, data: {confirm: "确定作废吗？"} %>
+                <% end %>
               <% else %>
                 <%= expense.declare_invalid_person %>已将其作废
               <% end %>

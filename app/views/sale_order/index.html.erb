@@ -37,7 +37,9 @@
           <% if can? :destroy, SaleOrder %>
             <div class="operation_right col-auto">
               <% if !sale_order.is_invalid %>
-                <%= link_to "作废", sale_order_path(sale_order), method: :delete, data: {confirm: "确定作废吗？"} %>
+                <% if can? :destroy, SaleOrder %>
+                  <%= link_to "作废", sale_order_path(sale_order), method: :delete, data: {confirm: "确定作废吗？"} %>
+                <% end %>
               <% else %>
                 <%= sale_order.declare_invalid_person %>已将其作废
               <% end %>

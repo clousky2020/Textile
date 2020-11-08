@@ -39,7 +39,6 @@
         <% if can? :reset, User %>
           |<%= link_to "重置密码", reset_user_path(user) %>
         <% end %>
-
         <% if can? :lock, User %>
           <% if user.id != current_user.id %>
             <% if user.is_lock %>
