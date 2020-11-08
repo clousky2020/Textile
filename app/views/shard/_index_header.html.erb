@@ -18,6 +18,8 @@
         <% elsif page == "sale_order" %>
           <%= select_tag :type, options_for_select([['未作废订单', 'is_invalid: false'], ['已作废订单', 'is_invalid: true'], ['未审核订单', 'check_status:false'], ['已审核订单', 'check_status:true'], ['退货单', 'is_return: true']]) %>
           <%= link_to "清空全部条件", sale_order_index_path %>
+      <% elsif page == "sale_customer" %>
+          <%= link_to "清空全部条件", sale_customer_index_path %>
         <% end %>
         <div class="input-group-append">
           <%= submit_tag '搜索' %>

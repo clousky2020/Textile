@@ -1,5 +1,7 @@
 <h2>欢迎你</h2>
 
+<%#= link_to "导出csv", download_purchase_supplier_index_path(format: "csv") %>
+<%#= link_to "导出xls", download_purchase_supplier_index_path(format: "xls",name:"福建万鸿") %>
 
 <div class="not_pass_content  row no-gutters">
   <% if can? :pass_check, Expense %>
@@ -37,14 +39,14 @@
 </div>
 
 
-<div >
+<div>
   <div class="btn-group">
     <%= form_with url: check_sale_order_url do |f| %>
-      <div class="form-inline">
+      <div class="form-group">
         <%= f.label :start_date, "开始日期" %>
         <%= f.date_field :start_date, value: (Time.current - 1.year).strftime("%Y-%m-%d") %>
       </div>
-      <div class="form-inline">
+      <div class="form-group">
         <%= f.label :end_date, "结束日期" %>
         <%= f.date_field :end_date, value: default_date_now %>
       </div>

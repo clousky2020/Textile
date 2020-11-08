@@ -1,20 +1,20 @@
-<div class="form-inline">
+<div class="form-group">
   <%= f.label :name, "仓库名称" %>
   <%= f.text_field :name, class: "form-control" %>
 </div>
-<div class="form-inline">
+<div class="form-group">
   <%= f.label :address, "地址" %>
   <%= f.text_field :address, class: "form-control" %>
 </div>
-<div class="form-inline">
+<div class="form-group">
   <%= f.label :description, "描述" %>
   <%= f.text_field :description, class: "form-control" %>
 </div>
-<div class="form-inline">
+<div class="form-group">
   <%= f.label :user_id, "管理员" %>
   <%= f.select(:user_id, @warehouses.map {|n| [n.name, n.id]}, class: "form-control") %>
 </div>
-<div class="form-inline">
+<div class="form-group">
   <%= f.label :status, "状态" %>
   <%= f.text_field :status, class: "form-control" %>
 </div>
