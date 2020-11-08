@@ -57,7 +57,7 @@ RoleCore.permission_set_class.draw do
     permission :destroy, _priority: 1
     permission :update, _priority: 1
     permission :read, _priority: 1, default: true
-    permission :get_expense_type, default: true, subject: :all
+    # permission :get_expense_type, default: true, subject: :all
   end
   group :sale_orders, model_name: "SaleOrder" do
     permission :create

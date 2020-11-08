@@ -16,6 +16,7 @@ class Ability
     can :check_purchase_supplier, :all
     can :get_expense_type, :all
     can :download, :all
+    can :check_sale_proceed, :all
 
     # 当第一位用户没有管理员权限时，开放所有权限
     user = User.first
