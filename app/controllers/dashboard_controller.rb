@@ -8,6 +8,12 @@ class DashboardController < ApplicationController
     @not_pass_proceeds = Proceed.where(check_status: false, is_invalid: false)
     @not_pass_expenses = Expense.where(check_status: false, is_invalid: false)
     @need_reimburses = Expense.where(check_status: false, is_invalid: false, need_reimburse: true)
+    # 最近一星期的单子数
+    @last_week_purchase_orders = PurchaseOrder.where(is_invalid: false).where("bill_time > ?",Time.current.midnight-7.days)
+    @last_week_sale_orders = SaleOrder.where(is_invalid: false).where("bill_time > ?",Time.current.midnight-7.days)
+    @last_week_proceeds = Proceed.where(is_invalid: false).where("bill_time > ?",Time.current.midnight-7.days)
+    @last_week_expenses = Expense.where(is_invalid: false).where("bill_time > ?",Time.current.midnight-7.days)
+
   end
 
   def check_sale_proceed
