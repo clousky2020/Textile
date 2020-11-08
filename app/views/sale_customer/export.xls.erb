@@ -229,7 +229,7 @@
             <Cell ss:StyleID="s117"><Data ss:Type="Number"><%= item['weight'] %></Data></Cell>
             <Cell ss:StyleID="s117"><Data ss:Type="Number"><%= item['number'] %></Data></Cell>
             <Cell ss:StyleID="s122"><Data ss:Type="Number"><%= item['price'] %></Data></Cell>
-            <Cell ss:StyleID="s122" ss:Formula="=RC[-2]*RC[-1]"></Cell>
+            <Cell ss:StyleID="s122" ss:Formula="=RC[-3]*RC[-1]"></Cell>
             <Cell ss:StyleID="s122"/>
             <Cell ss:StyleID="s122" ss:Formula="=SUMIFS(C[-2],C[-8],&quot;&lt;=&quot;&amp;RC[-8])- SUMIFS(C[-1],C[-8],&quot;&lt;=&quot;&amp;RC[-8])"></Cell>
             <Cell ss:StyleID="s122"><Data ss:Type="String"><%= item['remark'] %></Data></Cell>
@@ -245,7 +245,7 @@
             <Cell ss:StyleID="s117"><Data ss:Type="Number">-<%= item['weight'] %></Data></Cell>
             <Cell ss:StyleID="s117"><Data ss:Type="Number">-<%= item['number'] %></Data></Cell>
             <Cell ss:StyleID="s122"><Data ss:Type="Number"><%= item['price'] %></Data></Cell>
-            <Cell ss:StyleID="s122" ss:Formula="=RC[-2]*RC[-1]"></Cell>
+            <Cell ss:StyleID="s122" ss:Formula="=RC[-3]*RC[-1]"></Cell>
             <Cell ss:StyleID="s122"/>
             <Cell ss:StyleID="s122" ss:Formula="=SUMIFS(C[-2],C[-8],&quot;&lt;=&quot;&amp;RC[-8])- SUMIFS(C[-1],C[-8],&quot;&lt;=&quot;&amp;RC[-8])"></Cell>
             <Cell ss:StyleID="s122"><Data ss:Type="String">这是退货单.<%= item['remark'] %></Data></Cell>
