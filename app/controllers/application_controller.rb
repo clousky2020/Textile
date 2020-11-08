@@ -12,8 +12,9 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
+    store_referrer_location
     flash[:warning] = "没有权限执行此操作"
-    redirect_to root_url
+    redirect_back_referrer_for root_url
   end
 
 end
