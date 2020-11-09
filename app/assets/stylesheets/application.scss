@@ -18,22 +18,27 @@
 @import "font-awesome-sprockets";
 @import "font-awesome";
 
-body{
+body {
   margin-bottom: 60px;
 }
-.check_status{
+
+.check_status {
   color: #B00100;
 }
 
 .pagination {
-  span{
+  span {
     margin: 0 5px;
   }
 }
+//强制logo蓝色，给人可以点击的感觉
+.navbar-brand {
+  color: blue !important;
+}
 
-.ui-autocomplete{
-  overflow-y:scroll;
-  overflow-x:hidden;
+.ui-autocomplete {
+  overflow-y: scroll;
+  overflow-x: hidden;
   max-height: 200px;
 }
 
