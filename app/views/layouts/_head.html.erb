@@ -17,7 +17,7 @@
             <% if can? :read, Employee %>
               <%= link_to "员工管理", employee_index_path, class: "dropdown-item" %>
             <% end %>
-            <% if can? :read, User %>
+            <% if can? :create, User %>
               <%= link_to "用户管理", user_index_path, class: "dropdown-item" %>
             <% end %>
             <% if current_user %>
