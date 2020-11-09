@@ -7,11 +7,11 @@
         <% current_user.roles.each do |role| %>
           <div class="card">
             <div class="card-header">
-              <a class="card-link" data-toggle="collapse" href="#collapse_<%=role.id %>">
+              <a class="card-link" data-toggle="collapse" href="#collapse_<%= role.id %>">
                 <%= role.name %>
               </a>
             </div>
-            <div id="collapse_<%=role.id %>" class="collapse" data-parent="#accordion">
+            <div id="collapse_<%= role.id %>" class="collapse" data-parent="#accordion">
               <div class="card-body">
                 <%= role.description %>
               </div>
@@ -22,7 +22,7 @@
     </div>
 
     <div class="operations_can_do">
-      <h5>可以做的操作</h5>
+      <h5>需要做的事情</h5>
       <div class="not_pass_content">
         <% if can? :pass_check, Expense %>
           <% if @not_pass_expenses.count > 0 %>
@@ -66,6 +66,7 @@
         <% end %>
         <hr>
       </div>
+      <h5>常用</h5>
       <div class="create_order">
         <% if can? :create, Expense %>
           <div class="btn">
@@ -94,7 +95,7 @@
       <div>
         <% if @last_week_purchase_orders.size > 0 %>
           <p>有<%= @last_week_purchase_orders.size %>张采购单</p>
-          <% @last_week_purchase_orders[0..2].each do |order| %>
+          <% @last_week_purchase_orders[0..1].each do |order| %>
             <p> <%= link_to order.material.name, purchase_order_path(order) %>
               —<%= link_to order.purchase_supplier.name, purchase_supplier_path(order.purchase_supplier.id) %></p>
           <% end %>
@@ -104,7 +105,7 @@
         <% end %>
         <% if @last_week_sale_orders.size > 0 %>
           <p>有<%= @last_week_sale_orders.size %>张销售单</p>
-          <% @last_week_sale_orders[0..2].each do |order| %>
+          <% @last_week_sale_orders[0..1].each do |order| %>
             <p> <%= link_to order.product.name, sale_order_path(order) %>
               —<%= link_to order.sale_customer.name, sale_customer_path(order.sale_customer.id) %></p>
           <% end %>
@@ -114,7 +115,7 @@
         <% end %>
         <% if @last_week_proceeds.size > 0 %>
           <p>有<%= @last_week_proceeds.size %>张收款单</p>
-          <% @last_week_proceeds[0..2].each do |order| %>
+          <% @last_week_proceeds[0..1].each do |order| %>
             <p><%= link_to order.sale_customer.name, proceed_path(order) %></p>
           <% end %>
           <% if @last_week_proceeds.size > 2 %>
@@ -123,7 +124,7 @@
         <% end %>
         <% if @last_week_expenses.size > 0 %>
           <p>有<%= @last_week_expenses.size %>张付款单</p>
-          <% @last_week_expenses[0..2].each do |order| %>
+          <% @last_week_expenses[0..1].each do |order| %>
             <p><%= link_to order.counterparty, expense_path(order) %></p>
           <% end %>
           <% if @last_week_expenses.size > 2 %>
@@ -150,8 +151,8 @@
         </div>
       </div>
     </div>
-    <p class="alert-warning">本系统正处于第一版的测试期，所有的用户密码为123456,测试期后将删除所有资料。
-      有意见、建议、问题请在底部的建议反馈里提交！</p>
+    <p class="alert-warning">本系统正处于测试期，所有的用户密码为123456。
+      有任何意见、建议、问题、需要添加的功能请在底部的建议反馈里提交！</p>
     <h5>图表查询</h5>
     <div class="row no-gutters">
       <%= form_with url: check_sale_proceed_url do |f| %>
