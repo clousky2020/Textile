@@ -1,10 +1,10 @@
 <div class="form-group">
   <%= f.label :name, "用户名" %>
-  <%= f.text_field :name, class: "form-control" %>
+  <%= f.text_field :name,required: "required", class: "form-control" %>
 </div>
 <div class="form-group">
   <%= f.label :email, "邮箱" %>
-  <%= f.email_field :email, class: "form-control" %>
+  <%= f.email_field :email,required: "required", class: "form-control" %>
 </div>
 <% if type_2 == "create" %>
   <div class="form-group">
@@ -21,7 +21,7 @@
   </div>
 <% end %>
 
-<% if can? :manage, Role %>
+<% if can? :create, Role %>
   <div class="field">
     <%= f.label :roles, '角色', class: 'label' %>
     <p class="control">
@@ -35,11 +35,3 @@
   </div>
 <% end %>
 
-<!--<p class="field">-->
-<%#= label_tag '采购员' do |f| %>
-<%#= f.check_box "roles[]", "buyer", false %>
-<%# end %>
-<%#= check_box_tag "roles[]", "buyer", false %><%#= label_tag '采购员' %>
-<%#= check_box_tag "roles[]", "saler", false %><%#= label_tag '销售员' %>
-<%#= check_box_tag "roles[]", "director", false %><%#= label_tag '主管' %>
-<!--</p>-->

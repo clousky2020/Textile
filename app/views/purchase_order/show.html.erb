@@ -7,7 +7,7 @@
 <div class="text-center">
   <h2><%= yield(:title) %></h2>
 
-  <%= render 'purchase_order/show_content', object: @purchase_order%>
+  <%= render 'purchase_order/show_content', object: @purchase_order %>
 
   <div>
     <% if !@purchase_order.is_invalid && !@purchase_order.check_status %>
@@ -15,9 +15,10 @@
         <%= link_to "通过审核", yield(:pass_check_url), class: "btn btn-primary" %>
       <% end %>
     <% end %>
-
-    <% if can? :update, PurchaseOrder %>
-      <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary" %>
+    <% if !@purchase_order.check_status && !@purchase_order.is_invalid %>
+      <% if can? :update, PurchaseOrder %>
+        <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary" %>
+      <% end %>
     <% end %>
     <%= link_to "返回主页", yield(:back_url), class: "btn btn-primary" %>
   </div>

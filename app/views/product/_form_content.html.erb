@@ -1,10 +1,10 @@
 <div class="form-group">
   <%= f.label :name, "品名" %>
-  <%= f.text_field :name, placeholder: "必需", class: "form-control" %>
+  <%= f.text_field :name, placeholder: "必需",required: "required", class: "form-control" %>
 </div>
 <div class="form-group">
   <%= f.label :specification, "型号规格" %>
-  <%= f.text_field :specification, placeholder: "必需", class: "form-control" %>
+  <%= f.text_field :specification, placeholder: "必需",required: "required", class: "form-control" %>
 </div>
 
 <div class="form-group">
@@ -14,7 +14,7 @@
 <div class="form-group">
   <%= f.label :labor_cost, "人工费用(元)" %>
   <a class="far fa-question-circle" data-toggle="tooltip" data-placement="right" title="每万转多少元"> </a>
-  <%= f.number_field :labor_cost, step: 0.01, value: 40, class: "form-control" %>
+  <%= f.number_field :labor_cost, step: 0.01, value: 40,required: "required", class: "form-control" %>
 </div>
 <div class="form-group">
   <%= f.label :preset_price, "预设卖价(元)" %>

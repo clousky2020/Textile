@@ -1,15 +1,14 @@
 <div class="form-group">
   <%= f.label :name, "品名" %>
-  <%= f.text_field :name, class: "form-control" %>
+  <%= f.text_field :name,required: "required", class: "form-control" %>
 </div>
 <div class="form-group">
   <%= f.label :specification, "型号规格" %>
-  <%= f.text_field :specification, class: "form-control" %>
+  <%= f.text_field :specification,required: "required", class: "form-control" %>
 </div>
 
 <div class="form-group">
   <%= f.label :measuring_unit, "计量单位" %>
-
   <%= f.select :measuring_unit, options_for_select([['包', '包'], ['件', '件'], ['箱', '箱']]), class: "form-control" %>
 </div>
 <div class="form-group">
@@ -20,7 +19,7 @@
 <div class="form-group">
   <%= f.fields_for :purchase_supplier do |f| %>
     <%= f.label :name, "公司名" %>
-    <%= f.text_field :name, class: "form-control" %>
+    <%= f.text_field :name,required: "required", class: "form-control" %>
   <% end %>
 </div>
 <div class="form-group">

@@ -1,17 +1,17 @@
 <div class="form-group">
   <%= f.label :name, "姓名" %>
-  <%= f.text_field :name, class: "form-control" %>
+  <%= f.text_field :name, required: "required", class: "form-control" %>
 </div>
 
 <div class="form-group">
   <%= f.label :gender, "性别" %>
-  <%= f.radio_button :gender, "男", class: "radio-inline offset-1" %><%= f.label :gender, "男" %>
+  <%= f.radio_button :gender, "男", class: "radio-inline offset-1 " %><%= f.label :gender, "男" %>
   <%= f.radio_button :gender, "女", class: "radio-inline offset-1" %><%= f.label :gender, "女" %>
 </div>
 
 <div class="form-group">
   <%= f.label :work_id, "工作编号" %>
-  <%= f.number_field :work_id, class: "form-control", placeholder: "请填写数字" %>
+  <%= f.number_field :work_id, class: "form-control", placeholder: "请填写数字", required: "required" %>
   <label class="d-none">该编号已经有人了，请选择新的编号</label>
 </div>
 
@@ -27,7 +27,7 @@
 </div>
 <div class="form-group">
   <%= f.label :basic_wage, "基础工资(元/月)" %>
-  <%= f.number_field :basic_wage, class: "form-control" %>
+  <%= f.number_field :basic_wage, required: "required", class: "form-control" %>
 </div>
 <div class="form-group">
   <%= f.label :bank_card, "银行卡号" %>
@@ -35,7 +35,7 @@
 </div>
 <div class="form-group">
   <%= f.label :phone, "手机号码" %>
-  <%= f.text_field :phone, maxlength: 11, class: "form-control" %>
+  <%= f.text_field :phone, maxlength: 11,required: "required", class: "form-control" %>
 </div>
 <div class="form-group">
   <%= f.label :id_number, "身份证号码" %>

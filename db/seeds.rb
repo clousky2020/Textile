@@ -24,14 +24,14 @@ users = ['李文强', '王朝辉', '姚一夫', '顾晁诚', '顾乐峰', '赵�
 n = 1
 users.each do |name|
   user = User.new(name: name, password: "123456", email: "123456#{n}@qq.com")
-
   user.save
-  if user.save
-    # 新建一个受管理的本地仓库
-    user.create_repo(name: "本地#{n}号", description: "初始设定的仓库,受#{user.name}管理")
-    n += 1
-  end
+  n += 1
 end
+
+# 新建一个本地仓库
+repo = Repo.new(name: "本地仓库", description: "初始设定的仓库", address: "工业园")
+repo.user = User.first
+repo.save
 
 # 新建一个管理员角色，并赋予第一个用户
 role = Role.new
