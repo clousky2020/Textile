@@ -7,6 +7,9 @@ Rails.application.routes.draw do
 
   resources :session, :only => [:new, :create, :destroy]
   resources :param, only: [:index, :update]
+  resources :comments, only: [:index, :create, :destroy] do
+    get :take_top, on: :member
+  end
   resources :user do
     member do
       get :lock

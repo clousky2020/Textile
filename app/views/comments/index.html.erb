@@ -1,0 +1,28 @@
+<% provide :index_title, "反馈评论" %>
+
+<h2 class="text-center"><%= yield(:index_title) %></h2>
+
+<div class="comment">
+  <%= form_for @comment, url: comments_path do |f| %>
+    <div class="form_content">
+      <%= f.text_area :content, class: "form-control", style: "resize:none", rows: 5, placeholder: "发表你的意见和建议……" %>
+      <%= f.submit "发布", class: "btn btn-primary", align: "right" %>
+    </div>
+  <% end %>
+  <div id="comments_content">
+    <hr>
+    <%= render "comments/comments", object: @up_comments %>
+    <%= render "comments/comments", object: @comments %>
+  </div>
+</div>
+
+
+
+<%= render 'shard/paginate', object: @comments %>
+
+
+
+
+
+
+

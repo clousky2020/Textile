@@ -72,6 +72,9 @@ en:
         name: "角色名"
         permissions: "权限"
 
+      comment:
+        content: "主体内容"
+
       employee:
         name: "员工姓名"
         gender: "性别"

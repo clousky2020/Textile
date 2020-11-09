@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :materials
   has_many :expenses
   has_many :proceeds
+  has_many :comments
   has_many :role_assignments, dependent: :destroy
   has_many :roles, through: :role_assignments
   delegate :computed_permissions, to: :role

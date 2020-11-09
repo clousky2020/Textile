@@ -121,6 +121,20 @@ RoleCore.permission_set_class.draw do
       task.user_id == user.id
     end
   end
+  group :comments, model_name: "Comment" do
+    permission :create
+    permission :destroy, _priority: 1
+    permission :update, _priority: 1
+    permission :take_top, _priority: 1
+    permission :read, _priority: 1, default: true
+    permission :update_my_own, action: :update, default: true do |user, task|
+      task.user_id == user.id
+    end
+    permission :destroy_my_own, action: :destroy, default: true do |user, task|
+      task.user_id == user.id
+    end
+  end
+
   permission :super, action: :manage, subject: :all
 # These (under the comment) are not in use, just for demo
 

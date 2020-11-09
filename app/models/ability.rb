@@ -18,6 +18,11 @@ class Ability
     can :download, :all
     can :check_sale_proceed, :all
 
+
+    can :create, Comment
+    can :read, Comment
+
+
     # 当第一位用户没有管理员权限时，开放所有权限
     user = User.first
     unless user.roles.any? {|role| role.permissions.super?}
