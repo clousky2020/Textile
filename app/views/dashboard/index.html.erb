@@ -114,6 +114,7 @@
     </div>
   </div>
   <div class="col-md-9">
+
     <div id="accordion">
       <div class="card">
         <div class="card-header">
@@ -123,12 +124,13 @@
         </div>
         <div id="collapseOne" class="collapse" data-parent="#accordion">
           <div class="card-body">
-            <%=render 'dashboard/info'%>
+            <%= render 'dashboard/info' %>
           </div>
         </div>
       </div>
     </div>
-    <p class="alert-warning">有意见、建议、问题请在底部的建议反馈里提交！</p>
+    <p class="alert-warning">本系统正处于第一版的测试期，所有的用户密码为123456,测试期后将删除所有资料。
+      有意见、建议、问题请在底部的建议反馈里提交！</p>
     <h3>图表查询</h3>
     <div class="row no-gutters">
       <%= form_with url: check_sale_proceed_url do |f| %>
@@ -144,9 +146,7 @@
       <% end %>
     </div>
     <div class="chart-container">
-      <!--      <canvas id="check_sale_proceed_chart"></canvas>-->
-      <!--      <canvas id="check_purchase_expense_chart"></canvas>-->
-      <!--      <canvas id="check_proceed_expense_chart"></canvas>-->
+
     </div>
 
   </div>
