@@ -1,12 +1,10 @@
 <div class="form-group">
   <%= f.label :name, "品名" %>
-  <a class="fas fa-magic" data-toggle="tooltip" data-placement="right" title="已设定自动填充"> </a>
-  <%= f.text_field :name, class: "form-control", data: {autocomplete_source: check_material_name_material_index_path} %>
+  <%= f.text_field :name, placeholder: "必需，可自动填充", class: "form-control", data: {autocomplete_source: check_material_name_material_index_path} %>
 </div>
 <div class="form-group">
   <%= f.label :specification, "型号规格" %>
-  <a class="fas fa-magic" data-toggle="tooltip" data-placement="right" title="已设定自动填充"> </a>
-  <%= f.text_field :specification, class: "form-control", data: {autocomplete_source: check_material_specification_material_index_path} %>
+  <%= f.text_field :specification,placeholder: "必需，可自动填充", class: "form-control", data: {autocomplete_source: check_material_specification_material_index_path} %>
 </div>
 <div class="form-group">
   <%= f.label :batch_number, "批号" %>
@@ -24,38 +22,36 @@
 </div>
 <div class="form-group">
   <%= f.label :purchase_supplier, "供应商" %>
-  <a class="fas fa-magic" data-toggle="tooltip" data-placement="right" title="已设定自动填充"> </a>
-  <%= f.text_field :purchase_supplier, class: "form-control", data: {autocomplete_source: check_purchase_supplier_purchase_supplier_index_path} %>
+  <%= f.text_field :purchase_supplier,placeholder: "必需，可自动填充", class: "form-control", data: {autocomplete_source: check_purchase_supplier_purchase_supplier_index_path} %>
 </div>
 
 <div class="form-group">
   <%= f.label :weight, "重量" %>
-  <%= f.number_field :weight,  min: 0, step: 0.1, class: "form-control" %>
+  <%= f.number_field :weight, min: 0, step: 0.1, class: "form-control" %>
 </div>
 <div class="form-group">
   <%= f.label :number, "数量" %>
-  <%= f.number_field :number,  min: 0, step: 1, class: "form-control" %>
+  <%= f.number_field :number, min: 0, step: 1, class: "form-control" %>
 </div>
 <div class="form-group">
   <%= f.label :price, "单价" %>
-  <%= f.number_field :price,  min: 0, step: 0.01, class: "form-control" %>
+  <%= f.number_field :price, min: 0, step: 0.01, class: "form-control" %>
 </div>
 <div class="form-group">
   <%= f.label :tax_rate, "税率(小数)" %>
-  <%= f.number_field :tax_rate,  step: 0.001, min: 0, max: 1, class: "form-control" %>
+  <%= f.number_field :tax_rate, step: 0.001, min: 0, max: 1, class: "form-control" %>
 </div>
 <div class="form-group">
   <%= f.label :deposit, "押金" %>
-  <%= f.number_field :deposit,  min: 0, step: 1, class: "form-control" %>
+  <%= f.number_field :deposit, min: 0, step: 1, class: "form-control" %>
 </div>
 <div class="form-group">
   <%= f.label :freight, "运费" %>
-  <%= f.number_field :freight,  min: 0, step: 1, class: "form-control" %>
+  <%= f.number_field :freight, min: 0, step: 1, class: "form-control" %>
 </div>
 <div class="form-group">
   <%= f.label :bill_time, "账单时间" %>
-  <a class="far fa-question-circle" data-toggle="tooltip" data-placement="right" title="该采购单的时间记录"> </a>
-    <%= f.datetime_field :bill_time, value: default_time_now, class: "form-control" %>
+  <%= f.datetime_field :bill_time, value: default_time_now, class: "form-control" %>
 </div>
 <div class="form-group">
   <%= f.label :is_return, "是退货/退押金吗？" %>

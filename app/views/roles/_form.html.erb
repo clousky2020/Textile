@@ -3,7 +3,7 @@
     <article class="message is-danger">
       <div class="message-header">
         <p>
-          <%= pluralize(role.errors.count, "error") %> prohibited this form from being saved:
+          <%= pluralize(role.errors.count, "error") %> 禁止保存此表格:
         </p>
       </div>
       <div class="message-body">
@@ -17,10 +17,15 @@
   <div class="field">
     <%= f.label :name, '角色名', class: 'label' %>
     <p class="control">
-      <%= f.text_field :name, id: :role_name, class: 'input', required: 'required' %>
+      <%= f.text_field :name, id: :role_name, required: 'required' %>
     </p>
   </div>
-
+  <div class="field">
+    <%= f.label :description, '描述' %>
+    <p class="control">
+      <%= f.text_area :description, class: 'form-control', required: 'required' %>
+    </p>
+  </div>
   <%= render partial: "permissions", locals: {f: f, name: :permissions_attributes, permissions: role.permissions} %>
 
   <div class="field is-grouped">

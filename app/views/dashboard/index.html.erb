@@ -1,38 +1,59 @@
 <div class="row">
   <div class="col-md-3">
+
+    <div class="role_info">
+      <h5>欢迎你,以下是您的角色</h5>
+      <div id="accordion">
+        <% current_user.roles.each do |role| %>
+          <div class="card">
+            <div class="card-header">
+              <a class="card-link" data-toggle="collapse" href="#collapse_<%=role.id %>">
+                <%= role.name %>
+              </a>
+            </div>
+            <div id="collapse_<%=role.id %>" class="collapse" data-parent="#accordion">
+              <div class="card-body">
+                <%= role.description %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
     <div class="operations_can_do">
-      <h3>可以做的操作</h3>
+      <h5>可以做的操作</h5>
       <div class="not_pass_content">
         <% if can? :pass_check, Expense %>
           <% if @not_pass_expenses.count > 0 %>
-            <div>
+            <p>
               审核付款单<span class="badge badge-warning">
         <%= link_to @not_pass_expenses.count, expense_index_path(type: "check_status:false") %> </span>
-            </div>
+            </p>
           <% end %>
         <% end %>
         <% if can? :pass_check, Proceed %>
           <% if @not_pass_proceeds.count > 0 %>
-            <div>
+            <p>
               审核收款单<span class="badge badge-warning">
         <%= link_to @not_pass_proceeds.count, proceed_index_path(type: "check_status:false") %></span>
-            </div>
+            </p>
           <% end %>
         <% end %>
         <% if can? :pass_check, SaleOrder %>
           <% if @not_pass_sale_orders.count > 0 %>
-            <div>
+            <p>
               审核销售单<span class="badge badge-warning">
         <%= link_to @not_pass_sale_orders.count, sale_order_index_path(type: "check_status:false") %></span>
-            </div>
+            </p>
           <% end %>
         <% end %>
         <% if can? :pass_check, PurchaseOrder %>
           <% if @not_pass_purchase_orders.count > 0 %>
-            <div>
+            <p>
               审核采购单<span class="badge badge-warning">
         <%= link_to @not_pass_purchase_orders.count, purchase_order_index_path(type: "check_status:false") %></span>
-            </div>
+            </p>
           <% end %>
         <% end %>
         <% if can? :pass_reimburse_expense, Expense %>
@@ -69,7 +90,7 @@
       </div>
     </div>
     <div class="last_week_status">
-      <h3>最近7天的情况</h3>
+      <h5>最近7天的情况</h5>
       <div>
         <% if @last_week_purchase_orders.size > 0 %>
           <p>有<%= @last_week_purchase_orders.size %>张采购单</p>
@@ -131,7 +152,7 @@
     </div>
     <p class="alert-warning">本系统正处于第一版的测试期，所有的用户密码为123456,测试期后将删除所有资料。
       有意见、建议、问题请在底部的建议反馈里提交！</p>
-    <h3>图表查询</h3>
+    <h5>图表查询</h5>
     <div class="row no-gutters">
       <%= form_with url: check_sale_proceed_url do |f| %>
         <div class="input-group">
