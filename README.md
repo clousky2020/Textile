@@ -1,26 +1,14 @@
-# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+#背景
+在过去小企业工作中发现了一些问题，使得我萌生了将部分工作流程信息化的想法。
 
-Things you may want to cover:
+本项目实现以下功能：
+1. 数量繁多的记录脱离开个别专门的记录人员，终端人员可以自行输入各种单据，相关审核人员审核后记入系统。
+2. 管理人员能清晰直观的看到企业生产资料的出入情况，及各种所需的数据计算结果。
+3. 一键导出对应供应商/客户的对账单，降低耗费时间和减少制作过程中可能出现的错误。
+4. 以上操作都可以在手机上完成，不必守着一台位于公司内部的电脑上了。
 
-* Ruby version
+因为企业对于各种工作流程需要定制化的设计，势必不可能一个系统能匹配所有类型的企业，以上系统基于本人在纺织企业工作的两年经验，完全针对该企业工作内容的需要。
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
+#使用的工具
+基于Ruby On Rails开发成web形式，手机端和PC端都能进入操作。
