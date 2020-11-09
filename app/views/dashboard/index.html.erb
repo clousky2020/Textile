@@ -57,10 +57,10 @@
           <% end %>
         <% end %>
         <% if can? :pass_reimburse_expense, Expense %>
-          <% if @need_reimburses.size > 0 %>
+          <% if @need_reimburses.count > 0 %>
             <div>
               还有未报销单<span class="badge badge-warning">
-        <%= link_to @need_reimburses.size, expense_index_path(type: "need_reimburses:true") %></span>
+        <%= link_to @need_reimburses.count, expense_index_path(type: "need_reimburse:true") %></span>
             </div>
           <% end %>
         <% end %>
