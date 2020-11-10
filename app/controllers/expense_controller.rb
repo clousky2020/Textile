@@ -30,7 +30,9 @@ class ExpenseController < ApplicationController
   end
 
   def show
-    store_referrer_location
+    unless request.referrer =~ /(new|edit)/
+      store_referrer_location
+    end
   end
 
   def create

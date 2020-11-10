@@ -37,7 +37,9 @@ class PurchaseOrderController < ApplicationController
   end
 
   def show
-    store_referrer_location
+    unless request.referrer =~ /(new|edit)/
+      store_referrer_location
+    end
     @purchase_order.purchase_supplier.calcu_total_payment_required
   end
 
