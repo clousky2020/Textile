@@ -4,7 +4,7 @@
       <div class="comments-content">
         <p><%= raw comment.content %></p>
         <div class="mr-auto">
-          <p><%= comment.user.name %> · <%= comment.updated_at.localtime.strftime("%Y-%M-%d %H:%m") %>
+          <p><%= comment.user.name %> · <%= comment.updated_at.localtime.strftime("%Y-%m-%d %H:%m") %>
             <% if can? :take_top, Comment %>
               <% if comment.up %>
                 <span><%= link_to "取消置顶", take_top_comment_path(comment) %></span>
