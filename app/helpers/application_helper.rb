@@ -10,11 +10,11 @@ module ApplicationHelper
   end
 
   def default_time_now
-    Time.current.strftime("%Y-%m-%dT%H:%M")
+    Time.current.localtime.strftime("%Y-%m-%dT%H:%M")
   end
 
   def default_date_now
-    Time.current.strftime("%Y-%m-%d")
+    Time.current.localtime.strftime("%Y-%m-%d")
   end
 
 end
