@@ -1,7 +1,7 @@
 require 'creek'
 
 creek = Creek::Book.new "顾丰.xlsm"
-# 导入员工信息
+p '导入员工信息'
 creek.sheets.each do |sheet|
   if sheet.name == '员工信息'
     sheet.rows_with_meta_data.each do |row|
@@ -19,7 +19,7 @@ creek.sheets.each do |sheet|
 end
 
 
-#新建账户
+p '新建账户'
 users = ['李文强', '王朝辉', '姚一夫', '顾晁诚', '顾乐峰', '赵海英']
 n = 1
 users.each do |name|
@@ -28,21 +28,23 @@ users.each do |name|
   n += 1
 end
 
-# 新建一个本地仓库
-repo = Repo.new(name: "本地仓库", description: "初始设定的仓库", address: "工业园")
-repo.user = User.first
-repo.save
-
-# 新建一个管理员角色，并赋予第一个用户
-role = Role.new
-role.name = "管理员"
-role.permissions.super = true
-role.save
-user = User.first
-user.roles << role
-user.save
-
-# 添加默认参数配置
+p '新建一个本地仓库'
+unless Repo.find_by_name("顾丰本厂")
+  repo = Repo.new(name: "顾丰本厂", description: "初始设定的仓库", address: "工业园")
+  repo.user = User.first
+  repo.save
+end
+p '新建一个管理员角色，并赋予第一个用户'
+unless Role.find_by_name("管理员")
+  role = Role.new
+  role.name = "管理员"
+  role.permissions.super = true
+  role.save
+  user = User.first
+  user.roles << role
+  user.save
+end
+p '添加默认参数配置'
 params_list = {
     "权限认证": "开启后全系统具有认证体系",
     "采购账单自动审核": "有财务权限者录入的采购订单自动完成审核",
@@ -54,7 +56,9 @@ params_list.each do |key, value|
 end
 
 creek.sheets.each do |sheet|
+
   if sheet.name == '交易单'
+    p '导入交易单'
     sheet.rows_with_meta_data.each do |row|
       n = row['r']
       if n != "1"
@@ -66,7 +70,7 @@ creek.sheets.each do |sheet|
           material = Material.find_or_create_by(name: cells["B#{n}"], specification: cells["C#{n}"], purchase_supplier_id: purchase_supplier.id, measuring_unit: "包/箱")
           if material
             user = User.find(rand(1..3))
-            repo = Repo.find(rand(1..3))
+            repo = Repo.first
             #导入以前的交易单
             PurchaseOrder.find_or_create_by(batch_number: cells["D#{n}"], weight: cells["F#{n}"], number: cells["G#{n}"],
                                             measuring_unit: "包/箱", repo_id: repo.id, user_id: user.id,
@@ -78,7 +82,9 @@ creek.sheets.each do |sheet|
       end
     end
   end
+
   if sheet.name == '型号转数表设定'
+    p '导入型号转数表设定'
     sheet.rows_with_meta_data.each do |row|
       n = row['r']
       if n != "1"
@@ -89,12 +95,14 @@ creek.sheets.each do |sheet|
       end
     end
   end
+
   if sheet.name == '出货'
+    p '导入出货'
     sheet.rows_with_meta_data.each do |row|
       n = row['r']
       if n != "1"
         user = User.find(rand(1..3))
-        repo = Repo.find(rand(1..3))
+        repo = Repo.first
         cells = row['cells']
         # 创建客户名称
         sale_customer = SaleCustomer.find_or_create_by(name: cells["C#{n}"])
@@ -111,6 +119,7 @@ creek.sheets.each do |sheet|
   end
 
   if sheet.name == '收入详细'
+    p '导入收入详细'
     sheet.rows_with_meta_data.each do |row|
       n = row['r']
       if n != "1" && n != "2"
@@ -127,6 +136,7 @@ creek.sheets.each do |sheet|
 
 
   if sheet.name == '支出详细'
+    p '导入支出详细'
     sheet.rows_with_meta_data.each do |row|
       n = row['r']
       if n != "1" && n != "2" && row['cells']["B#{n}"] != nil
