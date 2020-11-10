@@ -30,12 +30,16 @@
   <%= f.number_field :basic_wage, required: "required", class: "form-control" %>
 </div>
 <div class="form-group">
+  <%= f.label :minimun_wage, "保底工资(元/月)" %>
+  <%= f.number_field :minimun_wage, required: "required", class: "form-control" %>
+</div>
+<div class="form-group">
   <%= f.label :bank_card, "银行卡号" %>
   <%= f.text_field :bank_card, maxlength: 19, class: "form-control" %>
 </div>
 <div class="form-group">
   <%= f.label :phone, "手机号码" %>
-  <%= f.text_field :phone, maxlength: 11,required: "required", class: "form-control" %>
+  <%= f.text_field :phone, maxlength: 11, required: "required", class: "form-control" %>
 </div>
 <div class="form-group">
   <%= f.label :id_number, "身份证号码" %>

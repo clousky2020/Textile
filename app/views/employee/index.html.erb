@@ -21,7 +21,6 @@
     <td>性别</td>
     <td>岗位</td>
     <td>状态</td>
-    <td>查看</td>
     <% if can? :destroy, Employee %>
       <td>删除</td>
     <% end %>
@@ -31,11 +30,10 @@
   <% @employees.each do |user| %>
     <tr>
       <td><%= user.work_id %></td>
-      <td><%= user.name %></td>
+      <td><%= link_to user.name, employee_path(user) %></td>
       <td><%= user.gender %></td>
       <td><%= user.work_type %></td>
       <td><%= user.work_status %></td>
-      <td><%= link_to "详情", employee_path(user) %></td>
       <% if can? :destroy, Employee %>
         <td><%= link_to "删除", employee_path(user), method: :delete, data: {confirm: "确定删除？"} %></td>
       <% end %>

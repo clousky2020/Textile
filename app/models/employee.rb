@@ -10,4 +10,12 @@ class Employee < ApplicationRecord
   validates :bank_card, numericality: true, length: {is: 19, message: "位数应为19位"}, allow_blank: true
   validates :entry_date, :presence => true
 
+  def self.search(search)
+    if search
+      where("name LIKE :term or work_status LIKE :term or gender LIKE :term or work_type LIKE :term ", term: "%#{search}%")
+    else
+      all
+    end
+  end
+
 end

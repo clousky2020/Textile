@@ -5,7 +5,7 @@ class EmployeeController < ApplicationController
 
   def index
     if params.has_key?(:search) && params[:search] != ""
-      @employees = Employee.where("name LIKE?", "%#{params[:search]}%").order("work_id").page(params[:page]).per(10)
+      @employees = Employee.search(params[:search]).order("work_id").page(params[:page]).per(10)
     elsif params[:order] == "all"
       @employees = Employee.order("work_id").page(params[:page]).per(10)
     else
