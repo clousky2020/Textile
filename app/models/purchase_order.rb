@@ -34,4 +34,6 @@ class PurchaseOrder < ApplicationRecord
       end
     end
   end
+
+
 end

@@ -1,0 +1,63 @@
+var head = $(".chart-container")
+head.empty();
+
+
+<%unless @top_purchase_orders.blank? %>
+head.append("<canvas id=\"check_purchase_supplier_top_chart\"></canvas>\n")
+var ctx = $('#check_purchase_supplier_top_chart');
+var myChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+        labels: <%= raw @top_purchase_orders.keys[0..4]  %>,
+        datasets: [
+            {
+                label: '采购金额',
+                data: <%= raw @top_purchase_orders.values[0..4] %>,
+                backgroundColor: 'red',
+                borderWidth: 1
+            }
+        ]
+    },
+    options: {
+        showlines: false,
+        spanGaps:
+            true,
+        fill:
+            false,
+        bezierCurve:
+            false,
+        datasetFill:
+            false
+    }
+});
+<%end %>
+
+<%unless @top_sale_orders.blank? %>
+head.append("<canvas id=\"check_sale_orders_top_chart\"></canvas>\n")
+var ctx = $('#check_sale_orders_top_chart');
+var myChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+        labels: <%= raw @top_sale_orders.keys[0..4]  %>,
+        datasets: [
+            {
+                label: '销售金额',
+                data: <%= raw @top_sale_orders.values[0..4] %>,
+                backgroundColor: 'green',
+                borderWidth: 1
+            }
+        ]
+    },
+    options: {
+        showlines: false,
+        spanGaps:
+            true,
+        fill:
+            false,
+        bezierCurve:
+            false,
+        datasetFill:
+            false
+    }
+});
+<%end %>

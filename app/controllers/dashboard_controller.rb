@@ -13,10 +13,9 @@ class DashboardController < ApplicationController
     @last_week_sale_orders = SaleOrder.where(is_invalid: false).where("bill_time > ?", Time.current.midnight - 7.days)
     @last_week_proceeds = Proceed.where(is_invalid: false).where("bill_time > ?", Time.current.midnight - 7.days)
     @last_week_expenses = Expense.where(is_invalid: false).where("bill_time > ?", Time.current.midnight - 7.days)
-
   end
 
-  def check_sale_proceed
+  def check_orders_money
     @sale_orders = SaleOrder.check_date(params[:start_date], params[:end_date], :total_price)
     @proceeds = Proceed.check_date(params[:start_date], params[:end_date], :paper_amount)
     @purchase_orders = PurchaseOrder.check_date(params[:start_date], params[:end_date], :total_price)
@@ -25,9 +24,9 @@ class DashboardController < ApplicationController
     @ratio << @proceeds.values.sum << @expenses.values.sum
   end
 
-  def check_purchase_expense
-    @purchase_orders = PurchaseOrder.check_date(params[:start_date], params[:end_date], :total_price)
-    @expenses = Expense.check_date(params[:start_date], params[:end_date], :paper_amount)
+  def check_trade_top
+    @top_purchase_orders = PurchaseOrder.check_top_to_hash(params[:start_date], params[:end_date], 'purchase_supplier', 'name')
+    @top_sale_orders = SaleOrder.check_top_to_hash(params[:start_date], params[:end_date], 'sale_customer', 'name')
   end
 
   def check_expense_proceed

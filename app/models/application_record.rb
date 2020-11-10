@@ -74,4 +74,27 @@ class ApplicationRecord < ActiveRecord::Base
     end
     h
   end
+
+  # 获得时间内的交易额,降序排序
+  def self.check_top_to_hash(start_date, end_date, attribute1, attribute2)
+    # 获取符合条件的订单
+    orders = self.where(bill_time: start_date..end_date, is_invalid: false, check_status: true)
+    # 新建一个hash
+    h = Hash.new
+    # 遍历
+    orders.each do |order|
+      # hash里面已有名字
+      if h.has_key? order.send(attribute1).send(attribute2)
+        # 添加新的订单总值
+        h[order.send(attribute1).send(attribute2)] += order.total_price
+      else
+        # 把名字和订单总值加入hash
+        h.store(order.send(attribute1).send(attribute2), order.total_price)
+      end
+    end
+    # 排序
+    h.sort {|a, b| b[1] <=> a[1]}.to_h
+  end
+
+
 end

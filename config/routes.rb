@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
   root 'dashboard#index'
-  post 'check_sale_proceed', to: 'dashboard#check_sale_proceed'
-  post 'check_purchase_expense', to: 'dashboard#check_purchase_expense'
+  post 'check_orders_money', to: 'dashboard#check_orders_money'
+  post 'check_trade_top', to: 'dashboard#check_trade_top'
   post 'check_expense_proceed', to: 'dashboard#check_expense_proceed'
 
   resources :session, :only => [:new, :create, :destroy]

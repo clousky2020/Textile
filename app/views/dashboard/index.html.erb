@@ -151,25 +151,43 @@
         </div>
       </div>
     </div>
-    <p class="alert-warning">本系统正处于测试期，所有的用户密码为123456。
-      有任何意见、建议、问题、需要添加的功能请在底部的建议反馈里提交！</p>
+    <p class="alert-warning"> 有任何意见、建议、问题、需要添加的功能请在底部的建议反馈里提交！</p>
+
+
     <h5>图表查询</h5>
-    <div class="row no-gutters">
-      <%= form_with url: check_sale_proceed_url do |f| %>
-        <div class="input-group">
-          <%= f.label :start_date, "开始日期" %>
-          <%= f.date_field :start_date, value: (Time.current - 7.days).strftime("%Y-%m-%d") %>
-        </div>
-        <div class="input-group">
-          <%= f.label :end_date, "结束日期" %>
-          <%= f.date_field :end_date, value: (Time.current + 1.day).strftime("%Y-%m-%d") %>
-          <%= f.submit "查询" %>
-        </div>
-      <% end %>
-    </div>
+    <p>开始日期：<%= date_field_tag :start_date, (Time.current - 7.days).strftime("%Y-%m-%d") %></p>
+    <p>结束日期：<%= date_field_tag :end_date, (Time.current + 1.day).strftime("%Y-%m-%d") %></p>
+    <%= button_tag "订单收支", id: "check_order_money", class: "btn btn-primary" %>
+    <%= button_tag "最高交易金额的公司", id: "check_trade_top", class: "btn btn-primary" %>
+
     <div class="chart-container">
 
     </div>
 
   </div>
 </div>
+<script>
+    $(function () {
+        $("#check_order_money").on("click", function () {
+            var start_date = $("#start_date").val();
+            var end_date = $("#end_date").val();
+            $.post("/check_orders_money",
+                {
+                    start_date: start_date,
+                    end_date: end_date
+                }
+            )
+        });
+
+        $("#check_trade_top").on("click", function () {
+            var start_date = $("#start_date").val();
+            var end_date = $("#end_date").val();
+            $.post("/check_trade_top",
+                {
+                    start_date: start_date,
+                    end_date: end_date
+                }
+            )
+        })
+    });
+</script>
