@@ -159,3 +159,118 @@ en:
         create: 新增%{model}
         submit: 储存%{model}
         update: 更新%{model}
+
+
+
+  role_core:
+    models:
+      global: 通用
+      user: 用户
+      role: 角色
+      employee: 员工
+      repo: 仓库
+      product: 产品
+      material: 原料
+      sale_customer: 客户
+      sale_order: 销售单
+      purchase_order: 采购单
+      purchase_supplier: 供货商
+      param: 设定
+      expense: 付款单
+      proceed: 收款单
+      comment: 评论
+
+    attributes:
+      global:
+        super: 超级管理员
+      user:
+        create: 创建
+        destroy: 删除
+        update: 编辑更新
+        read: 读取
+        reset: 重置密码
+        lock: 锁定
+        read_my_own: 读取(自己)
+        update_my_own: 编辑更新(自己)
+        destroy_my_own: 删除(自己)
+      role:
+        create: 创建
+        destroy: 删除
+        update: 编辑更新
+        read: 读取
+      employee:
+        create: 创建
+        destroy: 删除
+        update: 编辑更新
+        read: 读取
+      repo:
+        create: 创建
+        destroy: 删除
+        update: 编辑更新
+        read: 读取
+      product:
+        create: 创建
+        destroy: 删除
+        update: 编辑更新
+        read: 读取
+      material:
+        create: 创建
+        destroy: 删除
+        update: 编辑更新
+        read: 读取
+      sale_customer:
+        create: 创建
+        destroy: 删除
+        update: 编辑更新
+        read: 读取
+        export: 导出对账单
+      sale_order:
+        create: 创建
+        destroy: 删除
+        update: 编辑更新
+        read: 读取
+        pass_check: 审核
+        update_my_own: 编辑更新(自己)
+        destroy_my_own: 删除(自己)
+      purchase_order:
+        create: 创建
+        destroy: 删除
+        update: 编辑更新
+        read: 读取
+        pass_check: 审核
+        update_my_own: 编辑更新(自己)
+        destroy_my_own: 删除(自己)
+      purchase_supplier:
+        create: 创建
+        destroy: 删除
+        update: 编辑更新
+        read: 读取
+        export: 导出对账单
+      param:
+        update: 编辑更新
+        read: 读取
+      expense:
+        create: 创建
+        destroy: 删除
+        update: 编辑更新
+        read: 读取
+        pass_check: 审核
+        pass_reimburse: 报销
+        update_my_own: 编辑更新(自己)
+        destroy_my_own: 删除(自己)
+      proceed:
+        create: 创建
+        destroy: 删除
+        update: 编辑更新
+        read: 读取
+        pass_check: 审核
+        update_my_own: 编辑更新(自己)
+        destroy_my_own: 删除(自己)
+      comment:
+        create: 创建
+        destroy: 删除
+        update: 编辑更新
+        read: 读取
+        take_top: 置顶
+        update_my_own: 编辑更新(自己)
+        destroy_my_own: 删除(自己)
