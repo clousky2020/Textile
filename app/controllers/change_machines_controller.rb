@@ -6,8 +6,11 @@ class ChangeMachinesController < ApplicationController
   def index
     if params.has_key?(:search) && params[:search] != ""
       @change_machines = ChangeMachine.search(params[:search]).order("change_date DESC").page(params[:page])
+    elsif params.has_key?(:type) && params[:type] != ""
+      type = params[:type].split(":")
+      @change_machines = ChangeMachine.where("#{type[0]}=?", type[1]).order("created_at DESC").page(params[:page])
     else
-      @change_machines = ChangeMachine.order("change_date DESC").page(params[:page])
+      @change_machines = ChangeMachine.order("is_settle,created_at ").page(params[:page])
     end
   end
 

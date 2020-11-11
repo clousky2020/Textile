@@ -21,7 +21,6 @@
     <td>机器针筒类型</td>
     <td>改机日期</td>
     <td>目标型号</td>
-    <td>尾款</td>
     <% if can? :destroy, ChangeMachine %>
       <td>删除</td>
     <% end %>
@@ -39,11 +38,7 @@
     <td><%= change_machine.machine_type %></td>
     <td><%= change_machine.change_date %></td>
     <td><%= change_machine.change_to_specification %></td>
-    <% if change_machine.is_settle %>
-      <td class="table-success">已结清</td>
-    <% else %>
-      <td class="table-danger">未结清</td>
-    <% end %>
+
     <% if can? :destroy, ChangeMachine %>
       <td><%= link_to "删除", change_machine_path(change_machine), method: :delete, data: {confirm: "确定删除？"} %></td>
     <% end %>
