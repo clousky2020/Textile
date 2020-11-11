@@ -1,6 +1,7 @@
 class ChangeMachine < ApplicationRecord
 
   validates :price, :change_person, :change_date, :machine_id, presence: true
+  validates :change_date, uniqueness: {scope: :machine_id}
 
   def self.search(search)
     if search

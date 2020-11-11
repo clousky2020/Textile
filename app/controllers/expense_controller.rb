@@ -73,7 +73,12 @@ class ExpenseController < ApplicationController
   def pass_check
     @expense.pass_check_result(current_user)
     flash[:success] = "#{@expense.counterparty}的付款单已审核"
-    redirect_back_referrer_for(expense_url(@expense.id))
+    if Param.param_status("连续审核") && next_order = Expense.find_by(check_status: false)
+      redirect_to expense_path(next_order)
+    else
+      redirect_back_referrer_for(expense_url(@expense.id))
+    end
+
   end
 
   def pass_reimburse

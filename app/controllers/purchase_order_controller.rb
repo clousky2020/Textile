@@ -84,7 +84,11 @@ class PurchaseOrderController < ApplicationController
       @purchase_order.pass_check_result(current_user)
       @purchase_order.purchase_supplier.calcu_total_payment_required
       flash[:success] = "订单号#{@purchase_order.order_id}已审核"
-      redirect_back_referrer_for purchase_order_url(@purchase_order.id)
+      if Param.param_status("连续审核") && next_order = PurchaseOrder.find_by(check_status: false, purchase_supplier_id: @purchase_order.purchase_supplier_id)
+        redirect_to purchase_order_path(next_order)
+      else
+        redirect_back_referrer_for purchase_order_url(@purchase_order.id)
+      end
     else
       flash[:warning] = "订单已作废，不可更改"
       render "purchase_order/show"

@@ -12,7 +12,7 @@ class ProceedController < ApplicationController
     elsif params.has_key?(:search) && params[:search] != ""
       @proceeds = Proceed.includes(:sale_customer).sale_customer_search(params[:search]).references(:sale_customer).page(params[:page])
     else
-      @proceeds = Proceed.order("created_at DESC").page(params[:page])
+      @proceeds = Proceed.order("check_status,created_at DESC").page(params[:page])
     end
   end
 
@@ -69,7 +69,11 @@ class ProceedController < ApplicationController
   def pass_check
     @proceed.pass_check_result(current_user)
     flash[:success] = "#{@proceed.sale_customer.name}的收款单已审核"
-    redirect_back_referrer_for proceed_url(@proceed.id)
+    if Param.param_status("连续审核") && next_order = Proceed.find_by(check_status: false, sale_customer_id: @proceed.sale_customer_id)
+      redirect_to proceed_path(next_order)
+    else
+      redirect_back_referrer_for proceed_url(@proceed.id)
+    end
   end
 
   private

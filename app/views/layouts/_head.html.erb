@@ -84,6 +84,7 @@
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
+            <%= link_to "参数设定", params_path, class: "dropdown-item " %>
             <%= link_to "更改密码", edit_password_reset_path(current_user), class: "dropdown-item " %>
             <%= link_to "退出", session_path(current_user), method: :delete, class: "dropdown-item " %>
           </ul>

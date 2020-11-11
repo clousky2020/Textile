@@ -5,11 +5,12 @@
   <div>
     <% if !@proceed.is_invalid && !@proceed.check_status %>
       <% if can? :pass_check, Proceed %>
+        <div class="alert-warning "><%= param_check("连续审核") %></div>
         <%= link_to "通过审核", pass_check_proceed_path(@proceed), class: "btn btn-primary" %>
       <% end %>
-    <% end %>
-    <% if can? :update, Proceed %>
-      <%= link_to "编辑", edit_proceed_path(@proceed), class: "btn btn-primary" %>
+      <% if can? :update, Proceed %>
+        <%= link_to "编辑", edit_proceed_path(@proceed), class: "btn btn-primary" %>
+      <% end %>
     <% end %>
     <%= link_to "返回主页", proceed_index_path, class: "btn btn-primary" %>
   </div>

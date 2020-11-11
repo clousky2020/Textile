@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   post 'check_expense_proceed', to: 'dashboard#check_expense_proceed'
 
   resources :session, :only => [:new, :create, :destroy]
-  resources :param, only: [:index, :update]
+  resources :params, only: [:index, :update]
   resources :comments, only: [:index, :create, :destroy] do
     get :take_top, on: :member
   end

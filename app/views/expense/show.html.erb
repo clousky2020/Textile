@@ -1,31 +1,24 @@
 <% provide :title, "付款单详情" %>
-<% provide :edit_url, edit_expense_path(@expense) %>
-<% provide :pass_reimburse_url, pass_reimburse_expense_path(@expense) %>
-<% provide :pass_check_url, pass_check_expense_path(@expense) %>
-<% provide :back_url, expense_index_path %>
 
 
 <div class="text-center">
   <h2><%= yield(:title) %></h2>
-
   <%= render 'expense/show_content', object: @expense, type: "expense" %>
-
   <div>
     <% if !@expense.is_invalid && !@expense.check_status %>
       <% if can? :pass_check, Expense %>
-        <%= link_to "通过审核", yield(:pass_check_url), class: "btn btn-primary" %>
+        <div class="alert-warning"><%= param_check("连续审核") %></div>
+        <%= link_to "通过审核", pass_check_expense_path(@expense), class: "btn btn-primary" %>
+      <% end %>
+      <% if can? :update, Expense %>
+        <%= link_to "编辑", edit_expense_path(@expense), class: "btn btn-primary" %>
       <% end %>
     <% end %>
-
     <% if @expense.need_reimburse && @expense.check_status %>
       <% if can? :pass_check, Expense %>
-        <%= link_to "已报销", yield(:pass_reimburse_url), class: "btn btn-primary" %>
+        <%= link_to "已报销", pass_reimburse_expense_path(@expense), class: "btn btn-primary" %>
       <% end %>
     <% end %>
-
-    <% if can? :update, Expense %>
-      <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary" %>
-    <% end %>
-    <%= link_to "返回主页", yield(:back_url), class: "btn btn-primary" %>
+    <%= link_to "返回主页", expense_index_path, class: "btn btn-primary" %>
   </div>
 </div>

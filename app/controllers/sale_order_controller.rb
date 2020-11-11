@@ -14,7 +14,7 @@ class SaleOrderController < ApplicationController
       end
       @sale_orders = @sale_orders.page(params[:page])
     else
-      @sale_orders = SaleOrder.where(is_invalid: false).order("updated_at DESC").page(params[:page])
+      @sale_orders = SaleOrder.where(is_invalid: false).order("check_status,updated_at DESC").page(params[:page])
     end
   end
 
@@ -78,7 +78,12 @@ class SaleOrderController < ApplicationController
       @sale_order.pass_check_result(current_user)
       @sale_order.sale_customer.calcu_total_collection_required
       flash[:success] = "订单号#{@sale_order.order_id}已审核"
-      redirect_back_referrer_for sale_order_path(@sale_order.id)
+
+      if Param.param_status("连续审核") && next_order = SaleOrder.find_by(check_status: false, sale_customer_id: @sale_order.sale_customer_id)
+        redirect_to sale_order_path(next_order)
+      else
+        redirect_back_referrer_for sale_order_path(@sale_order.id)
+      end
     else
       flash[:warning] = "订单已作废，不用审核了"
       render "sale_order/show"

@@ -46,9 +46,9 @@ unless Role.find_by_name("管理员")
 end
 p '添加默认参数配置'
 params_list = {
-    "权限认证": "开启后全系统具有认证体系",
-    "采购账单自动审核": "有财务权限者录入的采购订单自动完成审核",
-    "销售账单自动审核": "有仓管权限者录入的销售订单自动完成审核"
+    "采购账单自动审核": "有审核权限者录入的采购订单自动完成审核",
+    "销售账单自动审核": "有审核权限者录入的销售订单自动完成审核",
+    "连续审核": "相同公司的订单，如有未审核的，在审核后直接跳转到未审核的订单界面"
 }
 params_list.each do |key, value|
   p "参数录入：#{key}=>#{value}"
@@ -177,10 +177,6 @@ creek.sheets.each do |sheet|
                                            account_from: cells["G#{n}"], remark: cells["H#{n}"], bill_time: cells["A#{n}"])
 
         expose.build_purchase_supplier
-        # if type == "货款" && !purchase_supplier.expenses.exists?(expose.id)
-        #   purchase_supplier.expenses << expose
-        #   purchase_supplier.save
-        # end
 
       end
     end
