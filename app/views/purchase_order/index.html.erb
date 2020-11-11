@@ -15,7 +15,8 @@
   <div class="alert-info text-center">空空如也</div>
 <% else %>
   <% @purchase_orders.each do |purchase_order| %>
-    <div class="purchase_order_info">
+
+    <div class="purchase_order_info <%= check_status_css(purchase_order) %>">
       <div class="content_left">
         <div class="row no-gutters">
           <div class="purchase_order_id">订单号:<%= link_to purchase_order.order_id, purchase_order_path(purchase_order) %></div>

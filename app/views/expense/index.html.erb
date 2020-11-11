@@ -17,8 +17,9 @@
   <div class="alert-info text-center">空空如也</div>
 <% else %>
   <% @expenses.each do |expense| %>
-    <div class="expense_info">
-      <div class="content_left">
+
+    <div class="expense_info <%= check_status_css(expense) %>">
+      <div class="content">
         <div class="row no-gutters">
           <div class="expense_date">单号:<%= link_to expense.order_id, expense_path(expense) %></div>
           <p class=" ml-auto">
@@ -56,8 +57,5 @@
 <% end %>
 
 <%= render 'shard/paginate', object: @expenses %>
-
-
-
 
 

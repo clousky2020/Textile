@@ -16,7 +16,7 @@
   <div class="alert-info text-center">空空如也</div>
 <% else %>
   <% @proceeds.each do |proceed| %>
-    <div class="proceed_info">
+    <div class="proceed_info <%= check_status_css(proceed) %>">
       <div class="content_left">
         <div class="proceed_date">单号:<%= link_to proceed.order_id, proceed_path(proceed) %></div>
         <div class="row no-gutters">
