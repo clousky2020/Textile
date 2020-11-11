@@ -1,0 +1,6 @@
+<% provide :button_text, "更新" %>
+<% provide :title, "编辑改机记录" %>
+<% provide :method, :patch %>
+<% provide :back_url, change_machines_url %>
+
+<%= render 'shard/form', object: @change_machine, url: change_machine_path, type: "change_machine", type_2: "edit" %>

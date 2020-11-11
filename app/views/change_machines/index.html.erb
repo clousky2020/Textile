@@ -1,0 +1,62 @@
+<% provide :index_title, "改机记录" %>
+<% provide :manage_object, ChangeMachine %>
+<% provide :new_url, new_change_machine_path %>
+
+<h2 class="text-center"><%= yield(:index_title) %></h2>
+<div class="row no-gutters">
+
+  <% if can? :create, ChangeMachine %>
+    <div>
+      <%= link_to "新建", yield(:new_url) %>
+    </div>
+  <% end %>
+  <%= render 'shard/index_header', page: "change_machine" %>
+</div>
+
+<table class="table table-hover table-active">
+  <thead>
+  <tr>
+    <td>改机人</td>
+    <td>机器编号</td>
+    <td>机器针筒类型</td>
+    <td>改机日期</td>
+    <td>目标型号</td>
+    <td>尾款</td>
+    <% if can? :destroy, ChangeMachine %>
+      <td>删除</td>
+    <% end %>
+  </tr>
+  </thead>
+  <tbody>
+  <% @change_machines.each do |change_machine| %>
+    <% if change_machine.is_settle %>
+      <tr class="table-success">
+    <% else %>
+      <tr class="table-danger">
+    <% end %>
+    <td><%= link_to change_machine.change_person, change_machine_path(change_machine) %></td>
+    <td><%= change_machine.machine_id %></td>
+    <td><%= change_machine.machine_type %></td>
+    <td><%= change_machine.change_date %></td>
+    <td><%= change_machine.change_to_specification %></td>
+    <% if change_machine.is_settle %>
+      <td class="table-success">已结清</td>
+    <% else %>
+      <td class="table-danger">未结清</td>
+    <% end %>
+    <% if can? :destroy, ChangeMachine %>
+      <td><%= link_to "删除", change_machine_path(change_machine), method: :delete, data: {confirm: "确定删除？"} %></td>
+    <% end %>
+    </tr>
+
+  <% end %>
+  </tbody>
+</table>
+<%= render 'shard/paginate', object: @change_machines %>
+
+
+
+
+
+
+

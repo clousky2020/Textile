@@ -46,6 +46,9 @@
             <% if can? :read, Repo %>
               <%= link_to "仓库管理", repo_index_path, class: "dropdown-item" %>
             <% end %>
+            <% if can? :read, ChangeMachine %>
+              <%= link_to "改机情况记录", change_machines_path, class: "dropdown-item" %>
+            <% end %>
             <% if can? :read, Material %>
               <%= link_to "原料管理", material_index_path, class: "dropdown-item " %>
             <% end %>

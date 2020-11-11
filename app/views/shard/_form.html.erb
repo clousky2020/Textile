@@ -24,6 +24,8 @@
       <%= render 'material/form_content', f: f, type_2: type_2, object: object %>
     <% elsif type == "product" %>
       <%= render 'product/form_content', f: f, type_2: type_2, object: object %>
+    <% elsif type == "change_machine" %>
+      <%= render 'change_machines/form_content', f: f, type_2: type_2, object: object %>
     <% end %>
     <div class="form-group">
       <%= f.submit yield(:button_text), class: "btn btn-primary" %>

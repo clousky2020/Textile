@@ -88,6 +88,11 @@
             <%= link_to "填写新的销售单", new_sale_order_path %>
           </div>
         <% end %>
+        <% if can? :create, ChangeMachine %>
+          <div class="btn">
+            <%= link_to "记录新的改机信息", new_change_machine_path %>
+          </div>
+        <% end %>
       </div>
     </div>
     <div class="last_week_status">
@@ -175,20 +180,8 @@
   </div>
   <div class="col-md-9">
 
-    <div id="accordion">
-      <div class="card">
-        <div class="card-header">
-          <a class="card-link" data-toggle="collapse" href="#collapseOne">
-            本系统的由来
-          </a>
-        </div>
-        <div id="collapseOne" class="collapse" data-parent="#accordion">
-          <div class="card-body">
-            <%= render 'dashboard/info' %>
-          </div>
-        </div>
-      </div>
-    </div>
+    <%#= render 'dashboard/info' %>
+
     <p class="alert-warning"> 有任何意见、建议、问题、需要添加的功能请在底部的建议反馈里提交！</p>
 
 

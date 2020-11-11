@@ -1,0 +1,46 @@
+<table class="table">
+  <tbody>
+  <tr>
+    <th>改机人姓名</th>
+    <td><%= object.change_person %></td>
+  </tr>
+  <tr>
+    <th>联系方式</th>
+    <td><%= object.contacts %></td>
+  </tr>
+  <tr>
+    <th>机器编号</th>
+    <td><%= object.machine_id %></td>
+  </tr>
+  <tr>
+    <th>机器的针筒类型</th>
+    <td><%= object.machine_type %></td>
+  </tr>
+  <tr>
+    <th>费用</th>
+    <td><%= object.price %></td>
+  </tr>
+  <tr>
+    <th>改机日期</th>
+    <td><%= object.change_date %></td>
+  </tr>
+  <tr>
+    <th>目标纺织类型</th>
+    <td><%= object.change_to_specification %></td>
+  </tr>
+  <tr>
+    <th>备注</th>
+    <td><%= object.remark %></td>
+  </tr>
+  <% if !object.is_settle? %>
+    <tr>
+      <td colspan="2" class="alert-danger">尾款未结清</td>
+    </tr>
+  <% else %>
+    <tr>
+      <td colspan="2" class="alert-success">尾款已结清</td>
+    </tr>
+
+  <% end %>
+  </tbody>
+</table>

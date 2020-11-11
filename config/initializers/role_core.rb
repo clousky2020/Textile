@@ -29,6 +29,15 @@ RoleCore.permission_set_class.draw do
     permission :update
     permission :read, _priority: 1, default: true
   end
+
+  group :change_machines, model_name: "ChangeMachine" do
+    permission :create
+    permission :destroy
+    permission :update
+    permission :read, default: true
+    permission :pass_settle
+  end
+
   group :employee, model_name: "Employee" do
     permission :create
     permission :destroy

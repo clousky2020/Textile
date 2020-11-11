@@ -1,0 +1,18 @@
+<% provide :title, "改机信息详情" %>
+<% provide :edit_url, edit_change_machine_path(@change_machine) %>
+<% provide :back_url, change_machines_path %>
+<div class="text-center">
+  <h2><%= yield(:title) %></h2>
+  <%= render 'change_machines/show_content', object: @change_machine, type: "change_machine" %>
+  <div>
+    <% if !@change_machine.is_settle? %>
+      <% if can? :pass_settle, ChangeMachine %>
+        <%= link_to "已结清", pass_settle_change_machine_path, class: "btn btn-primary" %>
+      <% end %>
+    <% end %>
+    <% if can? :update, ChangeMachine %>
+      <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary" %>
+    <% end %>
+    <%= link_to "返回主页", yield(:back_url), class: "btn btn-primary" %>
+  </div>
+</div>

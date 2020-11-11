@@ -120,7 +120,11 @@ en:
         price: "单价"
         sale_customer: "供应商名字"
 
-
+      change_machine:
+        price: 改机费用
+        change_person: 改机人
+        machine_id: 机器编号
+        change_date: 改机日期
 
   errors:
     format: "%{attribute} %{message}"
@@ -179,6 +183,7 @@ en:
       expense: 付款单
       proceed: 收款单
       comment: 评论
+      change_machine: 改机信息
 
     attributes:
       global:
@@ -198,6 +203,12 @@ en:
         destroy: 删除
         update: 编辑更新
         read: 读取
+      change_machine:
+        create: 创建
+        destroy: 删除
+        update: 编辑更新
+        read: 读取
+        pass_settle: 结清确认
       employee:
         create: 创建
         destroy: 删除

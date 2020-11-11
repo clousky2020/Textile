@@ -1,0 +1,7 @@
+
+<% provide :button_text, "创建" %>
+<% provide :title, "新的改机信息" %>
+<% provide :method, :post %>
+<% provide :back_url, change_machines_url %>
+
+<%= render 'shard/form', object: @change_machine, url: change_machines_url, type: "change_machine", type_2: "create" %>

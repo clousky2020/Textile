@@ -2,7 +2,7 @@
   <div class="search ml-auto">
     <%= form_tag({action: :index}, method: "get") do %>
       <div class="input-group">
-        <%= text_field_tag :search, '', placeholder: "页面上的内容都可以查询得到", size: 25 %>
+        <%= text_field_tag :search, '', placeholder: "查询", size: 25 %>
         <% if page == "expense" %>
           <%= select_tag :type, options_for_select([['未作废订单', 'is_invalid: false'], ['已作废订单', 'is_invalid: true'], ['未审核订单', 'check_status:false'], ['已审核订单', 'check_status:true'], ['未报销订单', 'need_reimburse:true']]) %>
           <%= select_tag :order, options_for_select([['账单时间降序', 'bill_time DESC'], ['账单时间升序', 'bill_time'], ['订单号', 'order_id DESC']]) %>
@@ -19,6 +19,8 @@
           <%= link_to "清空全部条件", sale_order_index_path %>
       <% elsif page == "sale_customer" %>
           <%= link_to "清空全部条件", sale_customer_index_path %>
+      <% elsif page == "change_machine" %>
+          <%= link_to "清空全部条件", change_machines_path %>
         <% end %>
         <div class="input-group-append">
           <%= submit_tag '搜索' %>

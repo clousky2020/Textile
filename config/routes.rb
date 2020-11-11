@@ -70,7 +70,11 @@ Rails.application.routes.draw do
       get :get_expense_type
     end
   end
-
+  resources :change_machines do
+    member do
+      get :pass_settle
+    end
+  end
   resources :password_resets, :only => [:edit, :update]
 
 
