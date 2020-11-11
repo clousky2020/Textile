@@ -96,6 +96,23 @@ creek.sheets.each do |sheet|
     end
   end
 
+  if sheet.name == '改机'
+    p '导入改机信息'
+    sheet.rows_with_meta_data.each do |row|
+      n = row['r']
+      if n != "1"
+        cells = row['cells']
+        change_machine = ChangeMachine.new(change_person: cells["D#{n}"], contacts: cells["E#{n}"], price: cells["C#{n}"],
+                                           machine_id: cells["B#{n}"], machine_type: cells["F#{n}"], remark: cells["H#{n}"],
+                                           change_date: cells["A#{n}"], change_to_specification: cells["G#{n}"])
+        if cells["I#{n}"] == "已结清"
+          change_machine.is_settle = true
+        end
+        change_machine.save
+      end
+    end
+  end
+
   if sheet.name == '出货'
     p '导入出货'
     sheet.rows_with_meta_data.each do |row|
@@ -158,10 +175,13 @@ creek.sheets.each do |sheet|
                                            paper_amount: cells["C#{n}"], actual_amount: cells["D#{n}"],
                                            account_number: cells["F#{n}"], account_name: cells["E#{n}"],
                                            account_from: cells["G#{n}"], remark: cells["H#{n}"], bill_time: cells["A#{n}"])
-        if type == "货款"
-          purchase_supplier.expenses << expose
-          purchase_supplier.save
-        end
+
+        expose.build_purchase_supplier
+        # if type == "货款" && !purchase_supplier.expenses.exists?(expose.id)
+        #   purchase_supplier.expenses << expose
+        #   purchase_supplier.save
+        # end
+
       end
     end
   end
