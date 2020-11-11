@@ -16,7 +16,7 @@ class Expense < ApplicationRecord
 
   def self.search(search)
     if search
-      where("purchase_suppliers.name LIKE :term or order_id LIKE :term or counterparty LIKE :term or remark LIKE :term ", term: "%#{search}%")
+      where("purchase_suppliers.name LIKE :term or order_id LIKE :term or counterparty LIKE :term or remark LIKE :term or expense_type LIKE :term ", term: "%#{search}%")
     else
       all
     end

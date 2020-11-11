@@ -2,10 +2,10 @@ class ExpenseController < ApplicationController
   load_and_authorize_resource
 
   def index
-    if params.has_key?(:search) && params.has_key?(:type) && params.has_key?(:expense_type)
+    if params.has_key?(:search) && params.has_key?(:type)
       type = params[:type].split(":")
       @expenses = Expense.left_outer_joins(:purchase_suppliers).search(params[:search]).where("#{type[0]}=?", type[1]).
-          where(expense_type: params[:expense_type]).references(:purchase_suppliers).order(params[:order]).page(params[:page])
+          references(:purchase_suppliers).order(params[:order]).page(params[:page])
     elsif params.has_key?(:type) && params[:type] != ""
       type = params[:type].split(":")
       @expenses = Expense.left_outer_joins(:purchase_suppliers).where("#{type[0]}=?", type[1]).references(:purchase_suppliers).order("created_at DESC").page(params[:page])
@@ -52,7 +52,6 @@ class ExpenseController < ApplicationController
       if @expense.update(expense_params)
         @expense.build_purchase_supplier
         flash[:success] = "成功更新付款单信息"
-        build_purchase_supplier
         redirect_to expense_path(@expense.id)
       else
         flash[:warning] = "#{@expense.errors.full_messages.join(',')}"
