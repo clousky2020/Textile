@@ -94,44 +94,82 @@
       <h5>最近7天的情况</h5>
       <div>
         <% if @last_week_purchase_orders.size > 0 %>
-          <p>有<%= @last_week_purchase_orders.size %>张采购单</p>
-          <% @last_week_purchase_orders[0..1].each do |order| %>
-            <p> <%= link_to order.material.name, purchase_order_path(order) %>
-              —<%= link_to order.purchase_supplier.name, purchase_supplier_path(order.purchase_supplier.id) %></p>
-          <% end %>
-          <% if @last_week_purchase_orders.size > 2 %>
-            <p>........</p>
-          <% end %>
+          <div id="accordion">
+            <div class="card">
+              <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="#collapse_21">
+                  <p>有<%= @last_week_purchase_orders.size %>张采购单</p>
+                </a>
+              </div>
+              <div id="collapse_21" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                  <% @last_week_purchase_orders.each do |order| %>
+                    <p> <%= link_to order.material.name, purchase_order_path(order) %>
+                      —<%= link_to order.purchase_supplier.name, purchase_supplier_path(order.purchase_supplier.id) %></p>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
         <% end %>
         <% if @last_week_sale_orders.size > 0 %>
           <p>有<%= @last_week_sale_orders.size %>张销售单</p>
-          <% @last_week_sale_orders[0..1].each do |order| %>
-            <p> <%= link_to order.product.name, sale_order_path(order) %>
-              —<%= link_to order.sale_customer.name, sale_customer_path(order.sale_customer.id) %></p>
-          <% end %>
-          <% if @last_week_sale_orders.size > 2 %>
-            <p>........</p>
-          <% end %>
+          <div id="accordion">
+            <div class="card">
+              <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="#collapse_22">
+                  <p>有<%= @last_week_sale_orders.size %>张销售单</p>
+                </a>
+              </div>
+              <div id="collapse_22" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                  <% @last_week_sale_orders.each do |order| %>
+                    <p> <%= link_to order.product.name, sale_order_path(order) %>
+                      —<%= link_to order.sale_customer.name, sale_customer_path(order.sale_customer.id) %></p>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
         <% end %>
         <% if @last_week_proceeds.size > 0 %>
           <p>有<%= @last_week_proceeds.size %>张收款单</p>
-          <% @last_week_proceeds[0..1].each do |order| %>
-            <p><%= link_to order.sale_customer.name, proceed_path(order) %></p>
-          <% end %>
-          <% if @last_week_proceeds.size > 2 %>
-            <p>........</p>
-          <% end %>
+          <div id="accordion">
+            <div class="card">
+              <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="#collapse_23">
+                  <p>有<%= @last_week_proceeds.size %>张收款单</p>
+                </a>
+              </div>
+              <div id="collapse_23" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                  <% @last_week_proceeds.each do |order| %>
+                    <p><%= link_to("#{order.sale_customer.name} - #{order.bill_time.localtime.strftime("%Y-%m-%d")}", proceed_path(order)) %></p>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
         <% end %>
         <% if @last_week_expenses.size > 0 %>
           <p>有<%= @last_week_expenses.size %>张付款单</p>
-          <% @last_week_expenses[0..1].each do |order| %>
-            <p><%= link_to order.counterparty, expense_path(order) %></p>
-          <% end %>
-          <% if @last_week_expenses.size > 2 %>
-            <p>........</p>
-          <% end %>
+          <div id="accordion">
+            <div class="card">
+              <div class="card-header">
+                <a class="card-link" data-toggle="collapse" href="#collapse_24">
+                  <p>有<%= @last_week_expenses.size %>张付款单</p>
+                </a>
+              </div>
+              <div id="collapse_24" class="collapse" data-parent="#accordion">
+                <div class="card-body">
+                  <% @last_week_expenses.each do |order| %>
+                    <p><%= link_to("#{order.counterparty} - #{order.bill_time.localtime.strftime("%Y-%m-%d")}", expense_path(order)) %></p>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
         <% end %>
-
       </div>
     </div>
   </div>
