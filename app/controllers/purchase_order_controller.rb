@@ -48,6 +48,9 @@ class PurchaseOrderController < ApplicationController
     info = @purchase_order.submit(params[:purchase_orders])
     if info[0]
       flash[:success] = info[1]
+      if Param.param_status("销售账单自动审核") && current_user.roles.any? {|role| role.permissions.purchase_orders.pass_check?}
+        PurchaseOrder.find(@purchase_order.order_id).pass_check_result(current_user)
+      end
       redirect_to purchase_order_url(info[2].id)
     else
       flash[:warning] = "#{(@purchase_order.errors.full_messages << info[1]).join(',')}"

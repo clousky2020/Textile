@@ -48,6 +48,9 @@ class SaleOrderController < ApplicationController
     info = @sale_order.submit(params[:sale_orders])
     if info[0]
       flash[:success] = info[1]
+      if Param.param_status("销售账单自动审核") && current_user.roles.any? {|role| role.permissions.sale_orders.pass_check?}
+        SaleOrder.find(@sale_order.order_id).pass_check_result(current_user)
+      end
       redirect_to sale_order_index_path
     else
       flash[:warning] = "#{(@sale_order.errors.full_messages << info[1]).join(',')}"

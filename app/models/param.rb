@@ -13,4 +13,6 @@ class Param < ApplicationRecord
     end
   end
 
+
+
 end

@@ -13,12 +13,16 @@ class SaleOrderCreateForm
     end
   end
 
-  attr_accessor(:name, :specification, :description, :measuring_unit, :number, :weight, :price,:bill_time,
+  attr_accessor(:name, :specification, :description, :measuring_unit, :number, :weight, :price, :bill_time,
                 :tax_rate, :freight, :picture, :is_return, :user_id, :repo_id, :product_id, :sale_customer)
-  validates :name, :measuring_unit, :number, :weight, :user_id, :repo_id, :sale_customer,:bill_time, presence: true
+  validates :name, :measuring_unit, :number, :weight, :user_id, :repo_id, :sale_customer, :bill_time, presence: true
   validates :weight, :price, numericality: {greater_than: 0}
 
   def initialize
+  end
+
+  def order_id
+    @order.id ||= 0
   end
 
   def tax_rate
@@ -60,12 +64,12 @@ class SaleOrderCreateForm
     self.sale_customer = params[:sale_customer]
     if valid?
       sale_customer = SaleCustomer.find_or_create_by(name: self.sale_customer.strip)
-      @order = SaleOrder.find_by(sale_customer_id: sale_customer.id, description: self.description.strip,bill_time:self.bill_time,
+      @order = SaleOrder.find_by(sale_customer_id: sale_customer.id, description: self.description.strip, bill_time: self.bill_time,
                                  measuring_unit: self.measuring_unit, product_id: self.product_id, repo_id: self.repo_id,
                                  user_id: self.user_id, number: self.number, weight: self.weight, price: self.price,
                                  tax_rate: self.tax_rate, freight: self.freight, is_return: self.is_return)
       if !@order
-        @order = SaleOrder.create(sale_customer_id: sale_customer.id, description: self.description.strip,bill_time:self.bill_time,
+        @order = SaleOrder.create(sale_customer_id: sale_customer.id, description: self.description.strip, bill_time: self.bill_time,
                                   measuring_unit: self.measuring_unit, product_id: self.product_id, repo_id: self.repo_id,
                                   user_id: self.user_id, number: self.number, weight: self.weight, price: self.price,
                                   tax_rate: self.tax_rate, freight: self.freight, is_return: self.is_return)

@@ -1,6 +1,6 @@
 <div class="param_info">
   <% @params.each do |param| %>
-    <div class=" param-form">
+    <div class=" param-form <%= param_status_css(param) %>">
       <%= form_for param, method: :patch, remote: true do |f| %>
         <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s,
                 :value => form_authenticity_token) %>

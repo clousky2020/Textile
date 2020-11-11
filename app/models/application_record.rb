@@ -22,7 +22,7 @@ class ApplicationRecord < ActiveRecord::Base
 
   #订单通过审核
   def pass_check_result(current_user)
-    self.update(check_status: true, check_time: Time.now, check_person: current_user.name)
+    self.update(check_status: true, check_time: Time.now.localtime, check_person: current_user.name)
   end
 
   #初始化订单审核状态

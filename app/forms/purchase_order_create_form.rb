@@ -21,6 +21,9 @@ class PurchaseOrderCreateForm
   def initialize
   end
 
+  def order_id
+    @order.id ||= nil
+  end
 
   def submit(params)
     self.name = params[:name]
@@ -49,9 +52,9 @@ class PurchaseOrderCreateForm
                                      tax_rate: self.tax_rate, deposit: self.deposit, freight: self.freight, is_return: self.is_return)
       if !@order
         @order = PurchaseOrder.create!(purchase_supplier_id: purchase_supplier.id, description: self.description.strip, batch_number: self.batch_number.strip,
-                                      measuring_unit: self.measuring_unit, material_id: material.id, repo_id: self.repo_id, bill_time: self.bill_time,
-                                      user_id: self.user_id, number: self.number, weight: self.weight, price: self.price,
-                                      tax_rate: self.tax_rate, deposit: self.deposit, freight: self.freight, is_return: self.is_return)
+                                       measuring_unit: self.measuring_unit, material_id: material.id, repo_id: self.repo_id, bill_time: self.bill_time,
+                                       user_id: self.user_id, number: self.number, weight: self.weight, price: self.price,
+                                       tax_rate: self.tax_rate, deposit: self.deposit, freight: self.freight, is_return: self.is_return)
         # 有图片则另外记录进去
         if @order && self.picture
           @order.picture = self.picture
@@ -60,12 +63,12 @@ class PurchaseOrderCreateForm
 
       else
         flash = "已经有相同的订单了,订单号#{@order.order_id}"
-        return false, flash,@order
+        return false, flash, @order
       end
       flash = "创建成功,订单号#{@order.order_id}"
-      return true, flash,@order
+      return true, flash, @order
     else
-      return false, "",@order
+      return false, "", @order
     end
   end
 

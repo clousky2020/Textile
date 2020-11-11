@@ -59,7 +59,7 @@
   </tr>
   <tr>
     <th>账单时间</th>
-    <td><%= object.bill_time %></td>
+    <td><%= str_time(object.bill_time) %></td>
   </tr>
   <tr>
     <th>经手人</th>
@@ -76,7 +76,7 @@
     </tr>
     <tr>
       <th>审核时间</th>
-      <td> <%= object.check_time.localtime %></td>
+      <td> <%= str_time(object.check_time) %></td>
     </tr>
   <% end %>
   <% if object.is_return %>

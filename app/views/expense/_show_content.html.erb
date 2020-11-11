@@ -44,7 +44,7 @@
 
   <tr>
     <th>付款时间</th>
-    <td><%= object.bill_time %></td>
+    <td><%= str_time(object.bill_time) %></td>
   </tr>
 
 
@@ -61,7 +61,7 @@
     </tr>
     <tr>
       <th>审核时间</th>
-      <td> <%= object.check_time.localtime %></td>
+      <td> <%= str_time(object.check_time) %></td>
     </tr>
   <% end %>
   <% if object.need_reimburse %>

@@ -17,12 +17,25 @@ module ApplicationHelper
     Time.current.localtime.strftime("%Y-%m-%d")
   end
 
+  def str_time(object)
+    object.strftime("%Y-%m-%d %H:%M")
+  end
+
   # 根据订单是否通过审核，改变框内的颜色
   def check_status_css(object)
     if !object.check_status
-      status = "alert-danger"
+      "alert-danger"
     else
-      status = "alert-success"
+      "alert-success"
+    end
+  end
+
+  # 根据订单是否通过审核，改变框内的颜色
+  def param_status_css(object)
+    if object.status
+      "alert-success"
+    else
+      nil
     end
   end
 
