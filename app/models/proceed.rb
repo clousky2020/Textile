@@ -4,6 +4,8 @@ class Proceed < ApplicationRecord
 
   mount_uploader :picture, PictureUploader
   validates :order_id, uniqueness: true
+  validates :bill_time, uniqueness: {scope: [:sale_customer_id, :paper_amount]}
+
   validates :paper_amount, :actual_amount, numericality: {greater_than: 0}
 
   after_create :check_result_initial

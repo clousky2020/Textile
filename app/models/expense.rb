@@ -3,6 +3,7 @@ class Expense < ApplicationRecord
   has_and_belongs_to_many :purchase_suppliers
 
   validates :order_id, uniqueness: true
+  validates :bill_time, uniqueness: {scope: [:counterparty, :paper_amount,:expense_type]}
   validates :counterparty, :expense_type, :paper_amount, :actual_amount, presence: true
   validates :paper_amount, :actual_amount, numericality: {greater_than: 0}
 

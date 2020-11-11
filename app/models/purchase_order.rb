@@ -15,6 +15,7 @@ class PurchaseOrder < ApplicationRecord
   after_update :calcuate_total_price
 
   scope :is_invalid, -> {where(is_invalid: true)}
+  validates :bill_time, uniqueness: {scope: [:purchase_supplier_id, :weight, :price]}
   scope :is_not_invalid, -> {where(is_invalid: false)}
 
 
