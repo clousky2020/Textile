@@ -198,6 +198,7 @@
     <p>结束日期：<%= date_field_tag :end_date, (Time.current + 1.day).strftime("%Y-%m-%d") %></p>
     <%= button_tag "订单收支", id: "check_order_money", class: "btn btn-primary" %>
     <%= button_tag "最高交易金额的公司", id: "check_trade_top", class: "btn btn-primary" %>
+    <%= button_tag "支出类别", id: "check_expense_ratio", class: "btn btn-primary" %>
 
     <div class="chart-container">
 
@@ -222,6 +223,16 @@
             var start_date = $("#start_date").val();
             var end_date = $("#end_date").val();
             $.post("/check_trade_top",
+                {
+                    start_date: start_date,
+                    end_date: end_date
+                }
+            )
+        });
+        $("#check_expense_ratio").on("click", function () {
+            var start_date = $("#start_date").val();
+            var end_date = $("#end_date").val();
+            $.post("/check_expense_ratio",
                 {
                     start_date: start_date,
                     end_date: end_date

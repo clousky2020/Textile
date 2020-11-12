@@ -18,9 +18,9 @@ class DashboardController < ApplicationController
 
   def check_orders_money
     @sale_orders = SaleOrder.check_date(params[:start_date], params[:end_date], :total_price)
-    @proceeds = Proceed.check_date(params[:start_date], params[:end_date], :paper_amount)
+    @proceeds = Proceed.check_date(params[:start_date], params[:end_date], :actual_amount)
     @purchase_orders = PurchaseOrder.check_date(params[:start_date], params[:end_date], :total_price)
-    @expenses = Expense.check_date(params[:start_date], params[:end_date], :paper_amount)
+    @expenses = Expense.check_date(params[:start_date], params[:end_date], :actual_amount)
     @ratio = Array.new
     @ratio << @proceeds.values.sum << @expenses.values.sum
   end
@@ -30,8 +30,7 @@ class DashboardController < ApplicationController
     @top_sale_orders = SaleOrder.check_top_to_hash(params[:start_date], params[:end_date], 'sale_customer', 'name')
   end
 
-  def check_expense_proceed
-    @expenses = Expense.where(bill_time: params[:start_date]..params[:end_date]).where(is_invalid: false, check_status: true)
-    @proceeds = Proceed.where(bill_time: params[:start_date]..params[:end_date]).where(is_invalid: false, check_status: true)
+  def check_expense_ratio
+    @expenses = Expense.check_ratio(params[:start_date], params[:end_date])
   end
 end

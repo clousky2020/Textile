@@ -3,7 +3,7 @@ class Expense < ApplicationRecord
   has_and_belongs_to_many :purchase_suppliers
 
   validates :order_id, uniqueness: true
-  validates :bill_time, uniqueness: {scope: [:counterparty, :paper_amount,:expense_type]}
+  validates :bill_time, uniqueness: {scope: [:counterparty, :paper_amount, :expense_type]}
   validates :counterparty, :expense_type, :paper_amount, :actual_amount, presence: true
   validates :paper_amount, :actual_amount, numericality: {greater_than: 0}
 
@@ -38,6 +38,20 @@ class Expense < ApplicationRecord
     else
       self.purchase_suppliers.clear
     end
+  end
+
+  # 得到支出
+  def self.check_ratio(start_date, end_date)
+    expenses = self.where(bill_time: start_date..end_date, is_invalid: false, check_status: true)
+    h = Hash.new
+    expenses.each do |expense|
+      if h.has_key? expense.expense_type
+        h[expenses.expense_type] += expense.actual_amount
+      else
+        h.store(expense.expense_type, expense.actual_amount)
+      end
+    end
+    h
   end
 
 end

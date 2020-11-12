@@ -1,0 +1,23 @@
+var head = $(".chart-container")
+head.empty();
+
+
+<%unless @expenses.blank? %>
+head.append("<canvas id=\"check_expense_ratio_chart\"></canvas>\n")
+var ctx = $('#check_expense_ratio_chart');
+var myChart = new Chart(ctx, {
+    type: "pie",
+    data: {
+        labels: <%=raw @expenses.keys %>,
+        datasets: [
+            {
+                data: <%= raw @expenses.values %>,
+                backgroundColor: ["green", "red", "blue","yellow"]
+            }
+        ]
+    }
+});
+<%else %>
+head.append("<p>好像没有找到符合要求的数据</p>");
+<%end %>
+
