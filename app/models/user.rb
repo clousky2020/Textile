@@ -19,7 +19,8 @@ class User < ApplicationRecord
             uniqueness: true
   validates :email, length: {maximum: 255},
             format: {with: VALID_EMAIL_REGEX},
-            uniqueness: {case_sensitive: false}
+            uniqueness: {case_sensitive: false},
+            allow_blank: true
 
   def computed_permissions
     roles.map(&:computed_permissions).reduce(RoleCore::ComputedPermissions.new, &:concat)
