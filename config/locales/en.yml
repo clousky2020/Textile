@@ -285,3 +285,10 @@ en:
         take_top: 置顶
         update_my_own: 编辑更新(自己)
         destroy_my_own: 删除(自己)
+
+  abraham:
+    later: 稍后
+    continue: 继续
+    done: 完成
+    exit: 退出
+    next: 下一步

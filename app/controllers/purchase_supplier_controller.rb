@@ -6,7 +6,7 @@ class PurchaseSupplierController < ApplicationController
     if params.has_key?(:search) && params[:search] != ""
       @suppliers = PurchaseSupplier.search_name(params[:search]).order("name").page(params[:page])
     else
-      @suppliers = PurchaseSupplier.order("created_at DESC").page(params[:page])
+      @suppliers = PurchaseSupplier.order("name").page(params[:page])
     end
   end
 
@@ -46,12 +46,12 @@ class PurchaseSupplierController < ApplicationController
   end
 
   def destroy
-    if @supplier.purchase_orders.where(status: true).blank?
+    if @supplier.purchase_orders.where(check_status: true).blank? && @supplier.expenses.blank?
       PurchaseSupplier.delete(@supplier)
       flash[:warning] = "已经删除供应商#{@supplier.name}了"
       redirect_to purchase_supplier_index_path
     else
-      flash[:warning] = "该供应商名下下还有订单，不能删除"
+      flash[:warning] = "该供应商名下下还有关联的采购订单/付款单，不能删除"
       redirect_to purchase_supplier_index_path
     end
   end

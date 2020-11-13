@@ -6,7 +6,7 @@
 <div class="row no-gutters">
 
   <% if can? :create, Proceed %>
-    <div>
+    <div class="create_order">
       <%= link_to "新建", yield(:new_url) %>
     </div>
   <% end %>
@@ -29,13 +29,8 @@
         </div>
         <div class="row no-gutters">
           <div class="proceed_material_info mr-auto">备注:<%= proceed.remark %></div>
-
           <div class="operation_right ml-auto">
-            <% if !proceed.is_invalid %>
-              <% if can? :destroy, Proceed %>
-                <%= link_to "作废", proceed_path(proceed), method: :delete, data: {confirm: "确定作废吗？"} %>
-              <% end %>
-            <% else %>
+            <% if proceed.is_invalid %>
               <%= proceed.declare_invalid_person %>已将其作废
             <% end %>
           </div>

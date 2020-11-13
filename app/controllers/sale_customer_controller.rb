@@ -6,9 +6,9 @@ class SaleCustomerController < ApplicationController
 
   def index
     if params.has_key?(:search) && params[:search] != ""
-      @customers = SaleCustomer.where("name LIKE ?", "%#{params[:search]}%").order("id").page(params[:page])
+      @customers = SaleCustomer.search_name(params[:search]).order("id").page(params[:page])
     else
-      @customers = SaleCustomer.order("name").page(params[:page])
+      @customers = SaleCustomer.order("id").page(params[:page])
     end
   end
 
@@ -58,7 +58,7 @@ class SaleCustomerController < ApplicationController
       flash[:warning] = "已经删除客户#{@customer.name}了"
       redirect_to sale_customer_index_path
     else
-      flash[:warning] = "该客户名下下还有关联的订单，不能删除"
+      flash[:warning] = "该客户名下下还有关联的销售订单/收款单，不能删除"
       redirect_to sale_customer_index_path
     end
   end

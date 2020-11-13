@@ -3,7 +3,7 @@
 <h2 class="text-center"><%= yield(:index_title) %></h2>
 <div class="row no-gutters">
   <% if can? :create, SaleCustomer %>
-    <div>
+    <div class="create_order">
       <%= link_to "新建", yield(:new_url) %>
     </div>
   <% end %>
@@ -15,7 +15,7 @@
   <tr>
     <td>编号</td>
     <td>公司名</td>
-
+    <td>联系电话</td>
   </tr>
   </thead>
   <tbody>
@@ -23,6 +23,7 @@
     <tr>
       <td><%= customer.id %></td>
       <td><%= link_to customer.name, sale_customer_path(customer) %></td>
+      <td><%= customer.phone %></td>
     </tr>
 
   <% end %>

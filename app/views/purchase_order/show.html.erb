@@ -8,10 +8,15 @@
     <% if !@purchase_order.is_invalid && !@purchase_order.check_status %>
       <% if can? :pass_check, PurchaseOrder %>
         <div class="alert-warning"><%= param_check("连续审核") %></div>
-        <%= link_to "通过审核", pass_check_purchase_order_path(@purchase_order), class: "btn btn-primary" %>
+        <%= link_to "通过审核", pass_check_purchase_order_path(@purchase_order), class: "btn btn-primary pass_check_link" %>
       <% end %>
       <% if can? :update, PurchaseOrder %>
-        <%= link_to "编辑", edit_purchase_order_path(@purchase_order), class: "btn btn-primary" %>
+        <%= link_to "编辑", edit_purchase_order_path(@purchase_order), class: "btn btn-primary edit-link" %>
+      <% end %>
+    <% end %>
+    <% if !@purchase_order.is_invalid && @purchase_order.check_status %>
+      <% if can? :destroy, PurchaseOrder %>
+        <%= link_to "作废", purchase_order_path(@purchase_order), method: :delete, data: {confirm: "确定作废吗？"}, class: "btn btn-primary destroy_link" %>
       <% end %>
     <% end %>
     <%= link_to "返回主页", purchase_order_index_path, class: "btn btn-primary" %>

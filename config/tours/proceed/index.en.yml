@@ -1,0 +1,17 @@
+intro:
+  steps:
+    1:
+      text: "欢迎,这是收款单页面，厂里收进款后需要填写的单据，都可以在这里创建，查找。红色的为未审核单据，绿色为已通过审核的单据,黄色的为已作废的单据"
+    2:
+      title: "新建"
+      text: "点击进入可以创建新的收款单"
+      attachTo:
+        element: ".create_order"
+        placement: "right"
+    3:
+      title: "查询"
+      text: "可以输入查询条件，例如单号、客户、备注信息、货款、日常消耗等等，可以模糊搜索"
+      attachTo:
+        element: "#search"
+        placement: "left"
+

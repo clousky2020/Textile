@@ -1,0 +1,17 @@
+intro:
+  steps:
+    1:
+      text: "欢迎,这是付款单页面，付款出去的单据，例如付房租水电、员工工资，原料货款等，都可以在这里创建，查找。红色的为未审核单据，绿色为已通过审核的单据,黄色的为已作废的单据"
+    2:
+      title: "新建"
+      text: "点击进入可以创建新的付款单"
+      attachTo:
+        element: ".create_order"
+        placement: "right"
+    3:
+      title: "查询"
+      text: "可以输入查询条件，例如单号、交易方、备注信息、货款、日常消耗等等，可以模糊搜索"
+      attachTo:
+        element: "#search"
+        placement: "left"
+

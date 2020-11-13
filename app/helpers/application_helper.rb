@@ -23,7 +23,9 @@ module ApplicationHelper
 
   # 根据订单是否通过审核，改变框内的颜色
   def check_status_css(object)
-    if !object.check_status
+    if object.is_invalid
+      "alert-warning"
+    elsif !object.check_status
       "alert-danger"
     else
       "alert-success"

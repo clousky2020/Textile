@@ -5,7 +5,7 @@
 <div class="row no-gutters">
 
   <% if can? :create, Expense %>
-    <div>
+    <div class="create_order">
       <%= link_to "新建", yield(:new_url) %>
     </div>
   <% end %>
@@ -41,11 +41,7 @@
           <div class="expense_remark col-auto">备注:<%= expense.remark %></div>
           <% if can? :destroy, Expense %>
             <div class="operation_right ml-auto">
-              <% if !expense.is_invalid %>
-                <% if can? :destroy, Expense %>
-                  <%= link_to "作废", expense_path(expense), method: :delete, data: {confirm: "确定作废吗？"} %>
-                <% end %>
-              <% else %>
+              <% if expense.is_invalid %>
                 <%= expense.declare_invalid_person %>已将其作废
               <% end %>
             </div>

@@ -1,0 +1,17 @@
+intro:
+  steps:
+    1:
+      text: "欢迎,这是客户列表，这里定义的客户名称会提供给销售单和收款单使用。"
+    2:
+      title: "新建"
+      text: "点击进入可以创建新的客户信息"
+      attachTo:
+        element: ".create_order"
+        placement: "right"
+    3:
+      title: "查询"
+      text: "可以输入客户名称快速查询到相应的客户信息"
+      attachTo:
+        element: "#search"
+        placement: "left"
+

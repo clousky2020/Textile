@@ -5,14 +5,18 @@
   <%= render 'sale_order/show_content', object: @sale_order %>
 
   <div>
-
     <% if !@sale_order.is_invalid && !@sale_order.check_status %>
       <% if can? :pass_check, SaleOrder %>
         <div class="alert-warning"><%= param_check("连续审核") %></div>
-        <%= link_to "通过审核", pass_check_sale_order_path(@sale_order), class: "btn btn-primary" %>
+        <%= link_to "通过审核", pass_check_sale_order_path(@sale_order),class: "btn btn-primary pass_check_link" %>
       <% end %>
       <% if can? :update, SaleOrder %>
-        <%= link_to "编辑", edit_sale_order_path(@sale_order), class: "btn btn-primary" %>
+        <%= link_to "编辑", edit_sale_order_path(@sale_order), class: "btn btn-primary edit-link" %>
+      <% end %>
+    <% end %>
+    <% if !@sale_order.is_invalid && @sale_order.check_status %>
+      <% if can? :destroy, SaleOrder %>
+        <%= link_to "作废", sale_order_path(@sale_order), method: :delete, data: {confirm: "确定作废吗？"}, class: "btn btn-primary destroy_link" %>
       <% end %>
     <% end %>
     <%= link_to "返回主页", sale_order_index_path, class: "btn btn-primary" %>

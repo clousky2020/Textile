@@ -14,4 +14,7 @@ import 'bootstrap'
 window.$ = window.jquery = jquery;
 require("jquery-ui");
 require("chart.js");
-
+import Shepherd from 'shepherd.js';
+window.Shepherd = Shepherd;
+import Cookies from 'js-cookie/src/js.cookie';
+window.Cookies = Cookies;

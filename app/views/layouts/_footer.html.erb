@@ -6,10 +6,16 @@
       <%= icon "fas", "qrcode", class: "fa-2x " %>
       <%= image_tag "wx_qrcode.jpg", class: "qrcode", alt: "微信二维码" %>
     </a>
-    <%= link_to "建议反馈", comments_path, class: "mr-auto" %>
+    <% if current_user %>
+      <div class="intro_clear m-auto">
+        <%= link_to "新手引导", intro_clear_url(id: current_user.id), method: :post %>
+      </div>
+    <% end %>
+    <%= link_to "建议反馈", comments_path, class: "m-auto" %>
   </div>
 
   <p>
     Copyright © clousky's 2020
   </p>
+
 </div>

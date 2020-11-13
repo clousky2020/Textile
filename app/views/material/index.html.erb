@@ -5,7 +5,7 @@
 <div class="row no-gutters">
 
   <% if can? :create, Material %>
-    <div>
+    <div class="create_order">
       <%= link_to "新建", yield(:new_url) %>
     </div>
   <% end %>

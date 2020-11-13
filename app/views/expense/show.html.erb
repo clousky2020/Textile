@@ -8,12 +8,19 @@
     <% if !@expense.is_invalid && !@expense.check_status %>
       <% if can? :pass_check, Expense %>
         <div class="alert-warning"><%= param_check("连续审核") %></div>
-        <%= link_to "通过审核", pass_check_expense_path(@expense), class: "btn btn-primary" %>
+        <%= link_to "通过审核", pass_check_expense_path(@expense), class: "btn btn-primary pass_check_link" %>
       <% end %>
       <% if can? :update, Expense %>
-        <%= link_to "编辑", edit_expense_path(@expense), class: "btn btn-primary" %>
+        <%= link_to "编辑", edit_expense_path(@expense), class: "btn btn-primary edit_link" %>
+      <% end %>
+
+    <% end %>
+    <% if !@expense.is_invalid && @expense.check_status %>
+      <% if can? :destroy, Expense %>
+        <%= link_to "作废", expense_path(@expense), method: :delete, data: {confirm: "确定作废吗？"}, class: "btn btn-primary destroy_link" %>
       <% end %>
     <% end %>
+
     <% if @expense.need_reimburse && @expense.check_status %>
       <% if can? :pass_check, Expense %>
         <%= link_to "已报销", pass_reimburse_expense_path(@expense), class: "btn btn-primary" %>

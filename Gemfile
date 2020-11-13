@@ -38,6 +38,8 @@ gem 'mini_magick'
 # 通用i18包
 # gem 'rails-i18n', '~> 6.0.0'
 # gem 'carrierwave-i18n'
+# 新手引导
+gem 'abraham'
 # 图标
 gem 'font-awesome-sass', '~> 5.15.1'
 # Reduces boot times through caching; required in config/boot.rb

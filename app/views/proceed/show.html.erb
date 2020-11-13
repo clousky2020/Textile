@@ -6,10 +6,15 @@
     <% if !@proceed.is_invalid && !@proceed.check_status %>
       <% if can? :pass_check, Proceed %>
         <div class="alert-warning "><%= param_check("连续审核") %></div>
-        <%= link_to "通过审核", pass_check_proceed_path(@proceed), class: "btn btn-primary" %>
+        <%= link_to "通过审核", pass_check_proceed_path(@proceed), class: "btn btn-primary pass_check_link" %>
       <% end %>
       <% if can? :update, Proceed %>
-        <%= link_to "编辑", edit_proceed_path(@proceed), class: "btn btn-primary" %>
+        <%= link_to "编辑", edit_proceed_path(@proceed), class: "btn btn-primary edit-link" %>
+      <% end %>
+    <% end %>
+    <% if !@proceed.is_invalid && @proceed.check_status %>
+      <% if can? :destroy, Proceed %>
+        <%= link_to "作废", proceed_path(@proceed), method: :delete, data: {confirm: "确定作废吗？"}, class: "btn btn-primary destroy_link" %>
       <% end %>
     <% end %>
     <%= link_to "返回主页", proceed_index_path, class: "btn btn-primary" %>

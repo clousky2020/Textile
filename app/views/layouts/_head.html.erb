@@ -27,19 +27,6 @@
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-            财务管理
-          </a>
-          <div class="dropdown-menu">
-            <% if can? :read, Proceed %>
-              <%= link_to "收款单", proceed_index_path, class: "dropdown-item" %>
-            <% end %>
-            <% if can? :read, Expense %>
-              <%= link_to "付款单", expense_index_path, class: "dropdown-item" %>
-            <% end %>
-          </div>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
             生产资料
           </a>
           <div class="dropdown-menu">
@@ -57,6 +44,20 @@
             <% end %>
           </div>
         </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+            收付款管理
+          </a>
+          <div class="dropdown-menu">
+            <% if can? :read, Proceed %>
+              <%= link_to "收款单", proceed_index_path, class: "dropdown-item" %>
+            <% end %>
+            <% if can? :read, Expense %>
+              <%= link_to "付款单", expense_index_path, class: "dropdown-item" %>
+            <% end %>
+          </div>
+        </li>
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
             订单管理
@@ -77,18 +78,19 @@
             <% end %>
           </div>
         </li>
-
-        <div class="dropdown btn">
+        <li class="nav-link">
+          <%= link_to "参数设定", params_path %>
+        </li>
+        <li class="nav-link dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <%= current_user.name %>
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
-            <%= link_to "参数设定", params_path, class: "dropdown-item " %>
             <%= link_to "更改密码", edit_password_reset_path(current_user), class: "dropdown-item " %>
             <%= link_to "退出", session_path(current_user), method: :delete, class: "dropdown-item " %>
           </ul>
-        </div>
+        </li>
 
       </ul>
     </div>

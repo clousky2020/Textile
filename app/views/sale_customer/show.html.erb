@@ -8,10 +8,15 @@
 
   <div>
     <% if can? :export, SaleCustomer %>
-      <%= link_to "导出对账单", export_sale_customer_path(@customer, format: "xls"), class: "btn btn-primary" %>
+      <%= link_to "导出对账单", export_sale_customer_path(@customer, format: "xls"), class: "btn btn-primary export" %>
     <% end %>
     <% if can? :update, SaleCustomer %>
-      <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary" %>
+      <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary edit-link" %>
+    <% end %>
+    <% if @customer.sale_orders.blank? && @customer.proceeds.blank? %>
+      <% if can? :destroy, SaleCustomer %>
+        <%= link_to "删除", sale_customer_path, method: :delete, class: "btn btn-primary edit-link" %>
+      <% end %>
     <% end %>
     <%= link_to "返回主页", yield(:back_url), class: "btn btn-primary" %>
   </div>

@@ -5,7 +5,7 @@
 <h2 class="text-center"><%= yield(:index_title) %></h2>
 <div class="row no-gutters">
   <% if can? :create, PurchaseSupplier %>
-    <div>
+    <div class="create_order">
       <%= link_to "新建", yield(:new_url) %>
     </div>
   <% end %>
@@ -16,7 +16,7 @@
   <tr>
     <td>编号</td>
     <td>公司名</td>
-
+    <td>联系号码</td>
   </tr>
   </thead>
   <tbody>
@@ -24,7 +24,7 @@
     <tr>
       <td><%= supplier.id %></td>
       <td><%= link_to supplier.name, purchase_supplier_path(supplier) %></td>
-
+      <td><%= supplier.phone %></td>
     </tr>
   <% end %>
   </tbody>

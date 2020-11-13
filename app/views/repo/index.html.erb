@@ -4,7 +4,7 @@
 <h2 class="text-center"><%= yield(:index_title) %></h2>
 <div class="row no-gutters">
   <% if can? :create, Repo %>
-    <div>
+    <div class="create_order">
       <%= link_to "新建", yield(:new_url) %>
     </div>
   <% end %>

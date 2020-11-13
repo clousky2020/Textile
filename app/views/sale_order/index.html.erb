@@ -5,7 +5,7 @@
 <h2 class="text-center"><%= yield(:index_title) %></h2>
 <div class="row no-gutters">
   <% if can? :create, SaleOrder %>
-    <div>
+    <div class="create_order">
       <%= link_to "新建", yield(:new_url) %>
     </div>
   <% end %>
@@ -15,7 +15,6 @@
   <div class="alert-info text-center">空空如也</div>
 <% else %>
   <% @sale_orders.each do |sale_order| %>
-
     <div class="sale_order_info <%= check_status_css(sale_order) %>">
       <div class="content_left">
         <div class="row no-gutters">
@@ -37,11 +36,7 @@
           <div class="sale_order_material_info col-auto">规格:<%= sale_order.product.specification %></div>
           <% if can? :destroy, SaleOrder %>
             <div class="operation_right col-auto">
-              <% if !sale_order.is_invalid %>
-                <% if can? :destroy, SaleOrder %>
-                  <%= link_to "作废", sale_order_path(sale_order), method: :delete, data: {confirm: "确定作废吗？"} %>
-                <% end %>
-              <% else %>
+              <% if sale_order.is_invalid %>
                 <%= sale_order.declare_invalid_person %>已将其作废
               <% end %>
             </div>

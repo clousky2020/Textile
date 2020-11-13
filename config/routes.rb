@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   post 'check_orders_money', to: 'dashboard#check_orders_money'
   post 'check_trade_top', to: 'dashboard#check_trade_top'
   post 'check_expense_ratio', to: 'dashboard#check_expense_ratio'
+  post 'intro_clear', to: 'dashboard#intro_clear'
 
   resources :session, :only => [:new, :create, :destroy]
   resources :params, only: [:index, :update]

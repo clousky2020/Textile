@@ -2,7 +2,7 @@
   <div class="col-md-3">
 
     <div class="role_info">
-      <h5>欢迎你,以下是您的角色</h5>
+      <h5>角色栏</h5>
       <div id="accordion">
         <% current_user.roles.each do |role| %>
           <div class="card">
@@ -22,7 +22,7 @@
     </div>
 
     <div class="operations_can_do">
-      <h5>需要做的事情</h5>
+      <h5>待处理清单</h5>
       <div class="not_pass_content">
         <% if can? :pass_check, Expense %>
           <% if @not_pass_expenses.count > 0 %>
@@ -74,33 +74,35 @@
         <% end %>
         <hr>
       </div>
-      <h5>常用</h5>
-      <div class="create_order">
-        <% if can? :create, Expense %>
-          <div class="btn">
-            <%= link_to "填写新的付款单", new_expense_path %>
-          </div>
-        <% end %>
-        <% if can? :create, Proceed %>
-          <div class="btn">
-            <%= link_to "填写新的收款单", new_proceed_path %>
-          </div>
-        <% end %>
-        <% if can? :create, PurchaseOrder %>
-          <div class="btn">
-            <%= link_to "填写新的采购单", new_purchase_order_path %>
-          </div>
-        <% end %>
-        <% if can? :create, SaleOrder %>
-          <div class="btn">
-            <%= link_to "填写新的销售单", new_sale_order_path %>
-          </div>
-        <% end %>
-        <% if can? :create, ChangeMachine %>
-          <div class="btn">
-            <%= link_to "记录新的改机信息", new_change_machine_path %>
-          </div>
-        <% end %>
+      <div class="common_content">
+        <h5>常用功能</h5>
+        <div>
+          <% if can? :create, Expense %>
+            <div class="btn">
+              <%= link_to "填写新的付款单", new_expense_path %>
+            </div>
+          <% end %>
+          <% if can? :create, Proceed %>
+            <div class="btn">
+              <%= link_to "填写新的收款单", new_proceed_path %>
+            </div>
+          <% end %>
+          <% if can? :create, PurchaseOrder %>
+            <div class="btn">
+              <%= link_to "填写新的采购单", new_purchase_order_path %>
+            </div>
+          <% end %>
+          <% if can? :create, SaleOrder %>
+            <div class="btn">
+              <%= link_to "填写新的销售单", new_sale_order_path %>
+            </div>
+          <% end %>
+          <% if can? :create, ChangeMachine %>
+            <div class="btn">
+              <%= link_to "记录新的改机信息", new_change_machine_path %>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
     <div class="last_week_status">
@@ -187,23 +189,19 @@
     </div>
   </div>
   <div class="col-md-9">
-
-    <%#= render 'dashboard/info' %>
-
     <p class="alert-warning"> 有任何意见、建议、问题、需要添加的功能请在底部的建议反馈里提交！</p>
+    <div class="graph_query">
+      <h5>图表查询</h5>
+      <p>开始日期：<%= date_field_tag :start_date, (Time.current - 7.days).strftime("%Y-%m-%d") %></p>
+      <p>结束日期：<%= date_field_tag :end_date, (Time.current + 1.day).strftime("%Y-%m-%d") %></p>
+      <%= button_tag "订单收支", id: "check_order_money", class: "btn btn-primary" %>
+      <%= button_tag "最高交易金额的公司", id: "check_trade_top", class: "btn btn-primary" %>
+      <%= button_tag "支出类别", id: "check_expense_ratio", class: "btn btn-primary" %>
 
+      <div class="chart-container">
 
-    <h5>图表查询</h5>
-    <p>开始日期：<%= date_field_tag :start_date, (Time.current - 7.days).strftime("%Y-%m-%d") %></p>
-    <p>结束日期：<%= date_field_tag :end_date, (Time.current + 1.day).strftime("%Y-%m-%d") %></p>
-    <%= button_tag "订单收支", id: "check_order_money", class: "btn btn-primary" %>
-    <%= button_tag "最高交易金额的公司", id: "check_trade_top", class: "btn btn-primary" %>
-    <%= button_tag "支出类别", id: "check_expense_ratio", class: "btn btn-primary" %>
-
-    <div class="chart-container">
-
+      </div>
     </div>
-
   </div>
 </div>
 <script>

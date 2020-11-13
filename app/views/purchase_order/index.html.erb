@@ -5,7 +5,7 @@
 <h2 class="text-center"><%= yield(:index_title) %></h2>
 <div class="row no-gutters">
   <% if can? :create, PurchaseOrder %>
-    <div>
+    <div class="create_order">
       <%= link_to "新建", yield(:new_url) %>
     </div>
   <% end %>
@@ -37,11 +37,7 @@
           <div class="purchase_order_material_info col-auto">规格:<%= purchase_order.material.specification %></div>
           <% if can? :destroy, PurchaseOrder %>
             <div class="operation_right col-auto">
-              <% if !purchase_order.is_invalid %>
-                <% if can? :destroy, PurchaseOrder %>
-                  <%= link_to "作废", purchase_order_path(purchase_order), method: :delete, data: {confirm: "确定作废吗？"} %>
-                <% end %>
-              <% else %>
+              <% if purchase_order.is_invalid %>
                 <%= purchase_order.declare_invalid_person %>已将其作废
               <% end %>
             </div>

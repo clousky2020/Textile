@@ -7,7 +7,7 @@
   <div>
 
     <% if can? :update, Employee %>
-      <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary" %>
+      <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary edit-link" %>
     <% end %>
     <%= link_to "返回主页", yield(:back_url), class: "btn btn-primary" %>
   </div>

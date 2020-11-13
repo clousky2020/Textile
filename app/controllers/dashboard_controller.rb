@@ -33,4 +33,10 @@ class DashboardController < ApplicationController
   def check_expense_ratio
     @expenses = Expense.check_ratio(params[:start_date], params[:end_date])
   end
+
+  def intro_clear
+    store_referrer_location
+    ActiveRecord::Base.connection.execute("delete from abraham_histories where creator_id =#{params[:id]} ")
+    redirect_back_referrer_for root_url
+  end
 end

@@ -1,0 +1,40 @@
+intro:
+  steps:
+    1:
+      text: "欢迎,本系统将为您管理生产中产生的各种单据，首先为您介绍主页的各种功能"
+    2:
+      title: "角色栏"
+      text: "这里是您在本系统中的角色定位，点击本角色的一些介绍，说明了您的主要职责"
+      attachTo:
+        element: "#accordion"
+        placement: "auto"
+    3:
+      title: "待处理清单"
+      text: "这里存放着需要处理的单据，未处理完成的单据不会记入系统的后续计算中，请尽快处理本部分的内容！"
+      attachTo:
+        element: ".not_pass_content"
+        placement: "auto"
+    4:
+      title: "常用功能"
+      text: "快速进入订单创建的入口"
+      attachTo:
+        element: ".comment_content"
+        placement: "auto"
+    5:
+      title: "最近7天的情况"
+      text: "在这里可以看到近一星期内的四种单据录入情况，可以点击后直接查看详情"
+      attachTo:
+        element: ".last_week_status"
+        placement: "auto"
+    6:
+      title: "图表查询"
+      text: "选择时间周期，点击相应的按钮，查看图表数据。注意：只有已经审核过了的单据才会被计算出来！"
+      attachTo:
+        element: ".graph_query"
+        placement: "auto"
+    7:
+      title: "新手引导"
+      text: "如果您忘记了操作，请点击这里重新开启新手引导"
+      attachTo:
+        element: ".intro_clear"
+        placement: "auto"

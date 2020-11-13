@@ -11,8 +11,14 @@
     <% if can? :export, PurchaseSupplier %>
       <%= link_to "导出对账单", export_purchase_supplier_path(@supplier, format: "xls"), class: "btn btn-primary" %>
     <% end %>
+
     <% if can? :update, PurchaseSupplier %>
-      <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary" %>
+      <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary edit-link" %>
+    <% end %>
+    <% if @supplier.purchase_orders.blank? && @supplier.expenses.blank? %>
+      <% if can? :destroy, PurchaseSupplier %>
+        <%= link_to "删除", purchase_supplier_path, method: :delete, class: "btn btn-primary destroy-link" %>
+      <% end %>
     <% end %>
     <%= link_to "返回主页", yield(:back_url), class: "btn btn-primary" %>
   </div>
