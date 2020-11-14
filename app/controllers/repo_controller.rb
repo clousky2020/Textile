@@ -44,7 +44,11 @@ class RepoController < ApplicationController
   end
 
   def destroy
-    Repo.delete(@repo)
+    if Repo.all.count > 1
+      Repo.delete(@repo)
+    else
+      flash[:danger] = "最后一个仓库不能删除"
+    end
     redirect_to repo_index_path
   end
 
