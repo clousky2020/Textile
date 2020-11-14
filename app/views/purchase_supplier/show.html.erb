@@ -9,7 +9,7 @@
 
   <div>
     <% if can? :export, PurchaseSupplier %>
-      <%= link_to "导出对账单", export_purchase_supplier_path(@supplier, format: "xls"), class: "btn btn-primary" %>
+      <%= link_to "导出对账单", export_purchase_supplier_path(@supplier, format: "xls"), class: "btn btn-primary export" %>
     <% end %>
 
     <% if can? :update, PurchaseSupplier %>

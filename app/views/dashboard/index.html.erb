@@ -195,9 +195,8 @@
       <p>开始日期：<%= date_field_tag :start_date, (Time.current - 7.days).strftime("%Y-%m-%d") %></p>
       <p>结束日期：<%= date_field_tag :end_date, (Time.current + 1.day).strftime("%Y-%m-%d") %></p>
       <%= button_tag "订单收支", id: "check_order_money", class: "btn btn-primary" %>
-      <%= button_tag "最高交易金额的公司", id: "check_trade_top", class: "btn btn-primary" %>
       <%= button_tag "支出类别", id: "check_expense_ratio", class: "btn btn-primary" %>
-
+      <%= button_tag "最高交易金额的公司", id: "check_trade_top", class: "btn btn-primary" %>
       <div class="chart-container">
 
       </div>
