@@ -33,6 +33,12 @@ intro:
         element: ".graph_query"
         placement: "auto"
     7:
+      title: "Logo"
+      text: "点击此处可以返回首页"
+      attachTo:
+        element: ".navbar-brand"
+        placement: "auto"
+    8:
       title: "新手引导"
       text: "如果您忘记了操作，请点击这里重新开启新手引导"
       attachTo:

@@ -1,0 +1,17 @@
+intro:
+  steps:
+    1:
+      text: "欢迎,这是原料管理页面，采购订单上出现的原料在这里都能找到"
+    2:
+      title: "新建"
+      text: "点击进入可以创建新的原料信息"
+      attachTo:
+        element: ".create_order"
+        placement: "auto"
+    3:
+      title: "查询"
+      text: "可以输入查询条件，例如品名，型号，供应商名称"
+      attachTo:
+        element: "#search"
+        placement: "auto"
+

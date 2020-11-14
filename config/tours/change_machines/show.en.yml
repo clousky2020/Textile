@@ -1,0 +1,11 @@
+intro:
+  steps:
+    1:
+      text: "改机记录详情页面"
+    2:
+      title: "已结清"
+      text: "已付清改机款后，点击此按钮，同时会生成一张付款单，记录了本次改机的内容。如需要报销，请至付款单处编辑更改"
+      attachTo:
+        element: ".clear_link"
+        placement: "auto"
+
