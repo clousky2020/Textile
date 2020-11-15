@@ -1,6 +1,5 @@
 <table class="table">
   <tbody>
-
   <tr>
     <th>品名</th>
     <td><%= object.name %></td>
@@ -40,3 +39,68 @@
   </tr>
   </tbody>
 </table>
+
+<% if @prices.uniq.size > 1 %>
+  <h4>历史出售价格曲线</h4>
+  <div class="chart-container">
+    <canvas id="historical_price_chart">
+    </canvas>
+  </div>
+<% end %>
+<% if @prices.size > 0 %>
+  <div class="sale_order_content">
+    <div id="accordion">
+      <div class="card">
+        <div class="card-header">
+          <a class="card-link" data-toggle="collapse" href="#collapse_1">
+            <span>历史订单列表</span>
+          </a>
+        </div>
+        <div id="collapse_1" class="collapse" data-parent="#accordion">
+          <div class="card-body">
+            <% @product.sale_orders.each do |sale_order| %>
+              <div class="row no-gutters">
+                <%= link_to(sale_order.order_id, sale_order_path(sale_order)) %>--
+                <%= sale_order.price %>元/千克
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+    $(function () {
+        if (<%=@prices.uniq.size>1 %>) {
+            var ctx = $('#historical_price_chart');
+            var myChart = new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: <%= raw @bill_times.map{|n|str_date(n)}  %>,
+                    datasets: [
+                        {
+                            label: '历史价格',
+                            data: <%= raw @prices %>,
+                            pointColor: "red",
+                            pointHighlightFill: "black"
+                        }
+                    ]
+                },
+                options: {
+                    bezierCurve: true,
+                    datasetStroke: true,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                min: <%=@prices.min %>-1
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+    })
+
+</script>

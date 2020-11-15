@@ -16,6 +16,11 @@ class MaterialController < ApplicationController
   end
 
   def show
+    if @material.purchase_orders
+      orders = @material.purchase_orders.select(:bill_time, :price).where(is_invalid: false, check_status: true)
+      @bill_times = orders.map(&:bill_time)
+      @prices = orders.map(&:price)
+    end
   end
 
   def edit

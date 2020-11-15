@@ -17,6 +17,10 @@ module ApplicationHelper
     Time.current.localtime.strftime("%Y-%m-%d")
   end
 
+  def str_date(object)
+    object.strftime("%Y-%m-%d")
+  end
+
   def str_time(object)
     object.strftime("%Y-%m-%d %H:%M")
   end

@@ -17,6 +17,11 @@ class ProductController < ApplicationController
   end
 
   def show
+    if @product.sale_orders
+      dates = @product.sale_orders.select(:bill_time, :price).where(is_invalid: false, check_status: true)
+      @bill_times = dates.map(&:bill_time)
+      @prices = dates.map(&:price)
+    end
   end
 
   def edit
@@ -53,7 +58,7 @@ class ProductController < ApplicationController
     redirect_to product_index_path
   end
 
-    def get_options
+  def get_options
     @product_names = Product.find(params[:id])
   end
 
