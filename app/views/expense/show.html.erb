@@ -21,7 +21,7 @@
       <% end %>
     <% end %>
 
-    <% if @expense.need_reimburse && @expense.check_status %>
+    <% if @expense.need_reimburse && @expense.check_status && !@expense.is_invalid %>
       <% if can? :pass_check, Expense %>
         <%= link_to "已报销", pass_reimburse_expense_path(@expense), class: "btn btn-primary" %>
       <% end %>
