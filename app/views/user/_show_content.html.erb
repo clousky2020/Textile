@@ -22,14 +22,19 @@
 
 <div class="reimbursed_order">
   <h4>报销单情况</h4>
-  <% @expenses.each do |expense| %>
-    <div class="order-content row no-gutters m-auto <%= order_status_css(expense) %>">
-      <%= link_to expense.order_id, expense_path(expense) %>
-      <%= expense.expense_type %>
-      <%= expense.counterparty %>
-      <% if expense.reimbursed %>
-        已报销
-      <% end %>
-    </div>
+  <% if @expenses.any? %>
+    <% @expenses.each do |expense| %>
+      <div class="order-content row no-gutters m-auto <%= order_status_css(expense) %>">
+        <%= link_to expense.order_id, expense_path(expense) %>
+        <%= expense.expense_type %>
+        <%= expense.counterparty %>
+        <% if expense.reimbursed %>
+          已报销
+        <% end %>
+      </div>
+    <% end %>
+  <% else %>
+    没有找到报销单
   <% end %>
+
 </div>

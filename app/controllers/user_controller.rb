@@ -11,7 +11,7 @@ class UserController < ApplicationController
   end
 
   def show
-    @expenses = Expense.where(user_id: @user.id).where("need_reimburse=? or reimbursed=?", true, true)
+    @expenses = Expense.where(user_id: @user.id, is_invalid: false).where("need_reimburse=? or reimbursed=?", true, true)
   end
 
   def edit
