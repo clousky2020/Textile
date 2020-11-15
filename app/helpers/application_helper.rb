@@ -21,7 +21,7 @@ module ApplicationHelper
     object.strftime("%Y-%m-%d %H:%M")
   end
 
-  # 根据订单是否通过审核，改变框内的颜色
+  # 根据订单的各种状态，改变框内的颜色
   def check_status_css(object)
     if object.is_invalid
       "alert-warning"
@@ -32,7 +32,7 @@ module ApplicationHelper
     end
   end
 
-  # 根据订单是否通过审核，改变框内的颜色
+  # 根据设置是否开启，改变框内的颜色
   def param_status_css(object)
     if object.status
       "alert-success"
