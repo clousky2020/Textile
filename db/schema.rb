@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_12_114228) do
+ActiveRecord::Schema.define(version: 2020_11_15_054109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -181,7 +181,7 @@ ActiveRecord::Schema.define(version: 2020_11_12_114228) do
     t.bigint "user_id"
     t.integer "number"
     t.string "measuring_unit"
-    t.decimal "weight", precision: 8, scale: 1, default: "0.0"
+    t.decimal "weight", precision: 8, scale: 2, default: "0.0"
     t.decimal "price", precision: 8, scale: 2, default: "0.0"
     t.decimal "tax_rate", precision: 4, scale: 3, default: "0.0"
     t.decimal "total_price", default: "0.0"
@@ -276,7 +276,7 @@ ActiveRecord::Schema.define(version: 2020_11_12_114228) do
     t.bigint "user_id"
     t.integer "number"
     t.string "measuring_unit"
-    t.decimal "weight", precision: 10, scale: 1, default: "0.0"
+    t.decimal "weight", precision: 8, scale: 2, default: "0.0"
     t.decimal "price", precision: 8, scale: 2, default: "0.0"
     t.decimal "tax_rate", precision: 4, scale: 3, default: "0.0"
     t.decimal "total_price", default: "0.0"
