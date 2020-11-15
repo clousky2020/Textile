@@ -6,7 +6,7 @@
   </tr>
   <tr>
     <th>型号规格</th>
-    <td><%= object.product.specification %></td>
+    <td><%= link_to object.product.specification, product_path(object.product) %></td>
   </tr>
 
   <tr>
@@ -42,7 +42,7 @@
   </tr>
   <tr>
     <th>客户名称</th>
-    <td><%= object.sale_customer.name %></td>
+    <td><%=link_to object.sale_customer.name,sale_customer_path(object.sale_customer) %></td>
   </tr>
   <tr>
     <th>存放的仓库</th>

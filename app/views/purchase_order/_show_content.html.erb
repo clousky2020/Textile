@@ -6,7 +6,7 @@
   </tr>
   <tr>
     <th>型号规格</th>
-    <td><%= object.material.specification %></td>
+    <td><%= link_to object.material.specification, material_path(object.material) %></td>
   </tr>
   <tr>
     <th>批号</th>
@@ -51,7 +51,7 @@
   </tr>
   <tr>
     <th>供货商名称</th>
-    <td><%= object.material.purchase_supplier.name %></td>
+    <td><%= link_to object.material.purchase_supplier.name, purchase_supplier_path(object.material.purchase_supplier) %></td>
   </tr>
   <tr>
     <th>存放的仓库</th>
