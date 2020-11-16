@@ -46,7 +46,7 @@ class Expense < ApplicationRecord
     h = Hash.new
     expenses.each do |expense|
       if h.has_key? expense.expense_type
-        h[expenses.expense_type] += expense.actual_amount
+        h[expense.expense_type] += expense.actual_amount
       else
         h.store(expense.expense_type, expense.actual_amount)
       end
