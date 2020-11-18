@@ -61,8 +61,13 @@ class ProceedController < ApplicationController
 
   def destroy
     store_referrer_location
-    @proceed.order_declare_invalid(current_user)
-    # Proceed.delete(@proceed)
+    if @proceed.check_status
+      @proceed.order_declare_invalid(current_user)
+      flash[:success] = "#{@proceed.sale_customer.name}的订单#{@proceed.order_id}已作废"
+    else
+      @proceed.delete
+      flash[:success] = "#{@proceed.sale_customer.name}的订单#{@proceed.order_id}已删除"
+    end
     redirect_back_referrer_for proceed_index_path
   end
 

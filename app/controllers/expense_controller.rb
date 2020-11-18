@@ -65,8 +65,13 @@ class ExpenseController < ApplicationController
 
   def destroy
     store_referrer_location
-    @expense.order_declare_invalid(current_user)
-    # Expense.delete(@expense)
+    if @expense.check_status
+      @expense.order_declare_invalid(current_user)
+      flash[:success] = "#{@expense.sale_customer.name}的订单#{@expense.order_id}已作废"
+    else
+      @expense.delete
+      flash[:success] = "#{@expense.sale_customer.name}的订单#{@expense.order_id}已删除"
+    end
     redirect_back_referrer_for expense_index_path
   end
 
