@@ -6,7 +6,7 @@
 require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
-require("channels")
+require("channels");
 
 import jquery from 'jquery';
 import 'bootstrap'
@@ -14,7 +14,18 @@ import 'bootstrap'
 window.$ = window.jquery = jquery;
 require("jquery-ui");
 require("chart.js");
-import Shepherd from 'shepherd.js';
-window.Shepherd = Shepherd;
+
+import intro from 'intro.js';
+
+window.introJs = intro;
+
 import Cookies from 'js-cookie/src/js.cookie';
+
 window.Cookies = Cookies;
+
+$(document).on('turbolinks:load', function () {
+    $('[data-toggle="tooltip"]').tooltip();
+    introJs().showHints();
+});
+
+
