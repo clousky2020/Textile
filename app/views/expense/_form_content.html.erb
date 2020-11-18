@@ -1,12 +1,12 @@
 <div class="form-group" data-step="1" data-intro="付款对象,可按空格搜索已经存在的供应商名称,可以填写别的名称">
   <%= f.label :counterparty, "交易方" %>
   <a class="fas fa-magic" data-toggle="tooltip" data-placement="right" title="已设定自动填充"> </a>
-  <%= f.text_field :counterparty, class: "form-control", placeholder: "必需，对方名称", required: "required", data: {autocomplete_source: check_purchase_supplier_purchase_supplier_index_path} %>
+  <%= f.text_field :counterparty, class: "form-control", placeholder: "必须填写，对方名称", required: "required", data: {autocomplete_source: check_purchase_supplier_purchase_supplier_index_path} %>
 </div>
 <div class="form-group" data-step="2" data-intro="付款的类型，可按空格查看已有的类型">
   <%= f.label :expense_type, "类型" %>
   <a class="fas fa-magic" data-toggle="tooltip" data-placement="right" title="已设定自动填充，按空格试一下"> </a>
-  <%= f.text_field :expense_type, class: "form-control", placeholder: "必需，该笔付款的类型", required: "required", data: {autocomplete_source: get_expense_type_expense_index_path} %>
+  <%= f.text_field :expense_type, class: "form-control", placeholder: "必须填写，该笔付款的类型", required: "required", data: {autocomplete_source: get_expense_type_expense_index_path} %>
 </div>
 <div class="form-group" data-step="3" data-intro="账面上的付款金额，有时候一些零头会舍去，但这里要填写账目上完整的金额">
   <%= f.label :paper_amount, "账面金额" %>

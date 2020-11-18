@@ -199,11 +199,6 @@
         <a class="dropdown-item" id="purchase_order_tour">新的采购单</a>
         <a class="dropdown-item" id="sale_order_tour">新的销售单</a>
         <a class="dropdown-item" id="change_machine_tour">新的改机记录</a>
-        <%#= link_to "新的付款单", "#", class: "dropdown-item", id: "expense_tour" %>
-        <%#= link_to "新的收款单", new_proceed_path, class: "dropdown-item", id: "proceed_tour" %>
-        <%#= link_to "新的采购单", new_purchase_order_path, class: "dropdown-item", id: "purchase_order_tour" %>
-        <%#= link_to "新的销售单", new_sale_order_path, class: "dropdown-item", id: "sale_order_tour" %>
-        <%#= link_to "新的改机记录", new_change_machine_path, class: "dropdown-item", id: "change_machine_tour" %>
       </div>
     </div>
 
@@ -260,7 +255,7 @@
             }, {
                 element: '#novice_guide',
                 intro: '这里是一些常用的操作流程，可以通过这里的操作提示，熟悉本系统'
-            } ,{
+            }, {
                 element: '#step6',
                 intro: '如果您忘记了首页的操作，请点击这里重新开启首页的新手引导'
             }]
@@ -286,9 +281,7 @@
 
     $(function () {
         //检查cookies中是否经历过新手引导了
-        var title = '';
-        var title = title.concat(date.controller_name, "-", date.action_name, "-", date.tour_name, "-", date.creator_id);
-        var value = Cookies.get(title);
+         var value = Cookies.get(title);
         if (!value) {
             //查询数据库，是否已经做过这个新手引导
             $.post("/introjs/find_attribute", date, function (date) {
@@ -305,7 +298,7 @@
             intro.setOptions({
                 steps: [{
                     element: '#new_expense',
-                    intro: "开始创建第一张付款单吧",
+                    intro: "开始创建一张付款单吧",
                 }],
                 exitOnOverlayClick: false,
             });
@@ -320,7 +313,7 @@
             intro.setOptions({
                 steps: [{
                     element: '#new_proceed',
-                    intro: "开始创建第一张收款单吧",
+                    intro: "开始创建一张收款单吧",
                 }],
                 exitOnOverlayClick: false,
             });
@@ -335,7 +328,7 @@
             intro.setOptions({
                 steps: [{
                     element: '#new_purchase_order',
-                    intro: "开始创建第一张采购单吧",
+                    intro: "开始创建一张采购单吧",
                 }],
                 exitOnOverlayClick: false,
             });
@@ -350,12 +343,27 @@
             intro.setOptions({
                 steps: [{
                     element: '#new_sale_order',
-                    intro: "开始创建第一张采购单吧",
+                    intro: "开始创建一张销售单吧",
                 }],
                 exitOnOverlayClick: false,
             });
             intro.setOption('doneLabel', '跳转到页面').start().oncomplete(function () {
                 window.location.href = "/sale_order/new"
+            });
+        });
+        //改机记录单的新手引导
+        $("#change_machine_tour").on("click", function () {
+            Cookies.set("change_machine_tour", true, {path: '/'});
+            var intro = introJs();
+            intro.setOptions({
+                steps: [{
+                    element: '#new_change_machine',
+                    intro: "开始创建一张改机单吧",
+                }],
+                exitOnOverlayClick: false,
+            });
+            intro.setOption('doneLabel', '跳转到页面').start().oncomplete(function () {
+                window.location.href = "/change_machines/new"
             });
         });
 
