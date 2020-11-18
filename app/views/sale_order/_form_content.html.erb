@@ -41,7 +41,7 @@
   <%= f.label :freight, "运费(元)" %>
   <%= f.number_field :freight, min: 0, step: 1, class: "form-control" %>
 </div>
-<div class="form-group" data-step="11" data-intro="承接上一条，是不是要我们公司出运费？不勾上的话这笔钱会计算入这批货的卖价里；勾上的话就不会计算入卖价，会生成另一张付款单，如果是别人垫付的话，需要到付款单页面去在编辑修改。">
+<div class="form-group" data-step="11" data-intro="承接上一条，是不是要我们公司出运费？不勾上的话这笔钱会计算入这批货的卖价里；勾上的话就不会计算入卖价，会生成另一张付款单，如果是垫付的话，需要到该付款单的编辑页面去把报销的框打上勾。">
   <%= f.label :our_freight, "是不是我方负责出运费?" %>
   <%= f.check_box :our_freight %>
 </div>
@@ -75,7 +75,6 @@
 <div class="alert-warning"><%= param_check("销售账单自动审核") %></div>
 <script>
     $(document).ready(function () {
-
         //销售单页面select选择产品型号规格后，填充下面的产品品名
         $("#sale_orders_specification").on("change", function () {
             $.post("/product/get_options", {id: this.value})

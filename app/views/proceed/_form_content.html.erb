@@ -1,30 +1,30 @@
-<div class="form-group">
+<div class="form-group"data-step="1" data-intro="选择收款的来源">
   <%= f.label :sale_customer_id, "客户名称" %>
   <%= f.select :sale_customer_id, options_for_select(SaleCustomer.all.map {|n| [n.name, n.id]}, object.sale_customer_id), class: "form-control" %>
 </div>
 
-<div class="form-group">
+<div class="form-group" data-step="2" data-intro="账面上的付款金额，有时候一些零头会舍去，但这里要填写账目上完整的金额">
   <%= f.label :paper_amount, "账面金额" %>
   <%= f.number_field :paper_amount, min: 0, step: 0.01, required: "required", class: "form-control" %>
 </div>
-<div class="form-group">
+<div class="form-group" data-step="3" data-intro="与账面金额对应，这里填写实际的付款金额，舍去的零头就不用记录了">
   <%= f.label :actual_amount, "实际金额" %>
   <%= f.number_field :actual_amount, min: 0, step: 0.01, required: "required", class: "form-control" %>
 </div>
-<div class="form-group">
+<div class="form-group" data-step="4" data-intro="转账的话，就是对方的账户名">
   <%= f.label :account_name, "户名" %>
   <%= f.text_field :account_name, placeholder: "对方账户的名称", class: "form-control" %>
 </div>
-<div class="form-group">
+<div class="form-group" data-step="5" data-intro="与上方对应，银行卡号或者支付宝、微信号">
   <%= f.label :account_number, "账户号码" %>
   <%= f.text_field :account_number, placeholder: "收款的银行卡号、支付宝、微信", class: "form-control" %>
 </div>
 
-<div class="form-group">
+<div class="form-group" data-step="6" data-intro="选择一下账户来往的类型">
   <%= f.label :account_from, "账户所属" %>
   <%= f.select :account_from, options_for_select([['银行', '银行'], ['支付宝', '支付宝'], ['微信', '微信'], ['其他', '其他']]), class: "form-control" %>
 </div>
-<div class="form-group">
+<div class="form-group" data-step="7" data-intro="这个账单的时间，如果是补以前的账单，记得这里要改成账单上的时间，默认是现在的时间">
   <%= f.label :bill_time, "账单时间" %>
   <a class="far fa-question-circle" data-toggle="tooltip" data-placement="right" title="该笔收款的时间记录"> </a>
   <%= f.datetime_field :bill_time, value: default_time_now, class: "form-control" %>
@@ -41,14 +41,13 @@
   </div>
 <% end %>
 
-<div class="picture">
+<div class="picture" data-step="8" data-intro="收款单之类的凭证，可以拍照上传保留">
   <%= label_tag "上传相关图片" %>
   <%= f.file_field :picture %>
 </div>
 
 <script>
     $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
         //账面金额改变时，也改变实际金额
         $("#proceed_paper_amount").on("change", function () {
             $("#proceed_actual_amount").val($("#proceed_paper_amount").val());

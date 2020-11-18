@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-3">
 
-    <div class="role_info">
+    <div class="role_info" id="step1">
       <h5>角色栏</h5>
       <div id="accordion">
         <% current_user.roles.each do |role| %>
@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div class="operations_can_do">
+    <div class="operations_can_do" id="step2">
       <h5>待处理清单</h5>
       <div class="not_pass_content">
         <% if can? :pass_check, Expense %>
@@ -74,38 +74,39 @@
         <% end %>
         <hr>
       </div>
-      <div class="common_content">
-        <h5>常用功能</h5>
-        <div>
-          <% if can? :create, Expense %>
-            <div class="btn">
-              <%= link_to "填写新的付款单", new_expense_path %>
-            </div>
-          <% end %>
-          <% if can? :create, Proceed %>
-            <div class="btn">
-              <%= link_to "填写新的收款单", new_proceed_path %>
-            </div>
-          <% end %>
-          <% if can? :create, PurchaseOrder %>
-            <div class="btn">
-              <%= link_to "填写新的采购单", new_purchase_order_path %>
-            </div>
-          <% end %>
-          <% if can? :create, SaleOrder %>
-            <div class="btn">
-              <%= link_to "填写新的销售单", new_sale_order_path %>
-            </div>
-          <% end %>
-          <% if can? :create, ChangeMachine %>
-            <div class="btn">
-              <%= link_to "记录新的改机信息", new_change_machine_path %>
-            </div>
-          <% end %>
-        </div>
+    </div>
+    <div class="common_content" id="step3">
+      <h5>常用功能</h5>
+      <div>
+        <% if can? :create, Expense %>
+          <div class="btn" id="new_expense">
+            <%= link_to "填写新的付款单", new_expense_path %>
+          </div>
+
+        <% end %>
+        <% if can? :create, Proceed %>
+          <div class="btn" id="new_proceed">
+            <%= link_to "填写新的收款单", new_proceed_path %>
+          </div>
+        <% end %>
+        <% if can? :create, PurchaseOrder %>
+          <div class="btn" id="new_purchase_order">
+            <%= link_to "填写新的采购单", new_purchase_order_path %>
+          </div>
+        <% end %>
+        <% if can? :create, SaleOrder %>
+          <div class="btn" id="new_sale_order">
+            <%= link_to "填写新的销售单", new_sale_order_path %>
+          </div>
+        <% end %>
+        <% if can? :create, ChangeMachine %>
+          <div class="btn" id="new_change_machine">
+            <%= link_to "记录新的改机信息", new_change_machine_path %>
+          </div>
+        <% end %>
       </div>
     </div>
-    <div class="last_week_status">
+    <div class="last_week_status" id="step4">
       <h5>最近7天的情况</h5>
       <div>
         <% if @last_week_purchase_orders.size > 0 %>
@@ -187,24 +188,179 @@
         <% end %>
       </div>
     </div>
+
+    <div class="nav-item dropdown" id="novice_guide">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        新手引导
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" id="expense_tour">新的付款单</a>
+        <a class="dropdown-item" id="proceed_tour">新的收款单</a>
+        <a class="dropdown-item" id="purchase_order_tour">新的采购单</a>
+        <a class="dropdown-item" id="sale_order_tour">新的销售单</a>
+        <a class="dropdown-item" id="change_machine_tour">新的改机记录</a>
+        <%#= link_to "新的付款单", "#", class: "dropdown-item", id: "expense_tour" %>
+        <%#= link_to "新的收款单", new_proceed_path, class: "dropdown-item", id: "proceed_tour" %>
+        <%#= link_to "新的采购单", new_purchase_order_path, class: "dropdown-item", id: "purchase_order_tour" %>
+        <%#= link_to "新的销售单", new_sale_order_path, class: "dropdown-item", id: "sale_order_tour" %>
+        <%#= link_to "新的改机记录", new_change_machine_path, class: "dropdown-item", id: "change_machine_tour" %>
+      </div>
+    </div>
+
   </div>
   <div class="col-md-9">
     <p class="alert-warning"> 有任何意见、建议、问题、需要添加的功能请在底部的建议反馈里提交！</p>
-    <div class="graph_query">
+    <div class="graph_query" id="step5">
       <h5>图表查询</h5>
       <p>开始日期：<%= date_field_tag :start_date, (Time.current - 7.days).strftime("%Y-%m-%d") %></p>
       <p>结束日期：<%= date_field_tag :end_date, (Time.current + 1.day).strftime("%Y-%m-%d") %></p>
       <%= button_tag "订单收支", id: "check_order_money", class: "btn btn-primary" %>
       <%= button_tag "支出类别", id: "check_expense_ratio", class: "btn btn-primary" %>
       <%= button_tag "最高交易金额的公司", id: "check_trade_top", class: "btn btn-primary" %>
-      <div class="chart-container">
-
-      </div>
+      <div class="chart-container"></div>
     </div>
   </div>
 </div>
 <script>
+    // 设定参数
+    var date = {
+        controller_name: "dashboard",
+        action_name: "index",
+        tour_name: "intro",
+        creator_id:<%=current_user.id %>
+    }
+    var title = '';
+    title = title.concat(date.controller_name, "-", date.action_name, "-", date.tour_name, "-", date.creator_id);
+
+    //设定首页的引导信息
+    function startIntro() {
+        var intro = introJs();
+        intro.setOptions({
+            steps: [{
+                intro: "欢迎您的使用,本系统将为您管理生产中产生的各种单据，首先为您介绍主页的各种功能"
+            }, {
+                element: '#step1',
+                intro: "这里是您在本系统中的角色定位，点击本角色的一些介绍，说明了您的主要职责",
+                position: 'auto'
+            }, {
+                element: '#step2',
+                intro: "这里存放着需要处理的单据，未处理完成的单据不会记入系统的后续计算中，请尽快处理本部分的内容！",
+                position: 'auto'
+            }, {
+                element: '#step3',
+                intro: '快速进入各种常用单据创建的入口',
+                position: 'auto'
+            }, {
+                element: '#step4',
+                intro: "在这里可以看到近一星期内的四种单据录入情况，可以点击后直接查看详情",
+                position: 'bottom'
+            }, {
+                element: '#step5',
+                intro: '选择时间周期，点击相应的按钮，查看图表数据。注意：只有已经审核过了的单据才会被计算出来！'
+            }, {
+                element: '#novice_guide',
+                intro: '这里是一些常用的操作流程，可以通过这里的操作提示，熟悉本系统'
+            } ,{
+                element: '#step6',
+                intro: '如果您忘记了首页的操作，请点击这里重新开启首页的新手引导'
+            }]
+        });
+        intro.setOptions({
+            skipLabel: "暂时跳过",
+            nextLabel: '下一步',
+            prevLabel: '上一步',
+            doneLabel: '完成',
+            exitOnOverlayClick: false,
+        })
+
+        intro.start();
+        //主动退出的话，在cookie中记录一下，本次访问不弹出引导了
+        intro.onbeforeexit(function () {
+            Cookies.set(title, true, {path: '/'})
+        });
+        intro.oncomplete(function () {
+            Cookies.remove(title);
+            $.post('/introjs', date)
+        });
+    }
+
     $(function () {
+        //检查cookies中是否经历过新手引导了
+        var title = '';
+        var title = title.concat(date.controller_name, "-", date.action_name, "-", date.tour_name, "-", date.creator_id);
+        var value = Cookies.get(title);
+        if (!value) {
+            //查询数据库，是否已经做过这个新手引导
+            $.post("/introjs/find_attribute", date, function (date) {
+                if (!date) {
+                    startIntro();
+                }
+            });
+        }
+
+        //付款单的新手引导
+        $("#expense_tour").on("click", function () {
+            Cookies.set("expense_tour", true, {path: '/'});
+            var intro = introJs();
+            intro.setOptions({
+                steps: [{
+                    element: '#new_expense',
+                    intro: "开始创建第一张付款单吧",
+                }],
+                exitOnOverlayClick: false,
+            });
+            intro.setOption('doneLabel', '跳转到页面').start().oncomplete(function () {
+                window.location.href = "/expense/new"
+            });
+        });
+        //收款单的新手引导
+        $("#proceed_tour").on("click", function () {
+            Cookies.set("proceed_tour", true, {path: '/'});
+            var intro = introJs();
+            intro.setOptions({
+                steps: [{
+                    element: '#new_proceed',
+                    intro: "开始创建第一张收款单吧",
+                }],
+                exitOnOverlayClick: false,
+            });
+            intro.setOption('doneLabel', '跳转到页面').start().oncomplete(function () {
+                window.location.href = "/proceed/new"
+            });
+        });
+        //采购单的新手引导
+        $("#purchase_order_tour").on("click", function () {
+            Cookies.set("purchase_order_tour", true, {path: '/'});
+            var intro = introJs();
+            intro.setOptions({
+                steps: [{
+                    element: '#new_purchase_order',
+                    intro: "开始创建第一张采购单吧",
+                }],
+                exitOnOverlayClick: false,
+            });
+            intro.setOption('doneLabel', '跳转到页面').start().oncomplete(function () {
+                window.location.href = "/purchase_order/new"
+            });
+        });
+        //销售单的新手引导
+        $("#sale_order_tour").on("click", function () {
+            Cookies.set("sale_order_tour", true, {path: '/'});
+            var intro = introJs();
+            intro.setOptions({
+                steps: [{
+                    element: '#new_sale_order',
+                    intro: "开始创建第一张采购单吧",
+                }],
+                exitOnOverlayClick: false,
+            });
+            intro.setOption('doneLabel', '跳转到页面').start().oncomplete(function () {
+                window.location.href = "/sale_order/new"
+            });
+        });
+
+
+        //图表信息查询
         $("#check_order_money").on("click", function () {
             var start_date = $("#start_date").val();
             var end_date = $("#end_date").val();

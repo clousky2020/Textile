@@ -38,9 +38,3 @@
     <%= f.select(:user_id, @salers.map {|n| [n.name, n.id]}, class: "form-control") %>
   </div>
 <% end %>
-
-<script>
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    })
-</script>

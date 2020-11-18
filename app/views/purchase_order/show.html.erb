@@ -8,15 +8,18 @@
     <% if !@purchase_order.is_invalid && !@purchase_order.check_status %>
       <% if can? :pass_check, PurchaseOrder %>
         <div class="alert-warning"><%= param_check("连续审核") %></div>
-        <%= link_to "通过审核", pass_check_purchase_order_path(@purchase_order), class: "btn btn-primary pass_check_link" %>
+        <span data-hint="您具有审核的权限,请确认单据内容正确后点击此按钮后，单据将记入系统计算。注意:已审核的单据无法编辑修改，如有错误只能作废后重新填写一张！" data-hintPosition="top-left">
+          <%= link_to "通过审核", pass_check_purchase_order_path(@purchase_order), class: "btn btn-primary pass_check_link" %></span>
       <% end %>
       <% if can? :update, PurchaseOrder %>
-        <%= link_to "编辑", edit_purchase_order_path(@purchase_order), class: "btn btn-primary edit-link" %>
+        <span data-hint="单子上有内容错误？缺失？重新编辑吧！注意:作废的单据和通过审核的单据就无法修改了！" data-hintPosition="top-left">
+          <%= link_to "编辑", edit_purchase_order_path(@purchase_order), class: "btn btn-primary edit-link" %></span>
       <% end %>
     <% end %>
     <% if !@purchase_order.is_invalid && @purchase_order.check_status %>
       <% if can? :destroy, PurchaseOrder %>
-        <%= link_to "作废", purchase_order_path(@purchase_order), method: :delete, data: {confirm: "确定作废吗？"}, class: "btn btn-primary destroy_link" %>
+        <span data-hint="单据错误？审核后不能修改了，只能作废后再写一张了。" data-hintPosition="top-left">
+          <%= link_to "作废", purchase_order_path(@purchase_order), method: :delete, data: {confirm: "确定作废吗？"}, class: "btn btn-primary destroy_link" %></span>
       <% end %>
     <% end %>
     <%= link_to "返回主页", purchase_order_index_path, class: "btn btn-primary" %>

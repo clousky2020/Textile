@@ -126,9 +126,15 @@ class SaleOrderUpdateForm
         @sale_order.save
       end
       if self.freight > 0 && self.our_freight
-        Expense.find_or_create_by(counterparty: sale_customer.name, paper_amount: self.freight, actual_amount: self.freight,
-                                  user_id: self.user_id, bill_time: self.bill_time, expense_type: "销售运费",
+        expense = Expense.find_by(counterparty: sale_customer.name, user_id: self.user_id, bill_time: self.bill_time, expense_type: "销售运费",
                                   remark: ("销售单#{@sale_order.order_id}的运费,产品是#{self.name}"))
+        if expense
+          Expense.update(paper_amount: self.freight, actual_amount: self.freight, remark: ("采购单#{@purchase_order.order_id}的运费,原料是#{self.name}"))
+        else
+          Expense.create(counterparty: sale_customer.name, paper_amount: self.freight, actual_amount: self.freight,
+                         user_id: self.user_id, bill_time: self.bill_time, expense_type: "销售运费",
+                         remark: ("销售单#{@sale_order.order_id}的运费,产品是#{self.name}"))
+        end
 
       end
 

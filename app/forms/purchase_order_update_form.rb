@@ -12,7 +12,7 @@ class PurchaseOrderUpdateForm
     end
   end
 
-  validates :name, :specification, :measuring_unit, :number, :weight, :user_id, :repo_id,:bill_time, presence: true
+  validates :name, :specification, :measuring_unit, :number, :weight, :user_id, :repo_id, :bill_time, presence: true
   validates :weight, :price, numericality: {greater_than_or_equal_to: 0}
 
   def initialize(purchase_order)
@@ -28,6 +28,10 @@ class PurchaseOrderUpdateForm
 
   def name
     @name ||= @material.name
+  end
+
+  def our_freight
+    @our_freight ||= @purchase_order.our_freight
   end
 
   def specification
@@ -89,6 +93,7 @@ class PurchaseOrderUpdateForm
   def user_id
     @user_id ||= @user.id
   end
+
   def bill_time
     @bill_time ||= @purchase_order.bill_time
   end
@@ -110,6 +115,7 @@ class PurchaseOrderUpdateForm
     @tax_rate = params[:tax_rate]
     @deposit = params[:deposit]
     @freight = params[:freight]
+    @our_freight = params[:our_freight]
     @repo_id = params[:repo_id]
     @user_id = params[:user_id]
     @picture = params[:picture]
@@ -120,9 +126,20 @@ class PurchaseOrderUpdateForm
       purchase_supplier = PurchaseSupplier.find_or_create_by(name: self.purchase_supplier.strip)
       @purchase_order.material.update(name: self.name.strip, specification: self.specification.strip, purchase_supplier_id: purchase_supplier.id)
       @purchase_order.update(material_id: self.material_id, description: self.description.strip, batch_number: self.batch_number.strip,
-                             measuring_unit: self.measuring_unit, repo_id: self.repo_id, user_id: self.user_id,bill_time:self.bill_time,
-                             number: self.number, weight: self.weight, price: self.price, tax_rate: self.tax_rate,
+                             measuring_unit: self.measuring_unit, repo_id: self.repo_id, user_id: self.user_id, bill_time: self.bill_time,
+                             number: self.number, weight: self.weight, price: self.price, tax_rate: self.tax_rate, our_freight: self.our_freight,
                              deposit: self.deposit, freight: self.freight, picture: self.picture, is_return: self.is_return)
+      if self.freight > 0 && self.our_freight
+        expense = Expense.find_by(counterparty: purchase_supplier.name, user_id: self.user_id, bill_time: self.bill_time, expense_type: "采购运费",
+                                  remark: ("采购单#{@purchase_order.order_id}的运费,原料是#{self.name}"))
+        if expense
+          Expense.update(paper_amount: self.freight, actual_amount: self.freight, remark: ("采购单#{@purchase_order.order_id}的运费,原料是#{self.name}"))
+        else
+          Expense.create(counterparty: purchase_supplier.name, paper_amount: self.freight, actual_amount: self.freight,
+                         user_id: self.user_id, bill_time: self.bill_time, expense_type: "采购运费",
+                         remark: ("采购单#{@purchase_order.order_id}的运费,原料是#{self.name}"))
+        end
+      end
       true
     else
       false
