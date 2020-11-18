@@ -1,39 +1,39 @@
-<div class="form-group">
+<div class="form-group" data-step="1" data-intro="改机师傅的名字，也是付款对象">
   <%= f.label :change_person, "改机人姓名" %>
-  <%= f.text_field :change_person, placeholder: "必需，例如：张三", required: "required", class: "form-control" %>
+  <%= f.text_field :change_person, placeholder: "必须填写，例如：张三", required: "required", class: "form-control" %>
 </div>
 
-<div class="form-group">
+<div class="form-group" data-step="2" data-intro="改机师傅的联系方式，手机号码、微信号等等">
   <%= f.label :contacts, "联系方式" %>
   <%= f.text_field :contacts, placeholder: "可以填写手机号码或其他联系方式", class: "form-control" %>
 </div>
-<div class="form-group">
+<div class="form-group" data-step="3" data-intro="这次改机的机器编号">
   <%= f.label :machine_id, "机器编号" %>
-  <%= f.number_field :machine_id, placeholder: "必需，机器上贴着的号码", required: "required", min: 0, max: 27, required: "required", class: "form-control" %>
+  <%= f.number_field :machine_id, placeholder: "必须填写，机器上贴着的号码", required: "required", min: 0, max: 27, required: "required", class: "form-control" %>
 </div>
-<div class="form-group">
+<div class="form-group" data-step="4" data-intro="新换上去的针筒信息">
   <%= f.label :machine_type, "机器的针筒类型" %>
   <%= f.text_field :machine_type, placeholder: "例如：72路24针", class: "form-control" %>
 </div>
-<div class="form-group">
+<div class="form-group" data-step="5" data-intro="这次改机的目标产品型号，没确定可以先不写">
   <%= f.label :change_to_specification, "要改成的型号" %>
   <%= f.text_field :change_to_specification, placeholder: "要改的布的种类型号", class: "form-control" %>
 </div>
-<div class="form-group">
+<div class="form-group" data-step="6" data-intro="改机费用，一般是600~1000之间">
   <%= f.label :price, "费用(元)" %>
   <%= f.number_field :price, required: "required", min: 0, class: "form-control" %>
 </div>
 
-<div class="form-group">
+<div class="form-group" data-step="7" data-intro="改机完成的日期">
   <%= f.label :change_date, "改机日期" %>
   <%= f.date_field :change_date, value: f.object.change_date || Date.today.to_s(:db), class: "form-control" %>
 </div>
 
-<div class="form-group">
+<div class="form-group" data-step="8" data-intro="其他内容，例如改机过程中发生了什么意外、损坏了什么零件之类的">
   <%= f.label :remark, "备注" %>
   <%= f.text_area :remark, placeholder: "其他的补充信息", class: "form-control" %>
 </div>
-<div class="form-group">
+<div class="form-group" data-step="9" data-intro="这笔改机费用是否结清了，结清的话会生成相应的付款单，如果是垫付的话，要到该付款单的编辑页面把报销框打勾">
   <%= f.label :is_settle, "是否结清？" %>
   <%= f.check_box :is_settle %>
 </div>
