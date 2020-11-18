@@ -31,6 +31,10 @@ class SaleOrderUpdateForm
     @name ||= @product.name
   end
 
+  def our_freight
+    @our_freight ||= @sale_order.our_freight
+  end
+
   def specification
     @specification ||= @product.specification
   end
@@ -108,13 +112,26 @@ class SaleOrderUpdateForm
     @bill_time = params[:bill_time]
     @is_return = params[:is_return]
     @sale_customer = params[:sale_customer]
+    @our_freight = params[:our_freight]
     if valid?
       sale_customer = SaleCustomer.find_or_create_by(name: self.sale_customer)
       product = Product.find_by(id: @product_id)
       @sale_order.update(product_id: product.id, description: self.description, sale_customer_id: sale_customer.id,
-                         measuring_unit: self.measuring_unit, repo_id: self.repo_id, user_id: self.user_id,
+                         measuring_unit: self.measuring_unit, repo_id: self.repo_id, user_id: self.user_id, our_freight: self.our_freight,
                          number: self.number, weight: self.weight, price: self.price, tax_rate: self.tax_rate,
                          freight: self.freight, picture: self.picture, is_return: self.is_return, bill_time: self.bill_time)
+      # 如果有图片，把图片的路径保存
+      if self.picture
+        @sale_order.picture = self.picture
+        @sale_order.save
+      end
+      if self.freight > 0 && self.our_freight
+        Expense.find_or_create_by(counterparty: sale_customer.name, paper_amount: self.freight, actual_amount: self.freight,
+                                  user_id: self.user_id, bill_time: self.bill_time, expense_type: "销售运费",
+                                  remark: ("销售单#{@sale_order.order_id}的运费,产品是#{self.name}"))
+
+      end
+
       true
     else
       false

@@ -13,7 +13,7 @@ class SaleOrderCreateForm
     end
   end
 
-  attr_accessor(:name, :specification, :description, :measuring_unit, :number, :weight, :price, :bill_time,
+  attr_accessor(:name, :specification, :description, :measuring_unit, :number, :weight, :price, :bill_time, :our_freight,
                 :tax_rate, :freight, :picture, :is_return, :user_id, :repo_id, :product_id, :sale_customer)
   validates :name, :measuring_unit, :number, :weight, :user_id, :repo_id, :sale_customer, :bill_time, presence: true
   validates :weight, :price, numericality: {greater_than: 0}
@@ -62,21 +62,31 @@ class SaleOrderCreateForm
     self.picture = params[:picture]
     self.bill_time = params[:bill_time]
     self.sale_customer = params[:sale_customer]
+    self.our_freight = params[:our_freight]
     if valid?
       sale_customer = SaleCustomer.find_or_create_by(name: self.sale_customer.strip)
       @order = SaleOrder.find_by(sale_customer_id: sale_customer.id, description: self.description.strip, bill_time: self.bill_time,
                                  measuring_unit: self.measuring_unit, product_id: self.product_id, repo_id: self.repo_id,
                                  user_id: self.user_id, number: self.number, weight: self.weight, price: self.price,
-                                 tax_rate: self.tax_rate, freight: self.freight, is_return: self.is_return)
+                                 tax_rate: self.tax_rate, freight: self.freight, is_return: self.is_return, our_freight: self.our_freight)
       if !@order
         @order = SaleOrder.create(sale_customer_id: sale_customer.id, description: self.description.strip, bill_time: self.bill_time,
                                   measuring_unit: self.measuring_unit, product_id: self.product_id, repo_id: self.repo_id,
                                   user_id: self.user_id, number: self.number, weight: self.weight, price: self.price,
-                                  tax_rate: self.tax_rate, freight: self.freight, is_return: self.is_return)
+                                  tax_rate: self.tax_rate, freight: self.freight, is_return: self.is_return, our_freight: self.our_freight)
+        # 如果有图片，把图片的路径保存
         if self.picture
           @order.picture = self.picture
           @order.save
         end
+        # 如果有运费且运费是我们出的，需要生成一张相关的付款单
+        if self.our_freight && self.freight.to_i > 0
+          Expense.create(counterparty: sale_customer.name, paper_amount: self.freight, actual_amount: self.freight,
+                         user_id: self.user_id, bill_time: self.bill_time, expense_type: "销售运费",
+                         remark: ("销售单#{@order.order_id}的运费,产品是#{self.name}"))
+
+        end
+
       else
         flash = "已经有相同的订单了,订单号#{@order.order_id}"
         return false, flash

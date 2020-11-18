@@ -71,8 +71,13 @@ class SaleOrderController < ApplicationController
 
   def destroy
     store_referrer_location
-    @sale_order.order_declare_invalid(current_user)
-    flash[:success] = "#{@sale_order.sale_customer.name}的订单#{@sale_order.order_id}已作废"
+    if @sale_order.check_status
+      @sale_order.order_declare_invalid(current_user)
+      flash[:success] = "#{@sale_order.sale_customer.name}的订单#{@sale_order.order_id}已作废"
+    else
+      @sale_order.destroy
+      flash[:success] = "#{@sale_order.sale_customer.name}的订单#{@sale_order.order_id}已删除"
+    end
     redirect_back_referrer_for sale_order_index_path
   end
 
@@ -99,13 +104,6 @@ class SaleOrderController < ApplicationController
   def get_sale_order
     @sale_order = SaleOrder.find(params[:id])
   end
-
-  # def sale_order_params
-  #   params.require(:sale_order).permit(:name, :specification, :description, :repo_id, :user_id, :number, :freight,
-  #                                      :measuring_unit, :price, :tax_rate, :deposit, :weight, :picture, :is_return,
-  #                                      sale_customer_attributes: [:id, :name],
-  #                                      product_attributes: [:id, :name, :specification])
-  # end
 
 
 end
