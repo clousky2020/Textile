@@ -60,7 +60,13 @@ class ApplicationRecord < ActiveRecord::Base
     orders = self.where(bill_time: start_date..end_date).select(:bill_time, option).where(is_invalid: false, check_status: true)
     h = Hash.new
     orders.each do |order|
-      if end_date.to_i - start_date.to_i > 30
+      start_date_todate = Date.strptime(start_date, '%Y-%m-%d')
+      end_date_todate = Date.strptime(end_date, '%Y-%m-%d')
+      # 超出一年，按年排列
+      if end_date_todate - start_date_todate > 365
+      bill_date = order.bill_time.strftime("%Y")
+      # 超出一个月，按月份排列
+      elsif end_date_todate - start_date_todate > 30
         bill_date = order.bill_time.strftime("%Y-%m")
       else
         bill_date = order.bill_time.strftime("%Y-%m-%d")
