@@ -1,7 +1,6 @@
 GEM
   remote: https://gems.ruby-china.com/
   specs:
-    abraham (2.1.2)
     actioncable (6.0.3.4)
       actionpack (= 6.0.3.4)
       nio4r (~> 2.0)
@@ -284,7 +283,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  abraham
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.2)
   byebug

@@ -8,6 +8,11 @@ Rails.application.routes.draw do
 
   resources :session, :only => [:new, :create, :destroy]
   resources :params, only: [:index, :update]
+  resources :introjs, only: [:create, :destroy] do
+    collection do
+      post :find_attribute
+    end
+  end
   resources :comments, only: [:index, :create, :destroy] do
     get :take_top, on: :member
   end
