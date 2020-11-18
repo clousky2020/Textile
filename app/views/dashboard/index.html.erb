@@ -194,11 +194,21 @@
         新手引导
       </a>
       <div class="dropdown-menu">
-        <a class="dropdown-item" id="expense_tour">新的付款单</a>
-        <a class="dropdown-item" id="proceed_tour">新的收款单</a>
-        <a class="dropdown-item" id="purchase_order_tour">新的采购单</a>
-        <a class="dropdown-item" id="sale_order_tour">新的销售单</a>
-        <a class="dropdown-item" id="change_machine_tour">新的改机记录</a>
+        <% if can? :create, Expense %>
+          <a class="dropdown-item" id="expense_tour">新的付款单</a>
+        <% end %>
+        <% if can? :create, Proceed %>
+          <a class="dropdown-item" id="proceed_tour">新的收款单</a>
+        <% end %>
+        <% if can? :create, PurchaseOrder %>
+          <a class="dropdown-item" id="purchase_order_tour">新的采购单</a>
+        <% end %>
+        <% if can? :create, SaleOrder %>
+          <a class="dropdown-item" id="sale_order_tour">新的销售单</a>
+        <% end %>
+        <% if can? :create, ChangeMachine %>
+          <a class="dropdown-item" id="change_machine_tour">新的改机记录</a>
+        <% end %>
       </div>
     </div>
 
@@ -281,7 +291,7 @@
 
     $(function () {
         //检查cookies中是否经历过新手引导了
-         var value = Cookies.get(title);
+        var value = Cookies.get(title);
         if (!value) {
             //查询数据库，是否已经做过这个新手引导
             $.post("/introjs/find_attribute", date, function (date) {
