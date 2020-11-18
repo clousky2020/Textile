@@ -22,7 +22,11 @@
   <% if object.freight %>
     <tr>
       <th>运费</th>
-      <td><%= object.freight %>元</td>
+      <% if object.our_freight %>
+        <td class="alert-warning"><%= object.freight %>元(我们公司付)</td>
+      <% else %>
+        <td><%= object.freight %>元</td>
+      <% end %>
     </tr>
   <% end %>
 
@@ -42,7 +46,7 @@
   </tr>
   <tr>
     <th>客户名称</th>
-    <td><%=link_to object.sale_customer.name,sale_customer_path(object.sale_customer) %></td>
+    <td><%= link_to object.sale_customer.name, sale_customer_path(object.sale_customer) %></td>
   </tr>
   <tr>
     <th>存放的仓库</th>

@@ -26,7 +26,11 @@
   <% if object.freight %>
     <tr>
       <th>运费</th>
-      <td><%= object.freight %>元</td>
+      <% if object.our_freight %>
+        <td class="alert-warning"><%= object.freight %>元(我们公司付)</td>
+      <% else %>
+        <td><%= object.freight %>元</td>
+      <% end %>
     </tr>
   <% end %>
   <% if object.deposit %>
