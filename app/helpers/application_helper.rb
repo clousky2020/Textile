@@ -47,7 +47,7 @@ module ApplicationHelper
 
   def param_check(name)
     settle = Param.find_by(name: name)
-    if settle.status
+    if settle && settle.status
       "已开启#{name},#{settle.description}"
     else
       nil
