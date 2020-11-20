@@ -212,6 +212,9 @@
         <% if can? :update, PurchaseSupplier %>
           <a class="dropdown-item" id="change_purchase_supplier_check_money_time_tour">设置初始对账金额</a>
         <% end %>
+        <% if can? :export, PurchaseSupplier %>
+          <a class="dropdown-item" id="export_purchase_supplier_tour">导出对账单</a>
+        <% end %>
       </div>
     </div>
 
@@ -387,6 +390,20 @@
             intro.setOptions({
                 steps: [{
                     intro: "如果供应商以前的订单遗失了没有记录进去，那金额不就是错误的了！为其设定一个初始的清算金额吧。这里我们拿供应商来练习一下，客户的清算金额也是同样操作",
+                }],
+                exitOnOverlayClick: false,
+            });
+            intro.setOption('doneLabel', '跳转到页面').start().oncomplete(function () {
+                window.location.href = "/purchase_supplier"
+            });
+        });
+        //导出供应商的对账单
+        $("#export_purchase_supplier_tour").on("click", function () {
+            Cookies.set("export_purchase_supplier_tour", true, {path: '/'});
+            var intro = introJs();
+            intro.setOptions({
+                steps: [{
+                    intro: "需要对账了？只用一个按键就能导出特定格式的对账单了，导出客户的对账单也是同样操作",
                 }],
                 exitOnOverlayClick: false,
             });
