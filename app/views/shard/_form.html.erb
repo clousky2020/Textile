@@ -28,9 +28,7 @@
       <%= render 'change_machines/form_content', f: f, type_2: type_2, object: object %>
     <% end %>
     <div class="form-group">
-      <span data-hint="上面必须的内容都写好了？那就点击这里吧。哪里没有填好会给你提示的~" data-hintPosition="top-left">
       <%= f.submit yield(:button_text), class: "btn btn-primary" %></span>
-      <span  data-hint="不想写单子了，退出。注意：前面填好的内容不会保存哦~" data-hintPosition="top-left">
       <%= link_to "取消", yield(:back_url), class: "btn btn-default" %></span>
     </div>
 
