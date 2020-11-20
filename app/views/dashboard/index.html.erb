@@ -209,6 +209,9 @@
         <% if can? :create, ChangeMachine %>
           <a class="dropdown-item" id="change_machine_tour">新的改机记录</a>
         <% end %>
+        <% if can? :update, PurchaseSupplier %>
+          <a class="dropdown-item" id="change_purchase_supplier_check_money_time_tour">设置初始对账金额</a>
+        <% end %>
       </div>
     </div>
 
@@ -227,69 +230,70 @@
   </div>
 </div>
 <script>
-    // 设定参数
-    var date = {
-        controller_name: "dashboard",
-        action_name: "index",
-        tour_name: "intro",
-        creator_id:<%=current_user.id %>
-    }
-    var title = '';
-    title = title.concat(date.controller_name, "-", date.action_name, "-", date.tour_name, "-", date.creator_id);
-
-    //设定首页的引导信息
-    function startIntro() {
-        var intro = introJs();
-        intro.setOptions({
-            steps: [{
-                intro: "欢迎您的使用,本系统将为您管理生产中产生的各种单据，首先为您介绍主页的各种功能"
-            }, {
-                element: '#step1',
-                intro: "这里是您在本系统中的角色定位，点击本角色的一些介绍，说明了您的主要职责",
-                position: 'auto'
-            }, {
-                element: '#step2',
-                intro: "这里存放着需要处理的单据，未处理完成的单据不会记入系统的后续计算中，请尽快处理本部分的内容！",
-                position: 'auto'
-            }, {
-                element: '#step3',
-                intro: '快速进入各种常用单据创建的入口',
-                position: 'auto'
-            }, {
-                element: '#step4',
-                intro: "在这里可以看到近一星期内的四种单据录入情况，可以点击后直接查看详情",
-                position: 'bottom'
-            }, {
-                element: '#step5',
-                intro: '选择时间周期，点击相应的按钮，查看图表数据。注意：只有已经审核过了的单据才会被计算出来！'
-            }, {
-                element: '#novice_guide',
-                intro: '这里是一些常用的操作流程，可以通过这里的操作提示，熟悉本系统'
-            }, {
-                element: '#step6',
-                intro: '如果您忘记了首页的操作，请点击这里重新开启首页的新手引导'
-            }]
-        });
-        intro.setOptions({
-            skipLabel: "暂时跳过",
-            nextLabel: '下一步',
-            prevLabel: '上一步',
-            doneLabel: '完成',
-            exitOnOverlayClick: false,
-        })
-
-        intro.start();
-        //主动退出的话，在cookie中记录一下，本次访问不弹出引导了
-        intro.onbeforeexit(function () {
-            Cookies.set(title, true, {path: '/'})
-        });
-        intro.oncomplete(function () {
-            Cookies.remove(title);
-            $.post('/introjs', date)
-        });
-    }
-
     $(function () {
+        // 设定参数
+        var date = {
+            controller_name: "dashboard",
+            action_name: "index",
+            tour_name: "intro",
+            creator_id:<%=current_user.id %>
+        }
+        var title = '';
+        title = title.concat(date.controller_name, "-", date.action_name, "-", date.tour_name, "-", date.creator_id);
+
+        //设定首页的引导信息
+        function startIntro() {
+            var intro = introJs();
+            intro.setOptions({
+                steps: [{
+                    intro: "欢迎您的使用,本系统将为您管理生产中产生的各种单据，首先为您介绍主页的各种功能"
+                }, {
+                    element: '#step1',
+                    intro: "这里是您在本系统中的角色定位，点击本角色的一些介绍，说明了您的主要职责",
+                    position: 'auto'
+                }, {
+                    element: '#step2',
+                    intro: "这里存放着需要处理的单据，未处理完成的单据不会记入系统的后续计算中，请尽快处理本部分的内容！",
+                    position: 'auto'
+                }, {
+                    element: '#step3',
+                    intro: '快速进入各种常用单据创建的入口',
+                    position: 'auto'
+                }, {
+                    element: '#step4',
+                    intro: "在这里可以看到近一星期内的四种单据录入情况，可以点击后直接查看详情",
+                    position: 'bottom'
+                }, {
+                    element: '#step5',
+                    intro: '选择时间周期，点击相应的按钮，查看图表数据。注意：只有已经审核过了的单据才会被计算出来！'
+                }, {
+                    element: '#novice_guide',
+                    intro: '这里是一些常用的操作流程，可以通过这里的操作提示，熟悉本系统'
+                }, {
+                    element: '#step6',
+                    intro: '如果您忘记了首页的操作，请点击这里重新开启首页的新手引导'
+                }]
+            });
+            intro.setOptions({
+                skipLabel: "暂时跳过",
+                nextLabel: '下一步',
+                prevLabel: '上一步',
+                doneLabel: '完成',
+                exitOnOverlayClick: false,
+            });
+
+            intro.start();
+            //主动退出的话，在cookie中记录一下，本次访问不弹出引导了
+            intro.onbeforeexit(function () {
+                Cookies.set(title, true, {path: '/'})
+            });
+            intro.oncomplete(function () {
+                Cookies.remove(title);
+                $.post('/introjs', date)
+            });
+        }
+
+
         //检查cookies中是否经历过新手引导了
         var value = Cookies.get(title);
         if (!value) {
@@ -374,6 +378,20 @@
             });
             intro.setOption('doneLabel', '跳转到页面').start().oncomplete(function () {
                 window.location.href = "/change_machines/new"
+            });
+        });
+        //为供应商设置初始的对账金额
+        $("#change_purchase_supplier_check_money_time_tour").on("click", function () {
+            Cookies.set("change_purchase_supplier_check_money_time_tour", true, {path: '/'});
+            var intro = introJs();
+            intro.setOptions({
+                steps: [{
+                    intro: "如果供应商以前的订单遗失了没有记录进去，那金额不就是错误的了！为其设定一个初始的清算金额吧。这里我们拿供应商来练习一下，客户的清算金额也是同样操作",
+                }],
+                exitOnOverlayClick: false,
+            });
+            intro.setOption('doneLabel', '跳转到页面').start().oncomplete(function () {
+                window.location.href = "/purchase_supplier"
             });
         });
 
