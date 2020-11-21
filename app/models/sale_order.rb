@@ -10,7 +10,7 @@ class SaleOrder < ApplicationRecord
   validates :weight, :number, :price, numericality: {greater_than: 0}
 
 
-  after_create :generate_order_id
+  before_create :generate_order_id
   after_create :created_person
   after_create :calcuate_total_price
   after_create :check_result_initial

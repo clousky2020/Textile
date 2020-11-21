@@ -18,16 +18,18 @@ class SaleCustomer < ApplicationRecord
       # 计算正常订单需要支付的钱款,加上设定的清算金额
       need_collection_money = sale_orders.where(is_return: false).collect(&:total_price).sum + self.check_money
       # 再加包含运费的单子里的运费
-      need_collection_money += sale_orders.where(our_freight: false).where("freight != ?", nil).collect(&:freight).sum
+      need_collection_money += sale_orders.where(is_return: false, our_freight: false).where.not(freight: nil).collect(&:freight).sum
     else
       # 计算正常订单需要支付的钱款
       need_collection_money = sale_orders.where(is_return: false).collect(&:total_price).sum
+      p need_collection_money
       # 再加包含运费的单子里的运费
-      need_collection_money += sale_orders.where(our_freight: false).where("freight != ?", nil).collect(&:freight).sum
+      need_collection_money += sale_orders.where(is_return: false, our_freight: false).where.not(freight: nil).collect(&:freight).sum
+      p need_collection_money
     end
     # 计算退货订单需要收回的钱款
     is_return_money = sale_orders.where(is_return: true).collect(&:total_price).sum
-    is_return_money += sale_orders.where(is_return: true, our_freight: false).where("freight != ?", nil).collect(&:freight).sum
+    is_return_money += sale_orders.where(is_return: true, our_freight: false).where.not(freight: nil).collect(&:freight).sum
 
     self.total_collection_required = need_collection_money - is_return_money
     self.save

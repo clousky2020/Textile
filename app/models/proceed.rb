@@ -10,7 +10,7 @@ class Proceed < ApplicationRecord
 
   after_create :check_result_initial
   after_create :created_person
-  after_create :generate_order_id
+  before_create :generate_order_id
 
 
   def self.sale_customer_search(search)

@@ -89,7 +89,6 @@
         function getNow(s) {
             return s < 10 ? '0' + s : s;
         }
-
         function str_now_time() {
             var myDate = new Date();//获取当前年
             var year = myDate.getFullYear();//获取当前月
@@ -101,7 +100,6 @@
             var now = year + '-' + getNow(month) + "-" + getNow(date) + "T" + getNow(h) + ':' + getNow(m);
             return now
         }
-
         //账单日期如果为空，则填入现在的时间
         var bill_time = $("#purchase_orders_bill_time").val();
         if (!bill_time) {

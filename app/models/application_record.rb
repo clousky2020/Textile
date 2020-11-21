@@ -4,7 +4,7 @@ class ApplicationRecord < ActiveRecord::Base
 
   #根据订单的创建时间，生成订单号
   def generate_order_id
-    self.update(order_id: self.created_at.localtime.strftime("%Y%m%d%H%M%S") + self.id.to_s)
+    self.order_id = self.created_at.localtime.strftime("%Y%m%d%H%M%S") + self.id.to_s
   end
 
   #计算订单税后总价
@@ -64,8 +64,8 @@ class ApplicationRecord < ActiveRecord::Base
       end_date_todate = Date.strptime(end_date, '%Y-%m-%d')
       # 超出一年，按年排列
       if end_date_todate - start_date_todate > 365
-      bill_date = order.bill_time.strftime("%Y")
-      # 超出一个月，按月份排列
+        bill_date = order.bill_time.strftime("%Y")
+        # 超出一个月，按月份排列
       elsif end_date_todate - start_date_todate > 30
         bill_date = order.bill_time.strftime("%Y-%m")
       else

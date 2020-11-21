@@ -248,7 +248,7 @@
             <% if item.our_freight %>
             <Cell ss:StyleID="s122"><Data ss:Type="Number"><%= item['freight'] %></Data></Cell>
             <%else %>
-              <Cell ss:StyleID="s122"><Data ss:Type="Number">0</Data></Cell>
+              <Cell ss:StyleID="s122"/>
             <%end %>
             <Cell ss:StyleID="s122"/>
             <Cell ss:StyleID="s122" ss:Formula="=SUMIFS(C[-4],C[-12],&quot;&lt;=&quot;&amp;RC[-12])+SUMIFS(C[-3],C[-12],&quot;&lt;=&quot;&amp;RC[-12])+SUMIFS(C[-2],C[-12],&quot;&lt;=&quot;&amp;RC[-12])- SUMIFS(C[-1],C[-12],&quot;&lt;=&quot;&amp;RC[-12])"></Cell>
@@ -272,7 +272,7 @@
             <% if item.our_freight %>
               <Cell ss:StyleID="s122"><Data ss:Type="Number">-<%= item['freight'] %></Data></Cell>
             <%else %>
-              <Cell ss:StyleID="s122"><Data ss:Type="Number">-0</Data></Cell>
+              <Cell ss:StyleID="s122"/>
             <%end %>
             <Cell ss:StyleID="s122"/>
             <Cell ss:StyleID="s122" ss:Formula="=SUMIFS(C[-4],C[-12],&quot;&lt;=&quot;&amp;RC[-12])+SUMIFS(C[-3],C[-12],&quot;&lt;=&quot;&amp;RC[-12])+SUMIFS(C[-2],C[-12],&quot;&lt;=&quot;&amp;RC[-12])- SUMIFS(C[-1],C[-12],&quot;&lt;=&quot;&amp;RC[-12])"></Cell>

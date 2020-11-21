@@ -17,17 +17,16 @@ class PurchaseSupplier < ApplicationRecord
       # 计算应付的钱，非退货单加上设定的清算金额
       need_pay_money = purchase_orders.where(is_return: false).collect(&:total_price).sum + self.check_money
       # 再加包含运费的单子里的运费
-      need_pay_money += purchase_orders.where(our_freight: false).where("freight != ?", nil).map(&:freight).sum
+      need_pay_money += purchase_orders.where(is_return: false, our_freight: false).where.not(freight: nil).map(&:freight).sum
     else
       # 计算得到所有非退货单的总值
       need_pay_money = purchase_orders.where(is_return: false).collect(&:total_price).sum
-
       # 再加包含运费的单子里的运费
-      need_pay_money += purchase_orders.where(our_freight: false).where("freight != ?", nil).map(&:freight).sum
+      need_pay_money += purchase_orders.where(is_return: false, our_freight: false).where.not(freight: nil).map(&:freight).sum
     end
     # 计算得到退货单的总值
     is_return_money = purchase_orders.where(is_return: true).collect(&:total_price).sum
-    is_return_money += purchase_orders.where(is_return: true, our_freight: false).where("freight != ?", nil).map(&:freight).sum
+    is_return_money += purchase_orders.where(is_return: true, our_freight: false).where.not(freight: nil).map(&:freight).sum
     # 更新
     self.total_payment_required = need_pay_money - is_return_money
     self.save

@@ -8,7 +8,7 @@ class PurchaseOrder < ApplicationRecord
   validates :order_id, uniqueness: true
   validates :weight, :price, numericality: {:greater_than_or_equal_to => 0}
 
-  after_create :generate_order_id
+  before_create :generate_order_id
   after_create :calcuate_total_price
   after_create :created_person
   after_create :check_result_initial

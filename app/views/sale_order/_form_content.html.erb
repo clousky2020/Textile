@@ -47,7 +47,7 @@
 </div>
 <div class="form-group" data-step="12" data-intro="这个账单的时间，如果是补以前的账单，记得这里要改成账单上的时间，默认是现在的时间">
   <%= f.label :bill_time, "账单时间" %>
-  <%= f.datetime_field :bill_time, value: default_time_now, required: "required", class: "form-control" %>
+  <%= f.datetime_field :bill_time, required: "required", class: "form-control" %>
 </div>
 <div class="form-group" data-step="13" data-intro="这批货的备注信息">
   <%= f.label :description, "备注" %>
@@ -75,6 +75,26 @@
 <div class="alert-warning"><%= param_check("销售账单自动审核") %></div>
 <script>
     $(document).ready(function () {
+
+        function getNow(s) {
+            return s < 10 ? '0' + s : s;
+        }
+        function str_now_time() {
+            var myDate = new Date();//获取当前年
+            var year = myDate.getFullYear();//获取当前月
+            var month = myDate.getMonth() + 1;//获取当前日
+            var date = myDate.getDate();
+            var h = myDate.getHours();       //获取当前小时数(0-23)
+            var m = myDate.getMinutes();     //获取当前分钟数(0-59)
+            var now = year + '-' + getNow(month) + "-" + getNow(date) + "T" + getNow(h) + ':' + getNow(m);
+            return now
+        }
+        //账单日期如果为空，则填入现在的时间
+        var bill_time = $("#sale_orders_bill_time").val();
+        if (!bill_time) {
+            $("#sale_orders_bill_time").val(str_now_time);
+        }
+
         //销售单页面select选择产品型号规格后，填充下面的产品品名
         $("#sale_orders_specification").on("change", function () {
             $.post("/product/get_options", {id: this.value})
