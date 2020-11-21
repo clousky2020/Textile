@@ -1,0 +1,31 @@
+<div class="common_content" id="step3">
+  <h5>常用功能</h5>
+  <div>
+    <% if can? :create, Expense %>
+      <div class="btn" id="new_expense">
+        <%= link_to "填写新的付款单", new_expense_path %>
+      </div>
+
+    <% end %>
+    <% if can? :create, Proceed %>
+      <div class="btn" id="new_proceed">
+        <%= link_to "填写新的收款单", new_proceed_path %>
+      </div>
+    <% end %>
+    <% if can? :create, PurchaseOrder %>
+      <div class="btn" id="new_purchase_order">
+        <%= link_to "填写新的采购单", new_purchase_order_path %>
+      </div>
+    <% end %>
+    <% if can? :create, SaleOrder %>
+      <div class="btn" id="new_sale_order">
+        <%= link_to "填写新的销售单", new_sale_order_path %>
+      </div>
+    <% end %>
+    <% if can? :create, ChangeMachine %>
+      <div class="btn" id="new_change_machine">
+        <%= link_to "记录新的改机信息", new_change_machine_path %>
+      </div>
+    <% end %>
+  </div>
+</div>

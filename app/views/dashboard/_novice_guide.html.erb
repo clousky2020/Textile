@@ -1,0 +1,28 @@
+<div class="nav-item dropdown" id="novice_guide">
+  <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+    新手引导
+  </a>
+  <div class="dropdown-menu">
+    <% if can? :create, Expense %>
+      <a class="dropdown-item" id="expense_tour">新的付款单</a>
+    <% end %>
+    <% if can? :create, Proceed %>
+      <a class="dropdown-item" id="proceed_tour">新的收款单</a>
+    <% end %>
+    <% if can? :create, PurchaseOrder %>
+      <a class="dropdown-item" id="purchase_order_tour">新的采购单</a>
+    <% end %>
+    <% if can? :create, SaleOrder %>
+      <a class="dropdown-item" id="sale_order_tour">新的销售单</a>
+    <% end %>
+    <% if can? :create, ChangeMachine %>
+      <a class="dropdown-item" id="change_machine_tour">新的改机记录</a>
+    <% end %>
+    <% if can? :update, PurchaseSupplier %>
+      <a class="dropdown-item" id="change_purchase_supplier_check_money_time_tour">设置初始对账金额</a>
+    <% end %>
+    <% if can? :export, PurchaseSupplier %>
+      <a class="dropdown-item" id="export_purchase_supplier_tour">导出对账单</a>
+    <% end %>
+  </div>
+</div>

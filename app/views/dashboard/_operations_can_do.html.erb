@@ -1,0 +1,54 @@
+<div class="operations_can_do" id="step2">
+  <h5>待处理清单</h5>
+  <div class="not_pass_content">
+    <% if can? :pass_check, Expense %>
+      <% if @not_pass_expenses.count > 0 %>
+        <p>
+          审核付款单<span class="badge badge-warning">
+        <%= link_to @not_pass_expenses.count, expense_index_path(type: "check_status:false") %> </span>
+        </p>
+      <% end %>
+    <% end %>
+    <% if can? :pass_check, Proceed %>
+      <% if @not_pass_proceeds.count > 0 %>
+        <p>
+          审核收款单<span class="badge badge-warning">
+        <%= link_to @not_pass_proceeds.count, proceed_index_path(type: "check_status:false") %></span>
+        </p>
+      <% end %>
+    <% end %>
+    <% if can? :pass_check, SaleOrder %>
+      <% if @not_pass_sale_orders.count > 0 %>
+        <p>
+          审核销售单<span class="badge badge-warning">
+        <%= link_to @not_pass_sale_orders.count, sale_order_index_path(type: "check_status:false") %></span>
+        </p>
+      <% end %>
+    <% end %>
+    <% if can? :pass_check, PurchaseOrder %>
+      <% if @not_pass_purchase_orders.count > 0 %>
+        <p>
+          审核采购单<span class="badge badge-warning">
+        <%= link_to @not_pass_purchase_orders.count, purchase_order_index_path(type: "check_status:false") %></span>
+        </p>
+      <% end %>
+    <% end %>
+    <% if can? :pass_reimburse_expense, Expense %>
+      <% if @need_reimburses.count > 0 %>
+        <div>
+          还有未报销单<span class="badge badge-warning">
+        <%= link_to @need_reimburses.count, expense_index_path(type: "need_reimburse:true") %></span>
+        </div>
+      <% end %>
+    <% end %>
+    <% if can? :pass_settle, ChangeMachine %>
+      <% if @need_pass_settle.count > 0 %>
+        <div>
+          还有未结算的改机费用<span class="badge badge-warning">
+        <%= link_to @need_pass_settle.count, change_machines_path(type: "is_settle:false") %></span>
+        </div>
+      <% end %>
+    <% end %>
+    <hr>
+  </div>
+</div>
