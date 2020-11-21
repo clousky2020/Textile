@@ -192,7 +192,7 @@
     <Worksheet ss:Name="<%=@purchase_supplier.name %>" >
     <Table>
       <Row ss:Height="50">
-        <Cell ss:MergeAcross="12" ss:StyleID="s108"><Data ss:Type="String">对账单-<%=@purchase_supplier.name %></Data></Cell>
+        <Cell ss:MergeAcross="13" ss:StyleID="s108"><Data ss:Type="String">对账单-<%=@purchase_supplier.name %></Data></Cell>
       </Row>
 
 
@@ -207,7 +207,7 @@
         <Cell ss:StyleID="s122"><Data ss:Type="String"><%= t('tax_rate', default: '税率') %></Data></Cell>
         <Cell ss:StyleID="s122"><Data ss:Type="String"><%= t('total_price', default: '总价') %></Data></Cell>
         <Cell ss:StyleID="s122"><Data ss:Type="String"><%= t('deposit', default: '押金') %></Data></Cell>
-<!--        <Cell ss:StyleID="s122"><Data ss:Type="String"><%#= t('freight', default: '运费') %></Data></Cell>-->
+        <Cell ss:StyleID="s122"><Data ss:Type="String"><%= t('freight', default: '包含运费') %></Data></Cell>
         <Cell ss:StyleID="s122"><Data ss:Type="String"><%= t('paper_amount', default: '已付款') %></Data></Cell>
         <Cell ss:StyleID="s122"><Data ss:Type="String"><%= t('spare_money', default: '剩余应付款') %></Data></Cell>
         <Cell ss:StyleID="s122"><Data ss:Type="String"><%= t('remark', default: '备注') %></Data></Cell>
@@ -226,7 +226,7 @@
           <Cell ss:StyleID="s122"/>
           <Cell ss:StyleID="s122"/>
           <Cell ss:StyleID="s122"/>
-<!--          <Cell ss:StyleID="s122"/>-->
+          <Cell ss:StyleID="s122"/>
           <Cell ss:StyleID="s122"/>
           <Cell ss:StyleID="s122"><Data ss:Type="Number">-<%= @purchase_supplier['check_money']%></Data></Cell>
           <Cell ss:StyleID="s122"><Data ss:Type="String">这是设定的清算记录</Data></Cell>
@@ -245,9 +245,13 @@
             <Cell ss:StyleID="s123"><Data ss:Type="Number"><%= item['tax_rate'] %></Data></Cell>
             <Cell ss:StyleID="s122" ss:Formula="=RC[-4]*RC[-2]*(1-RC[-1])"></Cell>
             <Cell ss:StyleID="s122"><Data ss:Type="Number"><%= item['deposit'] %></Data></Cell>
-<!--            <Cell ss:StyleID="s122"><Data ss:Type="Number"><%#= item['freight'] %></Data></Cell>-->
+            <% if item.our_freight %>
+            <Cell ss:StyleID="s122"><Data ss:Type="Number"><%= item['freight'] %></Data></Cell>
+            <%else %>
+              <Cell ss:StyleID="s122"><Data ss:Type="Number">0</Data></Cell>
+            <%end %>
             <Cell ss:StyleID="s122"/>
-            <Cell ss:StyleID="s122" ss:Formula="=SUMIFS(C[-4],C[-11],&quot;&lt;=&quot;&amp;RC[-11])+SUMIFS(C[-3],C[-11],&quot;&lt;=&quot;&amp;RC[-11])- SUMIFS(C[-1],C[-11],&quot;&lt;=&quot;&amp;RC[-11])"></Cell>
+            <Cell ss:StyleID="s122" ss:Formula="=SUMIFS(C[-4],C[-12],&quot;&lt;=&quot;&amp;RC[-12])+SUMIFS(C[-3],C[-12],&quot;&lt;=&quot;&amp;RC[-12])+SUMIFS(C[-2],C[-12],&quot;&lt;=&quot;&amp;RC[-12])- SUMIFS(C[-1],C[-12],&quot;&lt;=&quot;&amp;RC[-12])"></Cell>
             <Cell ss:StyleID="s122"><Data ss:Type="String"><%= item['remark'] %></Data></Cell>
           </Row>
         <% end %>
@@ -265,9 +269,13 @@
             <Cell ss:StyleID="s123"><Data ss:Type="Number"><%= item['tax_rate'] %></Data></Cell>
             <Cell ss:StyleID="s122" ss:Formula="=RC[-4]*RC[-2]*(1-RC[-1])"></Cell>
             <Cell ss:StyleID="s122"><Data ss:Type="Number">-<%= item['deposit'] %></Data></Cell>
-<!--            <Cell ss:StyleID="s122"><Data ss:Type="Number">-<%#= item['freight'] %></Data></Cell>-->
+            <% if item.our_freight %>
+              <Cell ss:StyleID="s122"><Data ss:Type="Number">-<%= item['freight'] %></Data></Cell>
+            <%else %>
+              <Cell ss:StyleID="s122"><Data ss:Type="Number">-0</Data></Cell>
+            <%end %>
             <Cell ss:StyleID="s122"/>
-            <Cell ss:StyleID="s122" ss:Formula="=SUMIFS(C[-4],C[-11],&quot;&lt;=&quot;&amp;RC[-11])+SUMIFS(C[-3],C[-11],&quot;&lt;=&quot;&amp;RC[-11])- SUMIFS(C[-1],C[-11],&quot;&lt;=&quot;&amp;RC[-11])"></Cell>
+            <Cell ss:StyleID="s122" ss:Formula="=SUMIFS(C[-4],C[-12],&quot;&lt;=&quot;&amp;RC[-12])+SUMIFS(C[-3],C[-12],&quot;&lt;=&quot;&amp;RC[-12])+SUMIFS(C[-2],C[-12],&quot;&lt;=&quot;&amp;RC[-12])- SUMIFS(C[-1],C[-12],&quot;&lt;=&quot;&amp;RC[-12])"></Cell>
             <Cell ss:StyleID="s122"><Data ss:Type="String">这是退货单.<%= item['remark'] %></Data></Cell>
           </Row>
         <% end %>
@@ -286,9 +294,9 @@
             <Cell ss:StyleID="s123"/>
             <Cell ss:StyleID="s122"/>
             <Cell ss:StyleID="s122"/>
-<!--            <Cell ss:StyleID="s122"/>-->
+            <Cell ss:StyleID="s122"/>
             <Cell ss:StyleID="s122"><Data ss:Type="Number"><%= item['paper_amount'] %></Data></Cell>
-            <Cell ss:StyleID="s122" ss:Formula="=SUMIFS(C[-4],C[-11],&quot;&lt;=&quot;&amp;RC[-11])+SUMIFS(C[-3],C[-11],&quot;&lt;=&quot;&amp;RC[-11])- SUMIFS(C[-1],C[-11],&quot;&lt;=&quot;&amp;RC[-11])"></Cell>
+            <Cell ss:StyleID="s122" ss:Formula="=SUMIFS(C[-4],C[-12],&quot;&lt;=&quot;&amp;RC[-12])+SUMIFS(C[-3],C[-12],&quot;&lt;=&quot;&amp;RC[-12])+SUMIFS(C[-2],C[-12],&quot;&lt;=&quot;&amp;RC[-12])- SUMIFS(C[-1],C[-12],&quot;&lt;=&quot;&amp;RC[-12])"></Cell>
             <Cell ss:StyleID="s122"><Data ss:Type="String"><%= item['remark'] %></Data></Cell>
           </Row>
         <% end %>
@@ -304,7 +312,7 @@
         <Cell ss:StyleID="s118"/>
         <Cell ss:StyleID="s119"/>
         <Cell ss:StyleID="s118" ss:Formula="=SUM(R[-<%=@rows_count %>]C:R[-1]C)"><Data ss:Type="Number"></Data></Cell>
-<!--        <Cell ss:StyleID="s118" ss:Formula="=SUM(R[-<%#=@rows_count %>]C:R[-1]C)"><Data ss:Type="Number"></Data></Cell>-->
+        <Cell ss:StyleID="s118" ss:Formula="=SUM(R[-<%=@rows_count %>]C:R[-1]C)"><Data ss:Type="Number"></Data></Cell>
         <Cell ss:StyleID="s118" ss:Formula="=SUM(R[-<%=@rows_count %>]C:R[-1]C)"><Data ss:Type="Number"></Data></Cell>
         <Cell ss:StyleID="s118" ss:Formula="=SUM(R[-<%=@rows_count %>]C:R[-1]C)"><Data ss:Type="Number"></Data></Cell>
         <Cell ss:StyleID="s122" ></Cell>
@@ -315,9 +323,9 @@
         <Cell ss:StyleID="s124"><Data ss:Type="String">结余款&#10;(大写)</Data></Cell>
         <Cell ss:MergeAcross="6" ss:StyleID="s125" ss:Formula="=ABS(RC[7])"><Data
           ss:Type="Number"></Data></Cell>
-        <Cell ss:MergeAcross="4" ss:StyleID="s118" ss:Formula="=R[-2]C+R[-2]C[1]-R[-2]C[2]"><Data
+        <Cell ss:MergeAcross="4" ss:StyleID="s118" ss:Formula="=R[-2]C+R[-2]C[1]+R[-2]C[2]-R[-2]C[3]"><Data
           ss:Type="Number"></Data></Cell>
-<!--        <Cell ss:StyleID="s122"/>-->
+        <Cell ss:StyleID="s122"/>
       </Row>
 
 

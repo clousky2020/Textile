@@ -129,15 +129,15 @@ class PurchaseOrderUpdateForm
                              measuring_unit: self.measuring_unit, repo_id: self.repo_id, user_id: self.user_id, bill_time: self.bill_time,
                              number: self.number, weight: self.weight, price: self.price, tax_rate: self.tax_rate, our_freight: self.our_freight,
                              deposit: self.deposit, freight: self.freight, picture: self.picture, is_return: self.is_return)
-      if self.freight > 0 && self.our_freight
-        expense = Expense.find_by(counterparty: purchase_supplier.name, user_id: self.user_id, bill_time: self.bill_time, expense_type: "采购运费",
-                                  remark: ("采购单#{@purchase_order.order_id}的运费,原料是#{self.name}"))
+      if self.our_freight == '1' && self.freight.to_i > 0
+        expense = Expense.find_by(counterparty: "运输公司", user_id: self.user_id, bill_time: self.bill_time, expense_type: "采购运费",is_invalid:false,
+                                  remark: ("#{purchase_supplier.name}采购单#{@purchase_order.order_id}的运费,原料是#{self.name}"))
         if expense
-          Expense.update(paper_amount: self.freight, actual_amount: self.freight, remark: ("采购单#{@purchase_order.order_id}的运费,原料是#{self.name}"))
+          Expense.update(paper_amount: self.freight, actual_amount: self.freight)
         else
-          Expense.create(counterparty: purchase_supplier.name, paper_amount: self.freight, actual_amount: self.freight,
+          Expense.create(counterparty: "运输公司", paper_amount: self.freight, actual_amount: self.freight,
                          user_id: self.user_id, bill_time: self.bill_time, expense_type: "采购运费",
-                         remark: ("采购单#{@purchase_order.order_id}的运费,原料是#{self.name}"))
+                         remark: ("#{purchase_supplier.name}采购单#{@purchase_order.order_id}的运费,原料是#{self.name}"))
         end
       end
       true

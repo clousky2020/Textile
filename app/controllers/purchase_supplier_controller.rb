@@ -64,17 +64,23 @@ class PurchaseSupplierController < ApplicationController
   def export
     @purchase_supplier = PurchaseSupplier.find(params[:id])
     if @purchase_supplier.check_money_time
-      @purchase_orders = PurchaseOrder.includes(:material).where(purchase_supplier_id: params[:id])
-                             .where("bill_time >=?", @purchase_supplier.check_money_time).where(is_return: false, check_status: true)
-      @purchase_orders_return = PurchaseOrder.includes(:material).where(purchase_supplier_id: params[:id])
-                                    .where("bill_time >=?", @purchase_supplier.check_money_time).where(is_return: true, check_status: true)
+      purchase_orders = PurchaseOrder.includes(:material)
+                            .where(purchase_supplier_id: params[:id], check_status: true, is_invalid: false)
+                            .where("bill_time >=?", @purchase_supplier.check_money_time)
+      @purchase_orders = purchase_orders.where(is_return: false)
+      @purchase_orders_return = purchase_orders.where(is_return: true)
       @expenses = PurchaseSupplier.select("expenses.bill_time,expenses.paper_amount").joins(:expenses)
-                      .where(id: params[:id]).where("bill_time >=? and expenses.check_status=?", @purchase_supplier.check_money_time, true)
-
+                      .where(id: params[:id])
+                      .where("bill_time >=? and expenses.check_status=?", @purchase_supplier.check_money_time, true)
     else
-      @purchase_orders = PurchaseOrder.includes(:material).where(purchase_supplier_id: params[:id]).where(is_return: false, check_status: true)
-      @purchase_orders_return = PurchaseOrder.includes(:material).where(purchase_supplier_id: params[:id]).where(is_return: true, check_status: true)
-      @expenses = PurchaseSupplier.select("expenses.bill_time,expenses.paper_amount").joins(:expenses).where(id: params[:id]).where("check_status=?", true)
+      purchase_orders = PurchaseOrder.includes(:material)
+                            .where(purchase_supplier_id: params[:id], check_status: true, is_invalid: false)
+      @purchase_orders = purchase_orders.where(is_return: false)
+      @purchase_orders_return = purchase_orders.where(is_return: true)
+      @expenses = PurchaseSupplier.select("expenses.bill_time,expenses.paper_amount")
+                      .joins(:expenses)
+                      .where(id: params[:id])
+                      .where("check_status=?", true)
     end
     @rows_count = @purchase_orders.size + @purchase_orders_return.size + @expenses.size + 1
     respond_to do |format|

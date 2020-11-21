@@ -82,15 +82,18 @@ en:
         work_type: "工种"
         phone: "手机号码"
         bank_card: "银行卡号"
+
       proceed:
         paper_amount: "账面金额"
         actual_amount: "实际金额"
+        bill_time: "账单时间"
 
       expense:
         paper_amount: "账面金额"
         actual_amount: "实际金额"
         expense_type: "类型"
         counterparty: "交易方"
+        bill_time: "账单时间"
 
       purchase_supplier:
         name: "公司名"
@@ -113,12 +116,14 @@ en:
         weight: "重量"
         price: "单价"
         purchase_supplier: "供应商名字"
+        bill_time: "账单时间"
 
       sale_order:
         number: "数量"
         weight: "重量"
         price: "单价"
         sale_customer: "供应商名字"
+        bill_time: "账单时间"
 
       change_machine:
         price: 改机费用

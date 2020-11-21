@@ -2,7 +2,11 @@
 
 
 <div class="text-center">
-  <h2><%= yield(:title) %></h2>
+  <h2><%= yield(:title) %>
+  <%if @purchase_order.is_invalid? %>
+    <span class="is_invalid_alert">已作废</span>
+    <%end %>
+  </h2>
   <%= render 'purchase_order/show_content', object: @purchase_order %>
   <div>
     <% if !@purchase_order.is_invalid && !@purchase_order.check_status %>

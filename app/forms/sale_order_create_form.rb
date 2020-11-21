@@ -80,10 +80,10 @@ class SaleOrderCreateForm
           @order.save
         end
         # 如果有运费且运费是我们出的，需要生成一张相关的付款单
-        if self.our_freight && self.freight.to_i > 0
-          Expense.create(counterparty: sale_customer.name, paper_amount: self.freight, actual_amount: self.freight,
+        if self.our_freight == "1" && self.freight.to_i > 0
+          Expense.create(counterparty:"运输公司", paper_amount: self.freight, actual_amount: self.freight,
                          user_id: self.user_id, bill_time: self.bill_time, expense_type: "销售运费",
-                         remark: ("销售单#{@order.order_id}的运费,产品是#{self.name}"))
+                         remark: ("#{sale_customer.name}销售单#{@order.order_id}的运费,产品是#{self.name}"))
 
         end
 

@@ -78,10 +78,10 @@ class PurchaseOrderController < ApplicationController
     store_referrer_location
     if @purchase_order.check_status
       @purchase_order.order_declare_invalid(current_user)
-      flash[:success] = "#{@purchase_order.sale_customer.name}的订单#{@purchase_order.order_id}已作废"
+      flash[:success] = "#{@purchase_order.purchase_supplier.name}的订单#{@purchase_order.order_id}已作废"
     else
       @purchase_order.delete
-      flash[:success] = "#{@purchase_order.sale_customer.name}的订单#{@purchase_order.order_id}已删除"
+      flash[:success] = "#{@purchase_order.purchase_supplier.name}的订单#{@purchase_order.order_id}已删除"
     end
     redirect_back_referrer_for purchase_order_index_path
   end
