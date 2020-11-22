@@ -60,8 +60,8 @@
 <% end %>
 
 <script>
-    if (<%=@prices.uniq.size>1 %>) {
-        $(function () {
+    $(function () {
+            if (<%=@prices.uniq.size>1 %>) {
                 var ctx = $('#historical_price_chart');
                 var myChart = new Chart(ctx, {
                     type: "line",
@@ -88,9 +88,7 @@
                         }
                     }
                 });
-
             }
-        )
-    }
-
+        }
+    )
 </script>

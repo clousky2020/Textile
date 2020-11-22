@@ -9,23 +9,22 @@ require("@rails/activestorage").start()
 require("channels");
 
 import jquery from 'jquery';
-import 'bootstrap'
-
 window.$ = window.jquery = jquery;
+import 'bootstrap'
 require("jquery-ui");
 require("chart.js");
 
 import intro from 'intro.js';
-
 window.introJs = intro;
 
 import Cookies from 'js-cookie/src/js.cookie';
-
 window.Cookies = Cookies;
 
-$(document).on('turbolinks:load', function () {
-    $('[data-toggle="tooltip"]').tooltip();
+document.addEventListener('turbolinks:load', ()=>{
+    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-toggle="popover"]').popover()
     introJs().showHints();
 });
 
+require('../js/tree');
 

@@ -32,27 +32,3 @@
     <a id="check_money_time_clear">清除</a>
   </div>
 <% end %>
-
-<script>
-    $(document).ready(function () {
-        //把清算时间和清算金额一起删掉
-        $("#check_money_time_clear").on("click", function () {
-            $("#sale_customer_check_money").val('');
-            $("#sale_customer_check_money_time").val(0);
-        })
-        //填充清算时间
-        $("#sale_customer_check_money").on("change", function () {
-            var myDate = new Date;
-            var year = myDate.getFullYear(); //获取当前年
-            var mon = myDate.getMonth() + 1; //获取当前月
-            var date = myDate.getDay(); //获取当前日
-            if (date < 10) {
-                date = "0" + date;
-            }
-            var hh = myDate.getHours(); //获取当前小时
-            var mm = myDate.getMinutes(); //获取当前分钟
-            $("#sale_customer_check_money_time").val(year + "-" + mon + "-" + date + "T" + hh + ":" + mm);
-        })
-
-    })
-</script>

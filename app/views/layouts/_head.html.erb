@@ -81,10 +81,11 @@
           <%= link_to "参数设定", params_path %>
         </li>
         <li class="nav-link dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="current_user_name">
             <%= current_user.name %>
             <span class="caret"></span>
           </a>
+          <input type="hidden" id="current_user_id" value="<%= current_user.id %>"/>
           <ul class="dropdown-menu">
             <%= link_to "个人信息", user_path(current_user), class: "dropdown-item" %>
             <%= link_to "更改密码", edit_password_reset_path(current_user), class: "dropdown-item " %>

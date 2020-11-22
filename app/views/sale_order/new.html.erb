@@ -5,22 +5,3 @@
 
 <%= render 'shard/form', object: @sale_order, url: sale_order_index_path, type: "sale_order", type_2: "create" %>
 
-
-<script>
-    if (Cookies.get("sale_order_tour")) {
-        var intro = introJs();
-        intro.setOptions({
-            skipLabel: "不要引导了",
-            nextLabel: '下一步',
-            prevLabel: '上一步',
-            doneLabel: '完成',
-            exitOnOverlayClick: false,
-        });
-        intro.onexit(function () {
-            Cookies.remove("sale_order_tour");
-        });
-        intro.start().oncomplete(function () {
-            Cookies.remove("sale_order_tour");
-        });
-    }
-</script>
