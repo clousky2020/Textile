@@ -1,0 +1,17 @@
+<% provide :title, "产品详情" %>
+<% provide :edit_url, edit_product_path(@product) %>
+<% provide :back_url, products_path %>
+
+
+<div class="text-center">
+  <h2><%= yield(:title) %></h2>
+
+  <%= render 'products/show_content', object: @product %>
+
+  <div>
+    <% if can? :update, Product %>
+      <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary edit-link" %>
+    <% end %>
+    <%= link_to "返回主页", yield(:back_url), class: "btn btn-primary" %>
+  </div>
+</div>

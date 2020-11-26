@@ -1,8 +1,0 @@
-<% provide :button_text, "更新" %>
-<% provide :title, "修改销售订单" %>
-<% provide :method, :patch %>
-<% provide :back_url, sale_order_index_path %>
-
-<%= render 'shard/form', object: @sale_order, url: sale_order_path, type: "sale_order", type_2: "edit" %>
-
-

@@ -3,17 +3,18 @@ class CreateSaleOrders < ActiveRecord::Migration[6.0]
     create_table :sale_orders do |t|
       t.string :order_id, index: true, uniq: true
       t.string :description
-      t.references :sale_customer
-      t.references :product
-      t.belongs_to :repo
+      t.references :sale_customers
+      t.references :products
+      t.belongs_to :repos
       t.belongs_to :user
-      t.integer :number
+      t.integer :number, default: 0
       t.string :measuring_unit
-      t.decimal :weight, precision: 10, scale: 1, default: 0
-      t.decimal :price, precision: 8, scale: 2, default: 0
+      t.decimal :weight, precision: 10, scale: 2, default: 0
+      t.decimal :price, precision: 10, scale: 2, default: 0
       t.decimal :tax_rate, precision: 4, scale: 3, default: 0
-      t.decimal :total_price, default: 0
+      t.decimal :total_price, precision: 10, scale: 2, default: 0
       t.integer :freight, default: 0
+      t.boolean :our_freight, default: false
       t.string :picture
       t.string :create_person
       t.string :check_person

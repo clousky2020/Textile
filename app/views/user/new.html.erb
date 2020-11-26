@@ -1,8 +1,0 @@
-<% provide :button_text, "创建" %>
-<% provide :title, "创建新用户" %>
-<% provide :method, :post %>
-<% provide :back_url, user_index_path %>
-
-<%= render 'shard/form', object: @user, url: user_index_path, type: "user", type_2: "create" %>
-
-

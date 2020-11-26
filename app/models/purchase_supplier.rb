@@ -4,7 +4,13 @@ class PurchaseSupplier < ApplicationRecord
   has_and_belongs_to_many :expenses
   validates :name, uniqueness: true, presence: true
 
-  after_update :calcu_unpaid
+  # 搜索所有的订单，计算一遍
+  def calcu_list
+    self.calcu_total_payment_required
+    self.calcu_paid
+    self.calcu_unpaid
+    self.calcu_deposit
+  end
 
   # 从采购单里计算总共需要付款,需要减去退货单的
   def calcu_total_payment_required
@@ -68,8 +74,8 @@ class PurchaseSupplier < ApplicationRecord
     # 计算退货单上的押金，就是从供应商那里收回的
     collection_deposit = deposits.where(is_return: true).map(&:deposit).sum
     # 总的押金等于付出的押金减去收回的押金，等于零机是回本，小于0就是赚，但这是不可能的
-    total_deposit = paid_deposit - collection_deposit
-    total_deposit
+    self.total_deposit = paid_deposit - collection_deposit
+    self.save
   end
 
 end

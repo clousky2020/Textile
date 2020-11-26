@@ -1,6 +1,5 @@
 class DashboardController < ApplicationController
 
-
   def index
     # 未审核的内容
     @not_pass_purchase_orders = PurchaseOrder.where(check_status: false, is_invalid: false)
@@ -34,9 +33,15 @@ class DashboardController < ApplicationController
     @expenses = Expense.check_ratio(params[:start_date], params[:end_date])
   end
 
+  def check_purchase_supplier
+  end
+
+  def check_sale_customer
+  end
+
   def intro_clear
     store_referrer_location
-    ActiveRecord::Base.connection.execute("delete from abraham_histories where creator_id =#{params[:id]} ")
+    ActiveRecord::Base.connection.execute("delete from intro_histories where creator_id =#{params[:id]} ")
     redirect_back_referrer_for root_url
   end
 end

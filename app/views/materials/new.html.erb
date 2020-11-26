@@ -1,0 +1,8 @@
+<% provide :button_text, "创建" %>
+<% provide :title, "创建新原料" %>
+<% provide :method, :post %>
+<% provide :back_url, materials_path %>
+
+<%= render 'shard/form', object: @material, url: materials_path, type: "material", type_2: "create", method: :post %>
+
+

@@ -30,3 +30,18 @@ export function str_now_time() {
     var now = year + '-' + getNow(month) + "-" + getNow(date) + "T" + getNow(h) + ':' + getNow(m);
     return now
 }
+
+export function check_introjs_from_db(href, title) {
+    if (window.location.pathname == href) {
+        //检查cookies中是否经历过新手引导了
+        var value = Cookies.get(title);
+        if (!value) {
+            //查询数据库，是否已经做过这个新手引导
+            $.post("/introjs/find_attribute", data, function (data) {
+                if (!data) {
+                    return startIntro();
+                }
+            });
+        }
+    }
+}

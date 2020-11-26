@@ -1,8 +1,0 @@
-<% provide :button_text, "创建" %>
-<% provide :title, "创建新客户" %>
-<% provide :method, :post %>
-<% provide :back_url, sale_customer_index_path %>
-
-<%= render 'shard/form', object: @customer, url: sale_customer_index_path, type: "sale_customer", type_2: "create", method: :post %>
-
-

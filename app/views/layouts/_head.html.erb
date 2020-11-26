@@ -18,7 +18,7 @@
               <%= link_to "员工管理", employee_index_path, class: "dropdown-item" %>
             <% end %>
             <% if can? :create, User %>
-              <%= link_to "用户管理", user_index_path, class: "dropdown-item" %>
+              <%= link_to "用户管理", users_path, class: "dropdown-item" %>
             <% end %>
 
           </div>
@@ -29,16 +29,16 @@
           </a>
           <div class="dropdown-menu">
             <% if can? :read, Repo %>
-              <%= link_to "仓库管理", repo_index_path, class: "dropdown-item" %>
+              <%= link_to "仓库管理", repos_path, class: "dropdown-item" %>
             <% end %>
             <% if can? :read, ChangeMachine %>
               <%= link_to "改机情况记录", change_machines_path, class: "dropdown-item" %>
             <% end %>
             <% if can? :read, Material %>
-              <%= link_to "原料管理", material_index_path, class: "dropdown-item " %>
+              <%= link_to "原料管理", materials_path, class: "dropdown-item " %>
             <% end %>
             <% if can? :read, Product %>
-              <%= link_to "产品管理", product_index_path, class: "dropdown-item " %>
+              <%= link_to "产品管理", products_path, class: "dropdown-item " %>
             <% end %>
           </div>
         </li>
@@ -48,10 +48,10 @@
           </a>
           <div class="dropdown-menu">
             <% if can? :read, Proceed %>
-              <%= link_to "收款单", proceed_index_path, class: "dropdown-item" %>
+              <%= link_to "收款单", proceeds_path, class: "dropdown-item" %>
             <% end %>
             <% if can? :read, Expense %>
-              <%= link_to "付款单", expense_index_path, class: "dropdown-item" %>
+              <%= link_to "付款单", expenses_path, class: "dropdown-item" %>
             <% end %>
           </div>
         </li>
@@ -62,23 +62,23 @@
           </a>
           <div class="dropdown-menu">
             <% if can? :read, PurchaseOrder %>
-              <%= link_to "采购单", purchase_order_index_path, class: "dropdown-item" %>
+              <%= link_to "采购单", purchase_orders_path, class: "dropdown-item" %>
             <% end %>
             <% if can? :read, PurchaseSupplier %>
-              <%= link_to "供应商", purchase_supplier_index_path, class: "dropdown-item" %>
+              <%= link_to "供应商", purchase_suppliers_path, class: "dropdown-item" %>
             <% end %>
             <div class="dropdown-divider"></div>
             <% if can? :read, SaleOrder %>
-              <%= link_to "销售单", sale_order_index_path, class: "dropdown-item" %>
+              <%= link_to "销售单", sale_orders_path, class: "dropdown-item" %>
             <% end %>
             <% if can? :read, SaleCustomer %>
-              <%= link_to "客户", sale_customer_index_path, class: "dropdown-item" %>
+              <%= link_to "客户", sale_customers_path, class: "dropdown-item" %>
             <% end %>
           </div>
         </li>
 
         <li class="nav-link">
-          <%= link_to "参数设定", params_path %>
+          <%= link_to "参数设定", settings_path %>
         </li>
         <li class="nav-link dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="current_user_name">

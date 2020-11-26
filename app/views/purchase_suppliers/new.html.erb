@@ -1,0 +1,8 @@
+<% provide :button_text, "创建" %>
+<% provide :title, "创建新的供应商" %>
+<% provide :method, :post %>
+<% provide :back_url, purchase_suppliers_path %>
+
+<%= render 'shard/form', object: @supplier, url: purchase_suppliers_path, type: "purchase_supplier", type_2: "create"%>
+
+

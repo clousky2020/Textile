@@ -37,7 +37,7 @@ module ApplicationHelper
   end
 
   # 根据设置是否开启，改变框内的颜色
-  def param_status_css(object)
+  def setting_status_css(object)
     if object.status
       "alert-success"
     else
@@ -46,7 +46,7 @@ module ApplicationHelper
   end
 
   def param_check(name)
-    settle = Param.find_by(name: name)
+    settle = Setting.find_by(name: name)
     if settle && settle.status
       "已开启#{name},#{settle.description}"
     else

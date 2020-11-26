@@ -45,14 +45,14 @@ unless Role.find_by_name("管理员")
   user.save
 end
 p '添加默认参数配置'
-params_list = {
+setting_list = {
     "采购账单自动审核": "有审核权限者录入的采购订单自动完成审核",
     "销售账单自动审核": "有审核权限者录入的销售订单自动完成审核",
     "连续审核": "如有未审核的相同公司的订单，在审核后直接跳转到未审核的订单界面"
 }
-params_list.each do |key, value|
+setting_list.each do |key, value|
   p "参数录入：#{key}=>#{value}"
-  Param.find_or_create_by(name: key, description: value, status: false)
+  Setting.find_or_create_by(name: key, description: value, status: false)
 end
 
 creek.sheets.each do |sheet|
@@ -67,7 +67,8 @@ creek.sheets.each do |sheet|
         purchase_supplier = PurchaseSupplier.find_or_create_by(name: cells["E#{n}"])
         if !cells["B#{n}"].blank? && !cells["C#{n}"].blank?
           #创建原材料目录
-          material = Material.find_or_create_by(name: cells["B#{n}"], specification: cells["C#{n}"], purchase_supplier_id: purchase_supplier.id, measuring_unit: "包/箱")
+          material = Material.find_or_create_by(name: cells["B#{n}"], specification: cells["C#{n}"],
+                                                purchase_supplier_id: purchase_supplier.id, measuring_unit: "包/箱")
           if material
             user = User.find(rand(1..3))
             repo = Repo.first

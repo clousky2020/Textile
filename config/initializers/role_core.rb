@@ -102,7 +102,7 @@ RoleCore.permission_set_class.draw do
     permission :read, _priority: 1, default: true
     permission :export
   end
-  group :params, model_name: "Param" do
+  group :settings, model_name: "Setting" do
     permission :update, _priority: 1
     permission :read, _priority: 1, default: true
   end

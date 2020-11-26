@@ -1,8 +1,0 @@
-<% provide :button_text, "更新" %>
-<% provide :title, "修改付款单" %>
-<% provide :method, :patch %>
-<% provide :back_url, expense_index_path %>
-
-<%= render 'shard/form', object: @expense, url: expense_path, type: "expense", type_2: "edit" %>
-
-

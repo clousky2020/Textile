@@ -8,7 +8,7 @@ $(document).on("turbolinks:load", function () {
     }
     //销售单页面select选择产品型号规格后，填充下面的产品品名
     $("#sale_orders_specification").on("change", function () {
-        $.post("/product/get_options", {id: this.value})
+        $.post("/products/get_options", {id: this.value})
     }).change();
     // 销售单页面搜索客户名称自动填充
     $("#sale_orders_sale_customer").autocomplete(

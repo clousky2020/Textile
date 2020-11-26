@@ -1,8 +1,5 @@
 class PasswordResetsController < ApplicationController
-  before_action :get_user, only: [:edit, :update, :reset]
-
-  # load_and_authorize_resource
-  # skip_authorization_check :only => [:reset]
+  before_action :get_user, only: [:edit, :update]
 
   def edit
   end

@@ -1,4 +1,4 @@
 class Intro < ApplicationRecord
-  self.table_name = "abraham_histories"
+  self.table_name = "intro_histories"
 
 end

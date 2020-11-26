@@ -111,7 +111,7 @@ class SaleOrderUpdateForm
     @picture = params[:picture]
     @bill_time = params[:bill_time]
     @is_return = params[:is_return]
-    @sale_customer = params[:sale_customer]
+    @sale_customer = params[:sale_customers]
     @our_freight = params[:our_freight]
     if valid?
       sale_customer = SaleCustomer.find_or_create_by(name: self.sale_customer)

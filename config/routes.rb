@@ -4,10 +4,12 @@ Rails.application.routes.draw do
   post 'check_orders_money', to: 'dashboard#check_orders_money'
   post 'check_trade_top', to: 'dashboard#check_trade_top'
   post 'check_expense_ratio', to: 'dashboard#check_expense_ratio'
+  post 'check_purchase_supplier', to: 'dashboard#check_purchase_supplier'
+  post 'check_sale_customer', to: 'dashboard#check_sale_customer'
   post 'intro_clear', to: 'dashboard#intro_clear'
 
-  resources :session, :only => [:new, :create, :destroy]
-  resources :params, only: [:index, :update]
+  resources :sessions, :only => [:new, :create, :destroy]
+  resources :settings, only: [:index, :update]
   resources :introjs, only: [:create, :destroy] do
     collection do
       post :find_attribute
@@ -16,7 +18,7 @@ Rails.application.routes.draw do
   resources :comments, only: [:index, :create, :destroy] do
     get :take_top, on: :member
   end
-  resources :user do
+  resources :users do
     member do
       get :lock
       get :reset
@@ -24,7 +26,7 @@ Rails.application.routes.draw do
   end
   resources :employee
   resources :roles
-  resources :purchase_supplier do
+  resources :purchase_suppliers do
     collection do
       get :check_purchase_supplier
     end
@@ -32,7 +34,7 @@ Rails.application.routes.draw do
       get :export
     end
   end
-  resources :sale_customer do
+  resources :sale_customers do
     collection do
       get :check_sale_customer
     end
@@ -40,34 +42,34 @@ Rails.application.routes.draw do
       get :export
     end
   end
-  resources :purchase_order do
+  resources :purchase_orders do
     member do
       get :pass_check
     end
   end
-  resources :sale_order do
+  resources :sale_orders do
     member do
       get :pass_check
     end
   end
-  resources :material do
+  resources :materials do
     collection do
       get :check_material_name
       get :check_material_specification
     end
   end
-  resources :product do
+  resources :products do
     collection do
       post :get_options
     end
   end
-  resources :repo
-  resources :proceed do
+  resources :repos
+  resources :proceeds do
     member do
       get :pass_check
     end
   end
-  resources :expense do
+  resources :expenses do
     member do
       get :pass_check
       get :pass_reimburse

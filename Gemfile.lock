@@ -58,6 +58,8 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    archive-zip (0.12.0)
+      io-like (~> 0.3.0)
     bcrypt (3.1.16)
     bindex (0.8.1)
     bootsnap (1.5.1)
@@ -82,12 +84,19 @@ GEM
       mini_mime (>= 0.1.3)
     carrierwave-i18n (0.2.0)
     childprocess (3.0.0)
+    chromedriver-helper (2.1.1)
+      archive-zip (~> 0.10)
+      nokogiri (~> 1.8)
+    cliver (0.3.2)
     coderay (1.1.3)
     concurrent-ruby (1.1.7)
     crass (1.0.6)
     creek (2.5.2)
       nokogiri (>= 1.10.0)
       rubyzip (>= 1.0.0)
+    cuprite (0.11)
+      capybara (>= 2.1, < 4)
+      ferrum (~> 0.9.0)
     database_cleaner (1.8.5)
     diff-lcs (1.4.4)
     erubi (1.10.0)
@@ -96,6 +105,13 @@ GEM
     factory_bot_rails (6.1.0)
       factory_bot (~> 6.1.0)
       railties (>= 5.0.0)
+    faker (2.15.1)
+      i18n (>= 1.6, < 2)
+    ferrum (0.9)
+      addressable (~> 2.5)
+      cliver (~> 0.3)
+      concurrent-ruby (~> 1.1)
+      websocket-driver (>= 0.6, < 0.8)
     ffi (1.13.1)
     font-awesome-sass (5.15.1)
       sassc (>= 1.11)
@@ -126,6 +142,7 @@ GEM
     image_processing (1.12.1)
       mini_magick (>= 4.9.5, < 5)
       ruby-vips (>= 2.0.17, < 3)
+    io-like (0.3.0)
     jbuilder (2.10.1)
       activesupport (>= 5.0.0)
     kaminari (1.2.1)
@@ -206,6 +223,10 @@ GEM
       bundler (>= 1.3.0)
       railties (= 6.0.3.4)
       sprockets-rails (>= 2.0.0)
+    rails-controller-testing (1.0.5)
+      actionpack (>= 5.0.1.rc1)
+      actionview (>= 5.0.1.rc1)
+      activesupport (>= 5.0.1.rc1)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -267,6 +288,8 @@ GEM
       rubyzip (>= 1.2.2)
     shellany (0.0.1)
     spring (2.1.1)
+    spring-commands-rspec (1.0.4)
+      spring (>= 0.9.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
       spring (>= 1.2, < 3.0)
@@ -312,9 +335,12 @@ DEPENDENCIES
   capybara
   carrierwave
   carrierwave-i18n
+  chromedriver-helper
   creek
+  cuprite
   database_cleaner
   factory_bot_rails
+  faker
   font-awesome-sass (~> 5.15.1)
   guard
   guard-bundler
@@ -330,12 +356,14 @@ DEPENDENCIES
   pg (>= 0.18, < 2.0)
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.2)
+  rails-controller-testing
   rails-i18n (~> 6.0.0)
   role_core
   rspec-rails
   sass-rails (>= 6)
   selenium-webdriver
   spring
+  spring-commands-rspec
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)
   tzinfo-data

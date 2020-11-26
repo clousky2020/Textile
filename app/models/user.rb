@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_one :repo
+  has_many :repo
   has_many :purchase_orders
   has_many :sale_orders
   has_many :products

@@ -11,9 +11,8 @@ class Expense < ApplicationRecord
 
   after_create :check_result_initial
   after_create :created_person
-  before_create :generate_order_id
+  after_create :generate_order_id
   after_create :build_purchase_supplier
-
 
   def self.search(search)
     if search
@@ -40,7 +39,40 @@ class Expense < ApplicationRecord
     end
   end
 
-  # 得到支出
+  # 判断订单类型，进行加减法运算
+  def calcu_to_purchase_supplier
+    if self.is_invalid
+      self.reduce_to_purchase_supplier
+    else
+      self.add_to_purchase_supplier
+    end
+  end
+
+  # 订单的金额加入供货商的数据中
+  def add_to_purchase_supplier
+    purchase_supplier = self.purchase_suppliers[0]
+    if !purchase_supplier.check_money_time || self.bill_time > purchase_supplier.check_money_time
+      # 已付款
+      purchase_supplier.paid += self.paper_amount
+      # 计算未付的钱
+      purchase_supplier.calcu_unpaid
+      purchase_supplier.save
+    end
+  end
+
+  # 从供货商的数据中减去相关的金额
+  def reduce_to_purchase_supplier
+    purchase_supplier = self.purchase_suppliers[0]
+    if !purchase_supplier.check_money_time || self.bill_time > purchase_supplier.check_money_time
+      # 已付款
+      purchase_supplier.paid -= self.paper_amount
+      # 计算未付的钱
+      purchase_supplier.calcu_unpaid
+      purchase_supplier.save
+    end
+  end
+
+  # 图表得到支出
   def self.check_ratio(start_date, end_date)
     expenses = self.where(bill_time: start_date..end_date, is_invalid: false, check_status: true)
     h = Hash.new

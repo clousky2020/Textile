@@ -52,12 +52,16 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
   gem 'launchy'
-  gem 'capybara'
 end
 
 group :test do
-  gem 'factory_bot_rails'
+  gem 'capybara'
+  gem 'faker'
+  gem 'rails-controller-testing'
   gem 'selenium-webdriver'
+  gem 'chromedriver-helper'
+  gem 'factory_bot_rails'
+  gem 'cuprite'
   gem 'database_cleaner'
 end
 
@@ -69,6 +73,7 @@ group :development do
   gem 'heavens_door'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'spring-commands-rspec'
   gem 'guard'
   gem 'guard-rspec', require: false
   gem 'guard-bundler', require: false

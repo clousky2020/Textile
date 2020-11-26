@@ -121,7 +121,7 @@ class PurchaseOrderUpdateForm
     @picture = params[:picture]
     @bill_time = params[:bill_time]
     @is_return = params[:is_return]
-    @purchase_supplier = params[:purchase_supplier]
+    @purchase_supplier = params[:purchase_suppliers]
     if valid?
       purchase_supplier = PurchaseSupplier.find_or_create_by(name: self.purchase_supplier.strip)
       @purchase_order.material.update(name: self.name.strip, specification: self.specification.strip, purchase_supplier_id: purchase_supplier.id)

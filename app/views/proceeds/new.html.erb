@@ -1,0 +1,7 @@
+<% provide :button_text, "创建" %>
+<% provide :title, "创建收款信息" %>
+<% provide :method, :post %>
+<% provide :back_url, proceeds_path %>
+
+<%= render 'shard/form', object: @proceed, url: proceeds_path, type: "proceed", type_2: "create" %>
+

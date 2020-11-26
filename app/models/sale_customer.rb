@@ -5,7 +5,14 @@ class SaleCustomer < ApplicationRecord
 
   validates :name, uniqueness: true, presence: true
 
-  after_update :calcu_unreceived
+
+  # 搜索所有的订单，计算一遍
+  def calcu_list
+    self.calcu_total_collection_required
+    self.calcu_received
+    self.calcu_unreceived
+  end
+
 
   # 从销售单里计算总共需要付款,需要减去退货单的
   def calcu_total_collection_required
@@ -22,10 +29,8 @@ class SaleCustomer < ApplicationRecord
     else
       # 计算正常订单需要支付的钱款
       need_collection_money = sale_orders.where(is_return: false).collect(&:total_price).sum
-      p need_collection_money
       # 再加包含运费的单子里的运费
       need_collection_money += sale_orders.where(is_return: false, our_freight: false).where.not(freight: nil).collect(&:freight).sum
-      p need_collection_money
     end
     # 计算退货订单需要收回的钱款
     is_return_money = sale_orders.where(is_return: true).collect(&:total_price).sum

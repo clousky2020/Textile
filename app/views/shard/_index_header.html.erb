@@ -6,19 +6,19 @@
         <% if page == "expense" %>
           <%= select_tag :type, options_for_select([['未作废订单', 'is_invalid: false'], ['已作废订单', 'is_invalid: true'], ['未审核订单', 'check_status:false'], ['已审核订单', 'check_status:true'], ['未报销订单', 'need_reimburse:true']]) %>
           <%= select_tag :order, options_for_select([['账单时间降序', 'bill_time DESC'], ['账单时间升序', 'bill_time'], ['订单号', 'order_id DESC']]) %>
-          <%= link_to "清空全部条件", expense_index_path %>
+          <%= link_to "清空全部条件", expenses_path %>
         <% elsif page == "proceed" %>
           <%= select_tag :type, options_for_select([['未作废订单', 'is_invalid: false'], ['已作废订单', 'is_invalid: true'], ['未审核订单', 'check_status:false'], ['已审核订单', 'check_status:true'], ['退货单', 'is_return: true']]) %>
           <%= select_tag :order, options_for_select([['账单时间降序', 'bill_time DESC'], ['账单时间升序', 'bill_time'], ['订单号', 'order_id DESC']]) %>
-          <%= link_to "清空全部条件", proceed_index_path %>
+          <%= link_to "清空全部条件", proceeds_path %>
         <% elsif page == "purchase_order" %>
           <%= select_tag :type, options_for_select([['未作废订单', 'is_invalid: false'], ['已作废订单', 'is_invalid: true'], ['未审核订单', 'check_status:false'], ['已审核订单', 'check_status:true'], ['退货单', 'is_return: true']]) %>
-          <%= link_to "清空全部条件", purchase_order_index_path %>
+          <%= link_to "清空全部条件", purchase_orders_path %>
         <% elsif page == "sale_order" %>
           <%= select_tag :type, options_for_select([['未作废订单', 'is_invalid: false'], ['已作废订单', 'is_invalid: true'], ['未审核订单', 'check_status:false'], ['已审核订单', 'check_status:true'], ['退货单', 'is_return: true']]) %>
-          <%= link_to "清空全部条件", sale_order_index_path %>
+          <%= link_to "清空全部条件", sale_orders_path %>
       <% elsif page == "sale_customer" %>
-          <%= link_to "清空全部条件", sale_customer_index_path %>
+          <%= link_to "清空全部条件", sale_customers_path %>
       <% elsif page == "change_machine" %>
           <%= link_to "清空全部条件", change_machines_path %>
         <% end %>

@@ -1,0 +1,55 @@
+<table class="table">
+  <tbody>
+  <tr>
+    <th>客户名称</th>
+    <td><%= object.name %></td>
+  </tr>
+  <tr>
+    <th>描述</th>
+    <td><%= object.description %></td>
+  </tr>
+  <tr>
+    <th>联系人</th>
+    <td><%= object.contacts %></td>
+  </tr>
+  <tr>
+    <th>联系电话</th>
+    <td><%= object.phone %></td>
+  </tr>
+  <tr>
+    <th>地址</th>
+    <td><%= object.address %></td>
+  </tr>
+
+  <tr>
+    <th>总计货款</th>
+    <td><%= object.total_collection_required %></td>
+  </tr>
+  <tr>
+    <th>已收款项</th>
+    <td><%= object.received %></td>
+  </tr>
+  <tr>
+    <th>未收款项</th>
+    <td><%= object.uncollected %></td>
+  </tr>
+  <% if object.check_money %>
+    <tr>
+      <th>清算金额</th>
+      <td><%= object.check_money %></td>
+    </tr>
+    <tr>
+      <th>清算日期</th>
+      <td><%= object.check_money_time %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <th>已有订单数</th>
+    <td><%= link_to object.sale_orders.where(is_invalid: false).count, sale_orders_path(:search => "#{object.name}") %></td>
+  </tr>
+  <tr>
+    <th>已有收款单数</th>
+    <td><%= link_to object.proceeds.where(is_invalid: false).count, proceeds_path(:search => "#{object.name}") %></td>
+  </tr>
+  </tbody>
+</table>

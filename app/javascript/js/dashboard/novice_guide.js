@@ -88,7 +88,7 @@ $(document).on("turbolinks:load", function () {
             exitOnOverlayClick: false
         });
         intro.setOption('doneLabel', '跳转到页面').start().oncomplete(function () {
-            window.location.href = "/expense/new"
+            window.location.href = "/expenses/new"
         });
     });
 //收款单的新手引导

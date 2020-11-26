@@ -31,5 +31,25 @@ $(document).on("turbolinks:load",function () {
                 end_date: end_date
             }
         )
-    })
+    });
+    $("#check_purchase_supplier").on("click", function () {
+        var start_date = $("#start_date").val();
+        var end_date = $("#end_date").val();
+        $.post("/check_purchase_supplier",
+            {
+                start_date: start_date,
+                end_date: end_date
+            }
+        )
+    });
+    $("#check_sale_customer").on("click", function () {
+        var start_date = $("#start_date").val();
+        var end_date = $("#end_date").val();
+        $.post("/check_sale_customer",
+            {
+                start_date: start_date,
+                end_date: end_date
+            }
+        )
+    });
 });

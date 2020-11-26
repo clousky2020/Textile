@@ -1,0 +1,21 @@
+<div class="param_info">
+  <% @settings.each do |param| %>
+    <div class=" param-form <%= setting_status_css(param) %>">
+      <%= form_for param, method: :patch, remote: true do |f| %>
+        <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s,
+                :value => form_authenticity_token) %>
+        <% if param.status %>
+          <%= f.label :status, "状态：开启" %>
+        <% else %>
+          <%= f.label :status, "状态：关闭" %>
+        <% end %>
+        <%= f.check_box :status, class: "setting_status" %>
+        <%= f.text_field :name, readonly: true, class: "form-control" %>
+        <%= f.text_area :description, readonly: true, class: "form-control", size: 40 %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+
+

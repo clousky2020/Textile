@@ -4,18 +4,19 @@ class CreatePurchaseOrders < ActiveRecord::Migration[6.0]
       t.string :order_id, index: true, uniq: true
       t.string :batch_number
       t.string :description
-      t.references :purchase_supplier
+      t.references :purchase_suppliers
       t.references :material
-      t.references :repo
+      t.references :repos
       t.references :user
-      t.integer :number
+      t.integer :number, default: 0
       t.string :measuring_unit
-      t.decimal :weight, precision: 8, scale: 1, default: 0
-      t.decimal :price, precision: 8, scale: 2, default: 0
+      t.decimal :weight, precision: 10, scale: 2, default: 0
+      t.decimal :price,  precision: 10, scale: 2, default: 0
       t.decimal :tax_rate, precision: 4, scale: 3, default: 0
-      t.decimal :total_price, default: 0
+      t.decimal :total_price, precision: 10, scale: 2, default: 0
       t.integer :deposit, default: 0
       t.integer :freight, default: 0
+      t.boolean :our_freight, default: false
       t.string :picture
       t.string :create_person
       t.string :check_person

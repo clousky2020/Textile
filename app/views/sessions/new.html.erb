@@ -1,0 +1,18 @@
+<div class="container">
+  <h2>登录界面</h2>
+  <%= form_for(:sessions, url: sessions_path) do |f| %>
+    <div class="field">
+      <%= f.label :name,'用户名' %><br/>
+      <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password,'密码' %><br/>
+      <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+    </div>
+
+    <div class="actions text-center">
+      <%= f.submit '登录', class: "btn btn-primary " %>
+    </div>
+  <% end %>
+</div>

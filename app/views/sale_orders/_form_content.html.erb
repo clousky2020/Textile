@@ -1,0 +1,76 @@
+<div class="form-group" data-step="1" data-intro="选择产品的型号，这里的产品来自生产资料--产品管理的菜单中，如果是新产品出售的话，还需要在产品管理的界面中新增">
+  <%= f.label :specification, "型号规格" %>
+  <a class="fas fa-question-circle" data-toggle="tooltip" data-placement="right" title="在这里找不到型号的话，在生产资料--产品管理中新增吧。"> </a>
+  <%= f.select :specification, options_for_select(Product.order("specification").collect {|n| [n.specification, n.id]}, object.product_id), class: "form-control" %>
+</div>
+<div class="form-group" data-step="2" data-intro="这里不用填，会根据上一条选择的型号，填写相应的品名">
+  <%= f.label :name, "品名" %>
+  <%= f.text_field(:name, readonly: true, class: "form-control") %>
+</div>
+<div class="form-group" data-step="3" data-intro="选择目前产品的存放地点，公司的仓库设置也在生产资料菜单里，需要权限">
+  <%= f.label :repo_id, "存入仓库" %>
+  <%= f.select(:repo_id, Repo.all.map {|n| [n.name, n.id]}, class: "form-control") %>
+</div>
+<div class="form-group" data-step="4" data-intro="产品卖给谁？可以按空格搜索已经存在的客户名，也可以填写新的客户名">
+  <%= f.label :sale_customer, "客户名称" %>
+  <a class="fas fa-magic" data-toggle="tooltip" data-placement="right" title="已设定自动填充"> </a>
+  <%= f.text_field :sale_customer, placeholder: "必须填写，可自动填充", required: "required", class: "form-control", data: {autocomplete_source: check_sale_customer_sale_customers_path} %>
+</div>
+<div class="form-group" data-step="5" data-intro="必须项，精确到小数点后两位(0.01)">
+  <%= f.label :weight, "重量(千克)" %>
+  <%= f.number_field :weight, min: 0, step: 0.01, required: "required", class: "form-control" %>
+</div>
+<div class="form-group" data-step="6" data-intro="必须项，多少匹布啊？">
+  <%= f.label :number, "数量" %>
+  <%= f.number_field :number, min: 0, step: 1, required: "required", class: "form-control" %>
+</div>
+<div class="form-group" data-step="7" data-intro="一般不用改，我们卖布都算一整匹，特殊的话也可以改成别的">
+  <%= f.label :measuring_unit, "计量单位" %>
+  <%= f.text_field :measuring_unit, value: '匹', required: "required", class: "form-control" %>
+</div>
+<div class="form-group" data-step="8" data-intro="必须项，价格要清楚！精确到小数点后两位(0.01)">
+  <%= f.label :price, "单价(元)" %>
+  <%= f.number_field :price, min: 0, step: 0.01, required: "required", class: "form-control" %>
+</div>
+<div class="form-group" data-step="9" data-intro="有些产品要去掉税点卖，没有的话就留空">
+  <%= f.label :tax_rate, "税率(例如:4.5%的减税就填0.045)" %>
+  <%= f.number_field :tax_rate, step: 0.001, min: 0, max: 1, class: "form-control" %>
+</div>
+
+<div class="form-group" data-step="10" data-intro="产品的运输费用，没有就空着">
+  <%= f.label :freight, "运费(元)" %>
+  <%= f.number_field :freight, min: 0, step: 1, class: "form-control" %>
+</div>
+<div class="form-group" data-step="11" data-intro="承接上一条，是不是要我们公司出运费？不勾上的话这笔钱会计算入这批货的卖价里；勾上的话就不会计算入卖价，会生成另一张付款单，如果是垫付的话，需要到该付款单的编辑页面去把报销的框打上勾。">
+  <%= f.label :our_freight, "是不是我方负责出运费?" %>
+  <%= f.check_box :our_freight %>
+</div>
+<div class="form-group" data-step="12" data-intro="这个账单的时间，如果是补以前的账单，记得这里要改成账单上的时间，默认是现在的时间">
+  <%= f.label :bill_time, "账单时间" %>
+  <%= f.datetime_field :bill_time, required: "required", class: "form-control" %>
+</div>
+<div class="form-group" data-step="13" data-intro="这批货的备注信息">
+  <%= f.label :description, "备注" %>
+  <%= f.text_area :description, class: "form-control" %>
+</div>
+<% if type_2 == "edit" %>
+  <div class="form-group">
+    <%= f.label :user_id, "经手人" %>
+    <%= f.select(:user_id, options_for_select(User.all.collect {|n| [n.name, n.id]}, object.user_id), class: "form-control") %>
+  </div>
+<% elsif type_2 == "create" %>
+  <div class="form-group d-none">
+    <%= f.label :user_id, "经手人ID" %>
+    <%= f.number_field(:user_id, readonly: true, value: current_user.id, class: "form-control") %>
+  </div>
+<% end %>
+<div class="form-group" data-step="14" data-intro="如果是客户退回来的货，需要勾上这个选择，会把货款从客户的账单中减掉">
+  <%= f.label :is_return, "是退货吗？" %>
+  <%= f.check_box :is_return %>
+</div>
+<div class="picture" data-step="15" data-intro="上传相关的单据留存">
+  <%= label_tag "上传相关图片" %>
+  <%= f.file_field :picture %>
+</div>
+<div class="alert-warning"><%= param_check("销售账单自动审核") %></div>
+

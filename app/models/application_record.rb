@@ -4,7 +4,10 @@ class ApplicationRecord < ActiveRecord::Base
 
   #根据订单的创建时间，生成订单号
   def generate_order_id
-    self.order_id = self.created_at.localtime.strftime("%Y%m%d%H%M%S") + self.id.to_s
+    if self.order_id == nil
+      self.order_id = self.created_at.localtime.strftime("%Y%m%d%H%M%S") + self.id.to_s
+      self.save
+    end
   end
 
   #计算订单税后总价

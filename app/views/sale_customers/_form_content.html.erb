@@ -1,0 +1,32 @@
+<div class="form-group">
+  <%= f.label :name, "公司名" %>
+  <%= f.text_field :name, required: "required", class: "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :contacts, "联系人姓名" %>
+  <%= f.text_field :contacts, class: "form-control" %>
+</div>
+
+<div class="form-group">
+  <%= f.label :phone, "联系号码" %>
+  <%= f.text_field :phone, class: "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :address, "地址" %>
+  <%= f.text_field :address, class: "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :description, "描述" %>
+  <%= f.text_field :description, class: "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :check_money, "清算金额" %>
+  <a class="far fa-question-circle" data-toggle="tooltip" data-placement="right" title="设定和客户的初始未收货款"> </a>
+  <%= f.number_field :check_money, min: 0, step: 0.01, class: "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :check_money_time, "清算时间" %>
+  <a class="far fa-question-circle" data-toggle="tooltip" data-placement="right" title="在此时间前记录的销售订单和收款单将不会参与总值计算"> </a>
+  <%= f.datetime_field :check_money_time, class: "form-control" %>
+  <a id="check_money_time_clear">清除清算金额和日期(不需要设置清算日期和金额，点击)</a>
+</div>

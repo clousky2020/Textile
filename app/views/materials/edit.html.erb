@@ -1,0 +1,8 @@
+<% provide :button_text, "更新" %>
+<% provide :title, "修改原料信息" %>
+<% provide :method, :patch %>
+<% provide :back_url, materials_path %>
+
+<%= render 'shard/form', object: @material, url: material_path, type: "material", type_2: "edit" %>
+
+

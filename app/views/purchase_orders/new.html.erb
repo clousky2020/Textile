@@ -1,0 +1,8 @@
+<% provide :button_text, "创建" %>
+<% provide :title, "创建新的采购订单" %>
+<% provide :method, :post %>
+<% provide :back_url, purchase_orders_path %>
+
+<%= render 'shard/form', object: @purchase_order, url: purchase_orders_path, type: "purchase_order", type_2: "create", method: :post %>
+
+

@@ -1,0 +1,15 @@
+<% provide :title, "原材料详情" %>
+<% provide :edit_url, edit_material_path(@material) %>
+<% provide :back_url, materials_path %>
+
+
+<div class="text-center">
+  <h2><%= yield(:title) %></h2>
+  <%= render 'materials/show_content', object: @material, type: "material" %>
+  <div>
+    <% if can? :update, Material %>
+      <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary edit-link" %>
+    <% end %>
+    <%= link_to "返回主页", yield(:back_url), class: "btn btn-primary" %>
+  </div>
+</div>

@@ -1,0 +1,86 @@
+<div class="form-group" data-step="1" data-intro="货单上原料的名字">
+  <%= f.label :name, "品名" %>
+  <%= f.text_field :name, placeholder: "必须填写，可自动填充", required: "required", class: "form-control", data: {autocomplete_source: check_material_name_materials_path} %>
+</div>
+<div class="form-group" data-step="2" data-intro="货单上原料的规格型号">
+  <%= f.label :specification, "型号规格" %>
+  <%= f.text_field :specification, placeholder: "必须填写，可自动填充", required: "required", class: "form-control", data: {autocomplete_source: check_material_specification_materials_path} %>
+</div>
+<div class="form-group" data-step="3" data-intro="原料的批号，有时候会没有">
+  <%= f.label :batch_number, "批号" %>
+  <%= f.text_field :batch_number, placeholder: "没有就空着", class: "form-control" %>
+</div>
+<div class="form-group" data-step="4" data-intro="原料进来后放到哪里了？">
+  <%= f.label :repo_id, "存入仓库" %>
+  <%= f.select(:repo_id, Repo.pluck(:name, :id), class: "form-control") %>
+</div>
+<div class="form-group" data-step="5" data-intro="常规的计量单位是就是包、件、箱三种，如有其他的内容，请到建议反馈区留言">
+  <%= f.label :measuring_unit, "计量单位" %>
+  <%= f.select :measuring_unit, options_for_select([['包', '包'], ['件', '件'], ['箱', '箱'],]), class: "form-control" %>
+</div>
+<div class="form-group" data-step="6" data-intro="原料的来源，可以按空格搜索原来就有的供应商名称，也可以填写新的供应商名称">
+  <%= f.label :purchase_supplier, "供应商" %>
+  <%= f.text_field :purchase_supplier, placeholder: "必须填写，可自动填充", required: "required", class: "form-control", data: {autocomplete_source: check_purchase_supplier_purchase_suppliers_path} %>
+</div>
+
+<div class="form-group" data-step="7" data-intro="必须项，原料的重量">
+  <%= f.label :weight, "重量(千克)" %>
+  <%= f.number_field :weight, placeholder: "必须填写", min: 0, step: 0.01, required: "required", class: "form-control" %>
+</div>
+<div class="form-group" data-step="8" data-intro="必须项，原料的数量，和计量单位对应">
+  <%= f.label :number, "数量" %>
+  <%= f.number_field :number, placeholder: "必须填写", min: 0, step: 1, required: "required", class: "form-control" %>
+</div>
+<div class="form-group" data-step="9" data-intro="必须项，原料的单价，注意：不是按一吨的单价，而是一千克的单价">
+  <%= f.label :price, "单价(元/千克)" %>
+  <%= f.number_field :price, placeholder: "必须填写", min: 0, step: 0.01, required: "required", class: "form-control" %>
+</div>
+<div class="form-group" data-step="10" data-intro="有些原料进来后要除去税点">
+  <%= f.label :tax_rate, "税率(例如:4.5%的减税就填0.045)" %>
+  <%= f.number_field :tax_rate, placeholder: "没有就不填", step: 0.001, min: 0, max: 1, class: "form-control" %>
+</div>
+<div class="form-group" data-step="11" data-intro="有些原料要给供应商一定的押金，例如单孔丝之类的">
+  <%= f.label :deposit, "押金" %>
+  <%= f.number_field :deposit, placeholder: "没有就不填", min: 0, step: 1, class: "form-control" %>
+</div>
+<div class="form-group" data-step="12" data-intro="原料的运输费用，没有就空着">
+  <%= f.label :freight, "运费(元)" %>
+  <%= f.number_field :freight, placeholder: "没有就不填", min: 0, step: 1, class: "form-control" %>
+</div>
+<div class="form-group" data-step="13" data-intro="承接上一条，是不是要我们公司出运费？不勾上的话这笔钱会计算入这批货的卖价里；勾上的话就不会计算入卖价，会生成另一张付款单，如果是垫付的话，需要到该付款单的编辑页面去把报销的框打上勾。">
+  <%= f.label :our_freight, "是不是我方负责出运费?" %>
+  <%= f.check_box :our_freight %>
+</div>
+<div class="form-group" data-step="14" data-intro="这个账单的时间，如果是补以前的账单，记得这里要改成账单上的时间，默认是现在的时间">
+  <%= f.label :bill_time, "账单时间" %>
+  <%= f.datetime_field :bill_time, class: "form-control" %>
+</div>
+<div class="form-group" data-step="15" data-intro="这批货的备注信息">
+  <%= f.label :description, "备注" %>
+  <%= f.text_area :description, class: "form-control" %>
+</div>
+<div class="form-group" data-step="16" data-intro="如果是往供应商退货/退押金，需要勾上这个选择，会把需要付的货款从供应商的账单中减掉">
+  <%= f.label :is_return, "是退货/退押金吗？" %>
+  <a class="far fa-question-circle" data-toggle="tooltip" data-placement="right" title="退货的话要减少需要付给供货商的钱"> </a>
+  <%= f.check_box :is_return %>
+</div>
+
+<% if type_2 == "edit" %>
+  <div class="form-group">
+    <%= f.label :user_id, "经手人" %>
+    <%= f.select :user_id, options_for_select(User.select(:id, :name).map {|n| [n.name, n.id]}, object.user_id), class: "form-control  " %>
+  </div>
+<% elsif type_2 == "create" %>
+  <div class="form-group d-none">
+    <%= f.label :user_id, "经手人ID" %>
+    <%= f.number_field(:user_id, readonly: true, value: current_user.id, class: "form-control") %>
+  </div>
+<% end %>
+
+<div class="picture" data-step="17" data-intro="上传相关的单据留存">
+  <%= label_tag "上传相关图片" %>
+  <%= f.file_field :picture %>
+</div>
+<div class="alert-warning"><%= param_check("采购账单自动审核") %></div>
+
+

@@ -1,0 +1,25 @@
+<% provide :title, "客户信息详情" %>
+<% provide :edit_url, edit_sale_customer_path(@customer) %>
+<% provide :back_url, sale_customers_path %>
+
+<div class="text-center">
+  <h2><%= yield(:title) %></h2>
+  <%= render 'sale_customers/show_content', object: @customer %>
+
+  <div>
+    <% if can? :export, SaleCustomer %>
+     <span data-hint="每个月要对账了，导出固定格式的全部记录，需要在Excel中把不必要的删除掉。" data-hintPosition="top-left">
+     <%= link_to "导出对账单", export_sale_customer_path(@customer, format: "xls"), class: "btn btn-primary export" %></span>
+    <% end %>
+    <% if can? :update, SaleCustomer %>
+      <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary edit-link" %>
+    <% end %>
+    <% if @customer.sale_orders.blank? && @customer.proceeds.blank? %>
+      <% if can? :destroy, SaleCustomer %>
+        <span data-hint="只有关联的订单数为零的才能删除，慎重！" data-hintPosition="top-left">
+          <%= link_to "删除", sale_customer_path, method: :delete, class: "btn btn-primary edit-link" %></span>
+      <% end %>
+    <% end %>
+    <%= link_to "返回主页", yield(:back_url), class: "btn btn-primary" %>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<% provide :title, "用户档案" %>
+<% provide :edit_url, edit_user_path(@user) %>
+<% provide :back_url, users_path %>
+
+
+<div class="text-center">
+  <h2><%= yield(:title) %></h2>
+
+  <%= render 'users/show_content', object: @user %>
+
+  <div>
+    <% if can? :update, User %>
+      <%= link_to "编辑", yield(:edit_url), class: "btn btn-primary edit-link" %>
+    <% end %>
+    <%= link_to "返回主页", yield(:back_url), class: "btn btn-primary" %>
+  </div>
+</div>

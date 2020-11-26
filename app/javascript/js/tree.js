@@ -5,15 +5,17 @@ require('./dashboard/novice_guide');
 
 require("./employee/form");
 
-require("./expense/form");
-require("./expense/new");
-require("./expense/index");
+require("./expenses/form");
+require("./expenses/new");
+require("./expenses/index");
 
-require("./param/index");
+require("./setting/index");
 
 require("./proceed/form");
 require("./proceed/index");
 require("./proceed/new");
+
+// require("./product/show.js.erb");
 
 require("./purchase_order/form")
 require("./purchase_order/new")
