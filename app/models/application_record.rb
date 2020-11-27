@@ -69,7 +69,7 @@ class ApplicationRecord < ActiveRecord::Base
       if end_date_todate - start_date_todate > 365
         bill_date = order.bill_time.strftime("%Y")
         # 超出一个月，按月份排列
-      elsif end_date_todate - start_date_todate > 30
+      elsif end_date_todate - start_date_todate > 31
         bill_date = order.bill_time.strftime("%Y-%m")
       else
         bill_date = order.bill_time.strftime("%Y-%m-%d")
