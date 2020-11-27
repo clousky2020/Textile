@@ -8,11 +8,11 @@ var ctx = $('#check_purchase_supplier_top_chart');
 var myChart = new Chart(ctx, {
     type: "bar",
     data: {
-        labels: <%= raw @top_purchase_orders.keys[0..4]  %>,
+        labels: <%= raw @top_purchase_orders.keys[0..9]  %>,
         datasets: [
             {
                 label: '采购金额',
-                data: <%= raw @top_purchase_orders.values[0..4] %>,
+                data: <%= raw @top_purchase_orders.values[0..9] %>,
                 backgroundColor: 'red',
                 borderWidth: 1
             }
@@ -40,11 +40,11 @@ var ctx = $('#check_sale_orders_top_chart');
 var myChart = new Chart(ctx, {
     type: "bar",
     data: {
-        labels: <%= raw @top_sale_orders.keys[0..4]  %>,
+        labels: <%= raw @top_sale_orders.keys[0..9]  %>,
         datasets: [
             {
                 label: '销售金额',
-                data: <%= raw @top_sale_orders.values[0..4] %>,
+                data: <%= raw @top_sale_orders.values[0..9] %>,
                 backgroundColor: 'green',
                 borderWidth: 1
             }
