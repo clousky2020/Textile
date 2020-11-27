@@ -5,7 +5,7 @@ p '新建账户'
 users = ['管理员', '采购员', '销售员', '财务', '车间主任']
 n = 1
 users.each do |name|
-  user = User.new(name: name, password: "123456", email: "123456#{n}@qq.com")
+  user = User.new(name: name, password: "123456", email: "1111#{n}@qq.com")
   user.save
   n += 1
 end
@@ -34,16 +34,16 @@ roles.each do |name|
   end
   role.save
   user = User.find_by(name: name)
-  user.roles << role
+  if user.roles.blank?
+    user.roles << role
+  end
   user.save
 end
 
 p '新建一个本地仓库'
-unless Repo.find_by_name("本厂")
-  repo = Repo.new(name: "本厂", description: "初始设定的仓库", address: "工业园")
-  repo.user = User.first
-  repo.save
-end
+repo = Repo.find_or_create_by(name: "本厂", description: "初始设定的仓库", address: "工业园")
+repo.user = User.first
+repo.save
 
 
 p '添加默认参数配置'
