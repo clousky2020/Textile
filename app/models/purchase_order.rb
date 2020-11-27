@@ -7,6 +7,8 @@ class PurchaseOrder < ApplicationRecord
 
   validates :order_id, uniqueness: true
   validates :weight, :price, numericality: {:greater_than_or_equal_to => 0}
+  validates :bill_time, uniqueness: {scope: [:purchase_supplier_id, :weight, :price]}
+  validates :bill_time, presence: true
 
   after_create :generate_order_id
   after_create :calcuate_total_price
@@ -53,7 +55,7 @@ class PurchaseOrder < ApplicationRecord
     end
   end
 
-  # 订单的金额加入供货商的数据中
+# 订单的金额加入供货商的数据中
   def add_to_purchase_supplier
     purchase_supplier = self.purchase_supplier
     if !purchase_supplier.check_money_time || self.bill_time > purchase_supplier.check_money_time
@@ -70,7 +72,7 @@ class PurchaseOrder < ApplicationRecord
     end
   end
 
-  # 从供货商的数据中减去相关的金额
+# 从供货商的数据中减去相关的金额
   def reduce_to_purchase_supplier
     purchase_supplier = self.purchase_supplier
     if !purchase_supplier.check_money_time || self.bill_time > purchase_supplier.check_money_time
