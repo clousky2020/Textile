@@ -206,7 +206,7 @@ describe "sale_orders" do
     sale_order_num = find("th", text: "已有订单数").find(:xpath, "./../td/a").text
     expect(sale_order_num).to eq("2")
     paid = find("th", text: "总计货款").find(:xpath, "./../td").text
-    expect(paid.to_f).to eq(sale_order_1.total_price + sale_order_1.freight + sale_order_2.total_price + sale_order_2.freight)
+    expect(paid).to eq((sale_order_1.total_price + sale_order_1.freight + sale_order_2.total_price + sale_order_2.freight).to_s)
     expect(page).not_to have_content('清算金额')
     #设置清算日期和金额
     click_on "编辑"

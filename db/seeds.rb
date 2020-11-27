@@ -20,7 +20,7 @@ end
 
 
 p '新建账户'
-users = ['李文强', '王朝辉', '姚一夫', '顾晁诚', '顾乐峰', '赵海英']
+users = ['管理员', '采购员', '销售员', '财务', '车间主任']
 n = 1
 users.each do |name|
   user = User.new(name: name, password: "123456", email: "123456#{n}@qq.com")
@@ -28,22 +28,60 @@ users.each do |name|
   n += 1
 end
 
+
+p '新建角色'
+roles = ['管理员', '采购员', '销售员', '财务', '车间主任']
+descriptions = {"管理员": "拥有本系统所有权限，对比其他角色拥有新建角色权限的功能！小心不要把自己的超级权限给删掉了！",
+                "采购员": "新采购的原料填写采购单，代买的物品填写付款单，记得打上报销的勾，也能填写收款单。编辑原料信息。查看所有的采购单。",
+                "销售员": "对销售的货物填写销售单，代买的物品填写付款单，记得打上报销的勾。编辑产品的信息，查看所有的销售单。",
+                "财务": "主要工作是审核采购单、销售单、付款单、收款单，使其记入系统计算，必要时可以作废以上单据。在对账日导出供应商和客户的对账单。更新供应商和客户的资料。",
+                "车间主任": "编辑员工资料记录，对新采购的原料填写采购单，销售的货物填写销售单，代买的物品填写付款单，记得打上报销的勾。编辑新的产品信息。查看所有的销售单和采购单。编辑仓库信息。"}
+
+Permissions = {"管理员": {"super" => "1"},
+               "采购员": {"super" => "0", "users" => {"create" => "0", "destroy" => "0", "update" => "0", "read" => "0", "read_my_own" => "1", "update_my_own" => "1", "reset" => "0", "lock" => "0"}, "roles" => {"create" => "0", "destroy" => "0", "update" => "0", "read" => "0"}, "change_machines" => {"create" => "0", "destroy" => "0", "update" => "0", "read" => "1", "pass_settle" => "0"}, "employee" => {"create" => "0", "destroy" => "0", "update" => "0", "read" => "1"}, "repos" => {"create" => "0", "destroy" => "0", "update" => "0", "read" => "1"}, "products" => {"create" => "0", "destroy" => "0", "update" => "0", "read" => "1"}, "materials" => {"create" => "0", "destroy" => "1", "update" => "1", "read" => "1"}, "sale_customers" => {"create" => "0", "destroy" => "0", "update" => "0", "read" => "1", "export" => "0"}, "sale_orders" => {"create" => "0", "destroy" => "0", "update" => "0", "pass_check" => "0", "read" => "0", "update_my_own" => "1", "destroy_my_own" => "1"}, "purchase_orders" => {"create" => "1", "destroy" => "1", "update" => "1", "pass_check" => "0", "read" => "1", "update_my_own" => "1", "destroy_my_own" => "1"}, "purchase_suppliers" => {"create" => "0", "destroy" => "0", "update" => "0", "read" => "1", "export" => "0"}, "params" => {"update" => "0", "read" => "1"}, "expenses" => {"create" => "1", "destroy" => "0", "update" => "0", "pass_check" => "0", "pass_reimburse" => "0", "read" => "1", "update_my_own" => "1", "destroy_my_own" => "1"}, "proceeds" => {"create" => "1", "destroy" => "0", "update" => "0", "pass_check" => "0", "read" => "1", "update_my_own" => "1", "destroy_my_own" => "1"}, "comments" => {"create" => "1", "destroy" => "0", "update" => "0", "take_top" => "0", "read" => "1", "update_my_own" => "1", "destroy_my_own" => "1"}},
+               "销售员": {"super" => "0", "users" => {"create" => "0", "destroy" => "0", "update" => "0", "read" => "0", "read_my_own" => "1", "update_my_own" => "1", "reset" => "0", "lock" => "0"}, "roles" => {"create" => "0", "destroy" => "0", "update" => "0", "read" => "0"}, "change_machines" => {"create" => "0", "destroy" => "0", "update" => "0", "read" => "1", "pass_settle" => "0"}, "employee" => {"create" => "0", "destroy" => "0", "update" => "0", "read" => "1"}, "repos" => {"create" => "0", "destroy" => "0", "update" => "0", "read" => "1"}, "products" => {"create" => "0", "destroy" => "0", "update" => "1", "read" => "1"}, "materials" => {"create" => "0", "destroy" => "0", "update" => "0", "read" => "1"}, "sale_customers" => {"create" => "0", "destroy" => "0", "update" => "1", "read" => "1", "export" => "0"}, "sale_orders" => {"create" => "1", "destroy" => "1", "update" => "1", "pass_check" => "0", "read" => "1", "update_my_own" => "1", "destroy_my_own" => "1"}, "purchase_orders" => {"create" => "0", "destroy" => "0", "update" => "0", "pass_check" => "0", "read" => "0", "update_my_own" => "1", "destroy_my_own" => "1"}, "purchase_suppliers" => {"create" => "0", "destroy" => "0", "update" => "0", "read" => "1", "export" => "0"}, "params" => {"update" => "0", "read" => "1"}, "expenses" => {"create" => "1", "destroy" => "0", "update" => "0", "pass_check" => "0", "pass_reimburse" => "0", "read" => "1", "update_my_own" => "1", "destroy_my_own" => "1"}, "proceeds" => {"create" => "1", "destroy" => "0", "update" => "0", "pass_check" => "0", "read" => "1", "update_my_own" => "1", "destroy_my_own" => "1"}, "comments" => {"create" => "1", "destroy" => "0", "update" => "0", "take_top" => "0", "read" => "1", "update_my_own" => "1", "destroy_my_own" => "1"}},
+               "财务": {"super" => "0", "users" => {"create" => "0", "destroy" => "0", "update" => "1", "read" => "1", "read_my_own" => "1", "update_my_own" => "1", "reset" => "0", "lock" => "0"}, "roles" => {"create" => "0", "destroy" => "0", "update" => "0", "read" => "0"}, "change_machines" => {"create" => "0", "destroy" => "0", "update" => "0", "read" => "1", "pass_settle" => "0"}, "employee" => {"create" => "1", "destroy" => "0", "update" => "1", "read" => "1"}, "repos" => {"create" => "0", "destroy" => "0", "update" => "0", "read" => "1"}, "products" => {"create" => "0", "destroy" => "0", "update" => "0", "read" => "1"}, "materials" => {"create" => "0", "destroy" => "0", "update" => "0", "read" => "1"}, "sale_customers" => {"create" => "0", "destroy" => "0", "update" => "1", "read" => "1", "export" => "1"}, "sale_orders" => {"create" => "1", "destroy" => "1", "update" => "1", "pass_check" => "1", "read" => "1", "update_my_own" => "1", "destroy_my_own" => "1"}, "purchase_orders" => {"create" => "1", "destroy" => "1", "update" => "1", "pass_check" => "1", "read" => "1", "update_my_own" => "1", "destroy_my_own" => "1"}, "purchase_suppliers" => {"create" => "0", "destroy" => "0", "update" => "1", "read" => "1", "export" => "1"}, "params" => {"update" => "0", "read" => "1"}, "expenses" => {"create" => "1", "destroy" => "1", "update" => "1", "pass_check" => "1", "pass_reimburse" => "1", "read" => "1", "update_my_own" => "1", "destroy_my_own" => "1"}, "proceeds" => {"create" => "1", "destroy" => "1", "update" => "1", "pass_check" => "1", "read" => "1", "update_my_own" => "1", "destroy_my_own" => "1"}, "comments" => {"create" => "1", "destroy" => "0", "update" => "0", "take_top" => "0", "read" => "1", "update_my_own" => "1", "destroy_my_own" => "1"}},
+               "车间主任": {"super" => "0", "users" => {"create" => "0", "destroy" => "0", "update" => "1", "read" => "0", "read_my_own" => "1", "update_my_own" => "1", "reset" => "0", "lock" => "0"}, "roles" => {"create" => "0", "destroy" => "0", "update" => "0", "read" => "0"}, "change_machines" => {"create" => "1", "destroy" => "1", "update" => "1", "read" => "1", "pass_settle" => "1"}, "employee" => {"create" => "1", "destroy" => "0", "update" => "1", "read" => "1"}, "repos" => {"create" => "1", "destroy" => "1", "update" => "1", "read" => "1"}, "products" => {"create" => "1", "destroy" => "1", "update" => "1", "read" => "1"}, "materials" => {"create" => "0", "destroy" => "0", "update" => "1", "read" => "1"}, "sale_customers" => {"create" => "0", "destroy" => "0", "update" => "1", "read" => "1", "export" => "0"}, "sale_orders" => {"create" => "1", "destroy" => "1", "update" => "1", "pass_check" => "0", "read" => "1", "update_my_own" => "1", "destroy_my_own" => "1"}, "purchase_orders" => {"create" => "1", "destroy" => "1", "update" => "1", "pass_check" => "0", "read" => "1", "update_my_own" => "1", "destroy_my_own" => "1"}, "purchase_suppliers" => {"create" => "0", "destroy" => "0", "update" => "1", "read" => "1", "export" => "0"}, "params" => {"update" => "0", "read" => "1"}, "expenses" => {"create" => "1", "destroy" => "0", "update" => "0", "pass_check" => "0", "pass_reimburse" => "0", "read" => "1", "update_my_own" => "1", "destroy_my_own" => "1"}, "proceeds" => {"create" => "1", "destroy" => "0", "update" => "0", "pass_check" => "0", "read" => "1", "update_my_own" => "1", "destroy_my_own" => "1"}, "comments" => {"create" => "1", "destroy" => "0", "update" => "0", "take_top" => "0", "read" => "1", "update_my_own" => "1", "destroy_my_own" => "1"}}
+}
+
+roles.each do |name|
+  role = Role.find_or_create_by(name: name)
+  role.description = descriptions[name.to_sym]
+
+  # Permissions[name.to_sym].each do |k, v|
+  #   if v.is_a? Hash
+  #     v.each do |k2, v2|
+  #       eval("role.permissions[k.to_sym][k2.to_sym] = v2")
+  #     end
+  #   else
+  #     role.permissions[k.to_sym] = v
+  #   end
+  # end
+  role.save
+end
+
+
 p '新建一个本地仓库'
 unless Repo.find_by_name("顾丰本厂")
   repo = Repo.new(name: "顾丰本厂", description: "初始设定的仓库", address: "工业园")
   repo.user = User.first
   repo.save
 end
+
 p '新建一个管理员角色，并赋予第一个用户'
-unless Role.find_by_name("管理员")
-  role = Role.new
-  role.name = "管理员"
-  role.permissions.super = true
-  role.save
-  user = User.first
+user = User.first
+if user.roles.blank?
+  unless role = Role.find_or_create_by(name: "管理员")
+    role = Role.new
+    role.name = "管理员"
+    role.permissions.super = true
+    role.save
+  end
   user.roles << role
   user.save
 end
+
+
 p '添加默认参数配置'
 setting_list = {
     "采购账单自动审核": "有审核权限者录入的采购订单自动完成审核",
@@ -185,3 +223,56 @@ creek.sheets.each do |sheet|
 
 end
 
+class HashObj
+  class << self
+    def load_from_hash(hash)
+      if hash.instance_of? Hash
+        obj = HashObj.new
+        hash.each {|k, v| obj.send :def_sget_method, k, HashObj.load_from_hash(v)}
+        obj
+      elsif hash.instance_of? Array
+        hash.map {|m| HashObj.load_from_hash(m)}
+      else
+        hash
+      end
+    end
+  end
+
+  def attributes
+    hash = {}
+    @@reg ||= /=/
+    self.singleton_methods.reject {|x| @@reg =~ x.to_s}.each do |m|
+      v = self.send(m)
+      if v.instance_of? HashObj
+        real_v = v.attributes
+      elsif v.instance_of? Array
+        real_v = []
+        v.each do |l|
+          if l.instance_of? HashObj
+            real_v << l.attributes
+          else
+            real_v << l
+          end
+        end
+      else
+        real_v = v
+      end
+      hash[m] = real_v
+    end
+    hash
+  end
+
+  protected
+
+  def def_sget_method(name, val)
+    self.instance_variable_set "@#{name}", val
+
+    self.define_singleton_method "#{name}=" do |n_val|
+      instance_variable_set "@#{name}", n_val
+    end
+
+    self.define_singleton_method name do
+      instance_variable_get "@#{name}"
+    end
+  end
+end

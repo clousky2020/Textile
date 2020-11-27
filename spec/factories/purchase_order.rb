@@ -7,9 +7,8 @@ FactoryBot.define do
     weight {rand(1..100)}
     deposit {rand(1..100)}
     price {rand(1..10)}
-    tax_rate {rand(0.05)}
-    total_price {weight * price}
-    bill_time {1.day.ago}
+    tax_rate {rand()/100}
+    bill_time {rand(1..99).day.ago}
     association :user
     association :purchase_supplier
     association :repo

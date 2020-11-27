@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :sale_customer do
-    sequence(:name) {|n| "test_name#{n}"}
+    # sequence(:name) {|n| "#{n}#{Faker::Company.name}"}
+    name {Faker::Company.name}
   end
 end

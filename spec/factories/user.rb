@@ -1,12 +1,11 @@
 FactoryBot.define do
   factory :user do
     id {1}
-    name {"测试用户"}
-    email {"123456@qq.com"}
+    name {"#{Faker::Name.name[1.10]}"}
+    email {"#{Faker::Internet.email}"}
     password {"123456"}
 
     factory :lock_user do
-
       name {'锁住的用户'}
       email {'123331@qq.com'}
       password {"123456"}
