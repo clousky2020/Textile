@@ -7,20 +7,19 @@ describe "dashboard" do
   let!(:sale_customer) {create(:sale_customer)}
   let!(:material) {create(:material, purchase_supplier: purchase_supplier)}
   let!(:product) {create(:product)}
-
   let!(:purchase_orders) {create_list(:purchase_order, 40, purchase_supplier: purchase_supplier,
                                       material: material, user: user, repo: repo)}
   let!(:sale_orders) {create_list(:sale_order, 40, user: user, repo: repo, sale_customer: sale_customer,
                                   product: product)}
   let!(:expenses) {create_list(:expense, 10, user: user, counterparty: purchase_supplier.name)}
-  let!(:proceeds) {create_list(:proceed, 10, user: user, sale_customer: SaleCustomer.find(rand(1..SaleCustomer.count)))}
+  let!(:proceeds) {create_list(:proceed, 10, user: user, sale_customer: SaleCustomer.first)}
 
   before do
     login_in(user)
   end
 
   scenario '页面点击能查看图表', js: true do
-
+    # 先把订单都审核通过了
     purchase_orders.each do |purchase_order|
       purchase_order.pass_check_result(user)
     end
