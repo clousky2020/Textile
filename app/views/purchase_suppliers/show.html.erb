@@ -18,8 +18,10 @@
     <% end %>
     <% if @supplier.purchase_orders.blank? && @supplier.expenses.blank? %>
       <% if can? :destroy, PurchaseSupplier %>
+        <% if @supplier.purchase_orders.size == 0 && @supplier.expenses.size == 0 %>
          <span data-hint="只有关联的订单数为零的才能删除，慎重！" data-hintPosition="top-left">
            <%= link_to "删除", purchase_supplier_path, method: :delete, class: "btn btn-primary destroy-link" %></span>
+        <% end %>
       <% end %>
     <% end %>
     <%= link_to "返回主页", yield(:back_url), class: "btn btn-primary" %>
