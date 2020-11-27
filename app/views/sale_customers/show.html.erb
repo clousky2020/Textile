@@ -18,7 +18,7 @@
       <% if can? :destroy, SaleCustomer %>
         <% if @customer.sale_orders.size == 0 && @customer.proceeds.size == 0 %>
         <span data-hint="只有关联的订单数为零的才能删除，慎重！" data-hintPosition="top-left">
-          <%= link_to "删除", sale_customer_path, method: :delete, class: "btn btn-primary edit-link" %></span>
+          <%= link_to "删除", sale_customer_path, method: :delete, class: "btn btn-primary edit-link",data: {confirm: "确定删除吗？请慎重"} %></span>
         <% end %>
       <% end %>
     <% end %>
