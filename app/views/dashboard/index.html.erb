@@ -10,14 +10,23 @@
     <p class="alert-warning"> 有任何意见、建议、问题、需要添加的功能请在底部的建议反馈里提交！</p>
     <div class="graph_query" id="step5">
       <h5>图表查询</h5>
-      <p>开始日期：<%= date_field_tag :start_date, (Time.current - 7.days).strftime("%Y-%m-%d") %></p>
-      <p>结束日期：<%= date_field_tag :end_date, (Time.current + 1.day).strftime("%Y-%m-%d") %></p>
-      <%= button_tag "订单收支", id: "check_order_money", class: "btn btn-primary" %>
-      <%= button_tag "支出类别", id: "check_expense_ratio", class: "btn btn-primary" %>
-      <%= button_tag "最高交易金额的公司", id: "check_trade_top", class: "btn btn-primary" %>
-      <%#= button_tag "供应商货款", id: "check_purchase_supplier", class: "btn btn-primary" %>
-      <%#= button_tag "客户货款", id: "check_sale_customer", class: "btn btn-primary" %>
+      <div class="row no-gutters">
+        <p class="col-12 col-md-4">开始日期：<%= date_field_tag :start_date, (Time.current - 7.days).strftime("%Y-%m-%d") %></p>
+        <p class="col-12 col-md-4">结束日期：<%= date_field_tag :end_date, (Time.current + 1.day).strftime("%Y-%m-%d") %></p>
+      </div>
+      <div class="row no-gutters">
+        <%= button_tag "订单收支", id: "check_order_money", class: "btn btn-primary" %>
+        <%= button_tag "支出类别", id: "check_expense_ratio", class: "btn btn-primary" %>
+        <%= button_tag "最高交易金额的公司", id: "check_trade_top", class: "btn btn-primary" %>
+      </div>
+      <div class="row no-gutters">
+        <%= collection_select(:purchase_supplier, 0, PurchaseSupplier.all, :id, :name) %>
+        <%= button_tag "供应商货款", id: "check_purchase_supplier", class: "btn btn-primary" %>
+        <%= collection_select(:sale_customer, 0, SaleCustomer.all, :id, :name) %>
+        <%= button_tag "客户货款", id: "check_sale_customer", class: "btn btn-primary" %>
+      </div>
       <div class="chart-container"></div>
+
     </div>
   </div>
 </div>

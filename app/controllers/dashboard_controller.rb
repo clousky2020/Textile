@@ -34,11 +34,16 @@ class DashboardController < ApplicationController
   end
 
   def check_purchase_supplier
+    purchase_supplier = PurchaseSupplier.find(params[:purchase_supplier_id].to_i)
+    @purchase_orders = purchase_supplier.check_broken_line(params[:start_date], params[:end_date])
   end
 
   def check_sale_customer
+    sale_customer = SaleCustomer.find(params[:sale_customer_id].to_i)
+    @sale_orders = sale_customer.check_broken_line(params[:start_date], params[:end_date])
   end
 
+  # 删除所有该用户的新手引导记录
   def intro_clear
     store_referrer_location
     ActiveRecord::Base.connection.execute("delete from intro_histories where creator_id =#{params[:id]} ")

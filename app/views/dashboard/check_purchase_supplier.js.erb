@@ -1,0 +1,24 @@
+var head = $(".chart-container")
+head.empty();
+
+
+<%unless @purchase_orders.blank? %>
+head.append("<canvas id=\"check_purchase_supplier_chart\"></canvas>\n")
+var ctx = $('#check_purchase_supplier_chart');
+var myChart = new Chart(ctx, {
+    type: "line",
+    data: {
+        labels: <%= raw @purchase_orders.keys  %>,
+        datasets: [
+            {
+                label: '采购金额曲线',
+                data: <%= raw @purchase_orders.values %>,
+                borderColor: 'blue',
+                borderWidth: 1,
+            }
+        ]
+    }
+});
+<%else %>
+head.append("<p>好像没有找到符合要求的数据</p>");
+<%end %>

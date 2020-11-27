@@ -62,4 +62,13 @@ class SaleCustomer < ApplicationRecord
     end
   end
 
+  # 获取客户的订单金额数据，做曲线显示
+  def check_broken_line(start_date, end_date)
+    orders = self.sale_orders.where(bill_time: start_date..end_date, is_invalid: false, check_status: true)
+    h = Hash.new
+    orders.select(:bill_time, :total_price).each do |order|
+      h.store(order.bill_time.strftime("%Y-%m-%d"), order.total_price)
+    end
+    h
+  end
 end

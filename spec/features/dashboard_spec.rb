@@ -50,7 +50,7 @@ describe "dashboard" do
     click_button "支出类别"
     expect(page).to have_content("好像没有找到符合要求的数据")
     click_button "最高交易金额的公司"
-    expect(page).to have_content("好像没有找到符合要求的订单")
+    expect(page).to have_content("好像没有找到符合要求的数据")
 
     fill_in "start_date", with: 180.days.ago
 
