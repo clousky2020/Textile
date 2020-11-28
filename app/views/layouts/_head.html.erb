@@ -76,10 +76,11 @@
             <% end %>
           </div>
         </li>
-
-        <li class="nav-link">
-          <%= link_to "参数设定", settings_path %>
-        </li>
+        <% if can? :update, Setting %>
+          <li class="nav-link">
+            <%= link_to "参数设定", settings_path %>
+          </li>
+        <% end %>
         <li class="nav-link dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="current_user_name">
             <%= current_user.name %>
