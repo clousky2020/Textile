@@ -21,12 +21,14 @@
 #主要使用的工具配置
 基于Ruby On Rails开发成web形式，部署到云服务器上，手机端和PC端都能进入操作。
 
+[bootstrap](https://getbootstrap.com/docs/4.5/getting-started/introduction/)——没什么酷炫的页面，先完成基础功能吧
+
 [IntroJs](https://github.com/usablica/intro.js)——在使用者的疑问：“这玩意儿怎么用？”的提醒下，增加了主要的操作引导
 
-[Chart](https://www.chartjs.org/)——老板要看的直观，那就上图表吧
+[Chart](https://www.chartjs.org/)——老板不喜欢一大堆数据，那就上图表吧
 
 [role_core](https://github.com/rails-engine/role_core)——权限不能少，要不然谁都可以提交审核订单了。为什么要采用RBAC的权限管理模式？
-当然是因为总有人有关系，还需要点别的权限，索性全交给他们自己去定。
+是因为在工作中发现一个人可能会做多种工作的需求，权限也可能有变动，所以要自由定制。
 
 主要使用的就以上这些了，剩下的就是各种单据的CRUD，计算逻辑。
 
