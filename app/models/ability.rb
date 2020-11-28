@@ -10,13 +10,13 @@ class Ability
 
 
     user.computed_permissions.call(self, user)
+    can :check_material_name, :all
     can :check_material_specification, :all
     can :get_options, :all
     can :get_expense_type, :all
     can :check_purchase_supplier, :all
     can :get_expense_type, :all
     can :download, :all
-    can :check_sale_proceed, :all
 
 
     can :create, Comment
