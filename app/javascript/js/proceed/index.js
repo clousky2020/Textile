@@ -2,11 +2,10 @@ import {set_data, set_title} from "../commont";
 
 
 $(document).on("turbolinks:load", function () {
-
     var data = set_data("proceed", "index", "intro");
     var title = set_title(data.controller_name, data.action_name, data.tour_name, data.user_id);
 
-    if (window.location.pathname == "/proceed") {
+    if (window.location.pathname == "/proceeds") {
         //检查cookies中是否经历过新手引导了
         var value = Cookies.get(title);
         if (!value) {
