@@ -132,7 +132,7 @@ $(document).on("turbolinks:load", function () {
             exitOnOverlayClick: false,
         });
         intro.setOption('doneLabel', '跳转到页面').start().oncomplete(function () {
-            window.location.href = "/sale_order/new"
+            window.location.href = "/sale_orders/new"
         });
     });
 //改机记录单的新手引导
