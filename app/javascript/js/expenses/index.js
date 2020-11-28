@@ -4,7 +4,7 @@ import {set_data, set_title} from "../commont";
 $(document).on("turbolinks:load", function () {
 
     var data = set_data("expenses", "index", "intro");
-    var title = set_title(data.controller_name, data.action_name, data.tour_name, data.creator_id);
+    var title = set_title(data.controller_name, data.action_name, data.tour_name, data.user_id);
 
     if (window.location.pathname == "/expenses") {
         //检查cookies中是否经历过新手引导了

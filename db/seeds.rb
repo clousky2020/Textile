@@ -87,7 +87,7 @@ if File.exist?("初始资料.xlsm")
           if !cells["B#{n}"].blank? && !cells["C#{n}"].blank?
             #创建原材料目录
             material = Material.find_or_create_by(name: cells["B#{n}"], specification: cells["C#{n}"],
-                                                  purchase_supplier_id: purchase_supplier.id, measuring_unit: "包/箱")
+                                                  purchase_supplier: purchase_supplier, measuring_unit: "包/箱")
             if material
               user = User.find(rand(1..3))
               repo = Repo.first

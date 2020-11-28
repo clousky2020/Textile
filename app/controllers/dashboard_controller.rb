@@ -46,7 +46,7 @@ class DashboardController < ApplicationController
   # 删除所有该用户的新手引导记录
   def intro_clear
     store_referrer_location
-    ActiveRecord::Base.connection.execute("delete from intro_histories where creator_id =#{params[:id]} ")
+    ActiveRecord::Base.connection.execute("delete from intro_histories where user_id =#{params[:id]} ")
     redirect_back_referrer_for root_url
   end
 end

@@ -4,15 +4,15 @@ export function set_data(controller_name, action_name, tour_name) {
         controller_name: controller_name,
         action_name: action_name,
         tour_name: tour_name,
-        creator_id: $("#current_user_id").val()
+        user_id: $("#current_user_id").val()
     }
     return data;
 }
 
 //保存到cookie的格式
-export function set_title(controller_name, action_name, tour_name, creator_id) {
+export function set_title(controller_name, action_name, tour_name, user_id) {
     var title = '';
-    title = title.concat(controller_name, "-", action_name, "-", tour_name, "-", creator_id);
+    title = title.concat(controller_name, "-", action_name, "-", tour_name, "-", user_id);
     return title;
 }
 

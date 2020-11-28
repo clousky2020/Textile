@@ -3,7 +3,7 @@ import {set_data, set_title} from "../commont";
 $(document).on("turbolinks:load", function () {
 // 设定参数
     var data = set_data("dashboard", "index", "intro")
-    var title = set_title(data.controller_name, data.action_name, data.tour_name, data.creator_id);
+    var title = set_title(data.controller_name, data.action_name, data.tour_name, data.user_id);
 
 
 //设定首页的引导信息
