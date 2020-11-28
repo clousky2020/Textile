@@ -1,8 +1,9 @@
 class IntrojsController < ApplicationController
   def create
-    Intro.find_or_create_by(controller_name: params[:controller_name], action_name: params[:action_name],
-                            tour_name: params[:tour_name], user_id: params[:user_id])
-
+    unless Setting.setting_status("新手引导")
+      Intro.find_or_create_by(controller_name: params[:controller_name], action_name: params[:action_name],
+                              tour_name: params[:tour_name], user_id: params[:user_id])
+    end
   end
 
   def destroy
