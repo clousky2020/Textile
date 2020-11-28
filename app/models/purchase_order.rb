@@ -65,7 +65,7 @@ class PurchaseOrder < ApplicationRecord
         purchase_supplier.total_payment_required += self.freight
       end
       # 押金
-      purchase_supplier.total_deposit += self.deposit
+      purchase_supplier.total_deposit += self.deposit || 0
       # 计算未付的钱
       purchase_supplier.calcu_unpaid
       purchase_supplier.save
@@ -82,7 +82,7 @@ class PurchaseOrder < ApplicationRecord
         purchase_supplier.total_payment_required -= self.freight
       end
       # 押金
-      purchase_supplier.total_deposit -= self.deposit
+      purchase_supplier.total_deposit -= self.deposit|| 0
       # 计算未付的钱
       purchase_supplier.calcu_unpaid
       purchase_supplier.save
