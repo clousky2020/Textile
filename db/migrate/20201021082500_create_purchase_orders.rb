@@ -4,9 +4,9 @@ class CreatePurchaseOrders < ActiveRecord::Migration[6.0]
       t.string :order_id, index: true, uniq: true
       t.string :batch_number
       t.string :description
-      t.references :purchase_suppliers
+      t.references :purchase_supplier
       t.references :material
-      t.references :repos
+      t.references :repo
       t.references :user
       t.integer :number, default: 0
       t.string :measuring_unit

@@ -6,7 +6,7 @@ class CreateIntroHistories < ActiveRecord::Migration[5.0]
       t.string :controller_name
       t.string :action_name
       t.string :tour_name
-      t.references :creator, null: false, index: true
+      t.references :user, null: false, index: true
 
       t.timestamps index: true
     end

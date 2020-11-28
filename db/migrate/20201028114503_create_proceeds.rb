@@ -2,7 +2,7 @@ class CreateProceeds < ActiveRecord::Migration[6.0]
   def change
     create_table :proceeds do |t|
       t.string :order_id
-      t.references :sale_customers
+      t.references :sale_customer
       t.references :user
       t.decimal :paper_amount, precision: 10, scale: 2, default: 0
       t.decimal :actual_amount, precision: 10, scale: 2, default: 0

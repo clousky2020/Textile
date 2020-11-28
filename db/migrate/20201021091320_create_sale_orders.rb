@@ -3,10 +3,10 @@ class CreateSaleOrders < ActiveRecord::Migration[6.0]
     create_table :sale_orders do |t|
       t.string :order_id, index: true, uniq: true
       t.string :description
-      t.references :sale_customers
-      t.references :products
-      t.belongs_to :repos
-      t.belongs_to :user
+      t.references :sale_customer
+      t.references :product
+      t.references :repo
+      t.references :user
       t.integer :number, default: 0
       t.string :measuring_unit
       t.decimal :weight, precision: 10, scale: 2, default: 0
