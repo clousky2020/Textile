@@ -17,14 +17,16 @@ require("./proceed/new");
 
 // require("./product/show.js.erb");
 
-require("./purchase_order/form")
-require("./purchase_order/new")
+require("./purchase_order/form");
+require("./purchase_order/new");
 
-require("./purchase_supplier/form")
-require("./purchase_supplier/index")
-require("./purchase_supplier/show")
+require("./purchase_supplier/form");
+require("./purchase_supplier/index");
+require("./purchase_supplier/show");
 
-require("./sale_customer/form")
+require("./sale_customer/form");
+require("./sale_customer/index");
+require("./sale_customer/show");
 
-require("./sale_order/form")
-require("./sale_order/new")
+require("./sale_order/form");
+require("./sale_order/new");

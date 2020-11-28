@@ -152,7 +152,7 @@ $(document).on("turbolinks:load", function () {
     });
 //为供应商设置初始的对账金额
     $("#change_purchase_supplier_check_money_time_tour").on("click", function () {
-        Cookies.set("change_purchase_supplier_check_money_time_tour", true, {path: '/'});
+        Cookies.set("change_purchase_supplier_check_money_time_tour_index", true, {path: '/'});
         var intro = introJs();
         intro.setOptions({
             steps: [{
@@ -165,17 +165,17 @@ $(document).on("turbolinks:load", function () {
         });
     });
 //导出供应商的对账单
-    $("#export_purchase_supplier_tour").on("click", function () {
-        Cookies.set("export_purchase_supplier_tour", true, {path: '/'});
+    $("#export_sale_customer_tour").on("click", function () {
+        Cookies.set("export_sale_customer_tour_index", true, {path: '/'});
         var intro = introJs();
         intro.setOptions({
             steps: [{
-                intro: "需要对账了？只用一个按键就能导出特定格式的对账单了，导出客户的对账单也是同样操作",
+                intro: "需要对账了？只用一个按键就能导出特定格式的对账单了",
             }],
             exitOnOverlayClick: false,
         });
         intro.setOption('doneLabel', '跳转到页面').start().oncomplete(function () {
-            window.location.href = "/purchase_suppliers"
+            window.location.href = "/sale_customers"
         });
     });
 })

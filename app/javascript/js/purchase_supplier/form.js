@@ -11,7 +11,7 @@ $(document).on("turbolinks:load", function () {
         $("#purchase_supplier_check_money_time").val(str_now_time());
     })
 
-    if (Cookies.get("change_purchase_supplier_check_money_time_tour")) {
+    if (Cookies.get("change_purchase_supplier_check_money_time_tour_edit")) {
         var intro = introJs();
         intro.setOptions({
             skipLabel: "暂时跳过",
@@ -34,8 +34,11 @@ $(document).on("turbolinks:load", function () {
                 intro: "以上通过设置清算金额和清算时间，将以前的订单忽略了，后续与供应商的对账就从这个金额和时间段开始计算。客户的清算金额也是如此设置"
             }],
         });
+        intro.onexit(function () {
+            Cookies.remove("change_purchase_supplier_check_money_time_tour_edit");
+        });
         intro.start().oncomplete(function () {
-            Cookies.remove("change_purchase_supplier_check_money_time_tour");
+            Cookies.remove("change_purchase_supplier_check_money_time_tour_edit");
         });
     }
 

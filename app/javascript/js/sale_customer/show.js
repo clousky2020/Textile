@@ -1,5 +1,5 @@
 $(document).on("turbolinks:load", function () {
-    if (Cookies.get("change_purchase_supplier_check_money_time_tour_index")) {
+    if (Cookies.get("export_sale_customer_tour_show")) {
         var intro = introJs();
         intro.setOptions({
             skipLabel: "暂时跳过",
@@ -10,16 +10,16 @@ $(document).on("turbolinks:load", function () {
         });
         intro.setOptions({
             steps: [{
-                intro: "选择一个供应商进入",
+                element: ".export",
+                intro: "这里可以按照特定格式导出该供应商目前为止所有的交易往来，列表是按照订单、付款单的格式排列的。供应商对账单导出也是相同的操作",
             }],
         });
         intro.onexit(function () {
-            Cookies.remove("change_purchase_supplier_check_money_time_tour_index");
+            Cookies.remove("export_sale_customer_tour_show");
         });
         intro.start().oncomplete(function () {
-            Cookies.remove('change_purchase_supplier_check_money_time_tour_index');
-            Cookies.set("change_purchase_supplier_check_money_time_tour_show", true, {path: '/'});
+            Cookies.remove('export_sale_customer_tour_show');
         });
-
     }
+
 })

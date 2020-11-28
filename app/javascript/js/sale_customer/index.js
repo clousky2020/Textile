@@ -1,5 +1,5 @@
 $(document).on("turbolinks:load", function () {
-    if (Cookies.get("change_purchase_supplier_check_money_time_tour_index")) {
+    if (Cookies.get("export_sale_customer_tour_index")) {
         var intro = introJs();
         intro.setOptions({
             skipLabel: "暂时跳过",
@@ -10,16 +10,15 @@ $(document).on("turbolinks:load", function () {
         });
         intro.setOptions({
             steps: [{
-                intro: "选择一个供应商进入",
+                intro: "选择一个客户进入",
             }],
         });
         intro.onexit(function () {
-            Cookies.remove("change_purchase_supplier_check_money_time_tour_index");
+            Cookies.remove("export_sale_customer_tour_index");
         });
         intro.start().oncomplete(function () {
-            Cookies.remove('change_purchase_supplier_check_money_time_tour_index');
-            Cookies.set("change_purchase_supplier_check_money_time_tour_show", true, {path: '/'});
+            Cookies.remove('export_sale_customer_tour_index');
+            Cookies.set("export_sale_customer_tour_show", true, {path: '/'});
         });
-
     }
 })
