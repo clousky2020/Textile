@@ -73,7 +73,6 @@ $(document).on("turbolinks:load", function () {
         }
     }
 
-
 //以下是选择的流程引导
 
 //付款单的新手引导
@@ -103,7 +102,7 @@ $(document).on("turbolinks:load", function () {
             exitOnOverlayClick: false,
         });
         intro.setOption('doneLabel', '跳转到页面').start().oncomplete(function () {
-            window.location.href = "/proceed/new"
+            window.location.href = "/proceeds/new"
         });
     });
 //采购单的新手引导
@@ -118,7 +117,7 @@ $(document).on("turbolinks:load", function () {
             exitOnOverlayClick: false,
         });
         intro.setOption('doneLabel', '跳转到页面').start().oncomplete(function () {
-            window.location.href = "/purchase_order/new"
+            window.location.href = "/purchase_orders/new"
         });
     });
 //销售单的新手引导
@@ -162,7 +161,7 @@ $(document).on("turbolinks:load", function () {
             exitOnOverlayClick: false,
         });
         intro.setOption('doneLabel', '跳转到页面').start().oncomplete(function () {
-            window.location.href = "/purchase_supplier"
+            window.location.href = "/purchase_suppliers"
         });
     });
 //导出供应商的对账单
@@ -176,7 +175,7 @@ $(document).on("turbolinks:load", function () {
             exitOnOverlayClick: false,
         });
         intro.setOption('doneLabel', '跳转到页面').start().oncomplete(function () {
-            window.location.href = "/purchase_supplier"
+            window.location.href = "/purchase_suppliers"
         });
     });
 })
