@@ -67,7 +67,7 @@ class ExpensesController < ApplicationController
     store_referrer_location
     if @expense.check_status
       @expense.order_declare_invalid(current_user)
-      @expense.calcu_to_purchase_supplier
+      @expense.calcu_to_purchase_supplier if @expenses.purchase_suppliers
       flash[:success] = "付款单#{@expense.order_id}已作废"
     else
       @expense.delete
@@ -79,7 +79,7 @@ class ExpensesController < ApplicationController
   def pass_check
     if !@expense.is_invalid
       @expense.pass_check_result(current_user)
-      @expense.calcu_to_purchase_supplier
+      @expense.calcu_to_purchase_supplier if @expense.purchase_suppliers
       flash[:success] = "#{@expense.counterparty}的付款单已审核"
       if Setting.setting_status("连续审核") && next_order = Expense.find_by(check_status: false)
         redirect_to expense_path(next_order)
