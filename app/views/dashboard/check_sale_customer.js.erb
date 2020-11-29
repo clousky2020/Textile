@@ -15,8 +15,31 @@ var myChart = new Chart(ctx, {
                 data: <%= raw @sale_orders.values %>,
                 borderColor: 'blue',
                 borderWidth: 1,
+                fill: false
             }
         ]
+    }
+});
+<%else %>
+head.append("<p>该时间段内没有找到符合要求的数据</p>");
+<%end %>
+<%unless @proceeds.blank? %>
+head.append("<canvas id=\"check_sale_customer_chart2\"></canvas>\n")
+var ctx = $('#check_sale_customer_chart2');
+var myChart = new Chart(ctx, {
+    type: "line",
+    data: {
+        labels: <%= raw @proceeds.keys  %>,
+        datasets: [
+            {
+                label: '收款金额曲线',
+                data: <%= raw @proceeds.values %>,
+                borderColor: 'green',
+                borderWidth: 1,
+                fill: false
+            }
+        ]
+
     }
 });
 <%else %>

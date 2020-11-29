@@ -13,8 +13,31 @@ var myChart = new Chart(ctx, {
             {
                 label: '采购金额曲线',
                 data: <%= raw @purchase_orders.values %>,
-                borderColor: 'blue',
+                borderColor: 'black',
                 borderWidth: 1,
+                fill: false
+            }
+        ]
+    }
+});
+<%else %>
+head.append("<p>该时间段内没有找到符合要求的数据</p>");
+<%end %>
+
+<%unless @expenses.blank? %>
+head.append("<canvas id=\"check_purchase_supplier_chart2\"></canvas>\n")
+var ctx = $('#check_purchase_supplier_chart2');
+var myChart = new Chart(ctx, {
+    type: "line",
+    data: {
+        labels: <%= raw @expenses.keys  %>,
+        datasets: [
+            {
+                label: '付款金额曲线',
+                data: <%= raw @expenses.values %>,
+                borderColor: 'red',
+                borderWidth: 1,
+                fill: false
             }
         ]
     }
