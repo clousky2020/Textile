@@ -32,6 +32,7 @@
 
 主要使用的就以上这些了，剩下的就是各种单据的CRUD，计算逻辑。
 
+[没人看的开发日志](http://clousky.club/articles/18)
 
 #启动体验一下
 可以直接上网站demo——[clousky.ltd](http://www.clousky.ltd/)
