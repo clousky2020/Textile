@@ -38,7 +38,7 @@ var myChart = new Chart(ctx, {
     }
 });
 <%else %>
-head.append("<p>好像没有找到符合要求的数据</p>");
+head.append("<p>该时间段内没有找到符合要求的数据</p>");
 <%end %>
 
 <%unless @purchase_orders.blank? %>

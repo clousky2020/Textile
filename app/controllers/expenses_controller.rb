@@ -67,7 +67,7 @@ class ExpensesController < ApplicationController
     store_referrer_location
     if @expense.check_status
       @expense.order_declare_invalid(current_user)
-      @expense.calcu_to_purchase_supplier if @expenses.purchase_suppliers
+      @expense.calcu_to_purchase_supplier if @expense.purchase_suppliers
       flash[:success] = "付款单#{@expense.order_id}已作废"
     else
       @expense.delete
