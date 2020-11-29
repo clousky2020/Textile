@@ -36,11 +36,13 @@ class DashboardController < ApplicationController
   def check_purchase_supplier
     purchase_supplier = PurchaseSupplier.find(params[:purchase_supplier_id].to_i)
     @purchase_orders = purchase_supplier.check_broken_line(params[:start_date], params[:end_date])
+    @expenses = purchase_supplier.check_expenses(params[:start_date], params[:end_date])
   end
 
   def check_sale_customer
     sale_customer = SaleCustomer.find(params[:sale_customer_id].to_i)
     @sale_orders = sale_customer.check_broken_line(params[:start_date], params[:end_date])
+    @proceeds = sale_customer.check_proceed(params[:start_date], params[:end_date])
   end
 
   # 删除所有该用户的新手引导记录

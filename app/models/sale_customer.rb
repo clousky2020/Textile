@@ -67,8 +67,30 @@ class SaleCustomer < ApplicationRecord
     orders = self.sale_orders.where(bill_time: start_date..end_date, is_invalid: false, check_status: true)
     h = Hash.new
     orders.select(:bill_time, :total_price).each do |order|
-      h.store(order.bill_time.strftime("%Y-%m-%d"), order.total_price)
+      order_time = order.bill_time.strftime("%Y-%m-%d")
+      if h.has_key? order_time
+        h[order_time] += order.total_price
+      else
+        h.store(order_time, order.total_price)
+      end
     end
     h
   end
+
+  # 获取客户的已收金额数据，做曲线显示
+  def check_proceed(start_date, end_date)
+    orders = self.proceeds.where(bill_time: start_date..end_date, is_invalid: false, check_status: true)
+    h = Hash.new
+    orders.select(:bill_time, :paper_amount).each do |order|
+      order_time = order.bill_time.strftime("%Y-%m-%d")
+      if h.has_key? order_time
+        h[order_time] += order.paper_amount
+      else
+        h.store(order_time, order.paper_amount)
+      end
+    end
+    h
+  end
+
+
 end
