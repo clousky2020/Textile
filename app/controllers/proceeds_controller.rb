@@ -5,10 +5,10 @@ class ProceedsController < ApplicationController
     if params.has_key?(:search) && params.has_key?(:type)
       type = params[:type].split(":")
       @proceeds = Proceed.includes(:sale_customer).sale_customer_search(params[:search]).where("#{type[0]}=?", type[1]).
-          references(:sale_customers).order(params[:order]).page(params[:page])
+          references(:sale_customer).order(params[:order]).page(params[:page])
     elsif params.has_key?(:type) && params[:type] != ""
       type = params[:type].split(":")
-      @proceeds = Proceed.includes(:sale_customers).where("#{type[0]}=?", type[1]).references(:sale_customers).page(params[:page])
+      @proceeds = Proceed.includes(:sale_customer).where("#{type[0]}=?", type[1]).references(:sale_customer).page(params[:page])
     elsif params.has_key?(:search) && params[:search] != ""
       @proceeds = Proceed.includes(:sale_customers).sale_customer_search(params[:search]).references(:sale_customers).page(params[:page])
     else
