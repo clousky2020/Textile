@@ -7,5 +7,6 @@ FactoryBot.define do
     tax_rate {rand() / 100}
     measuring_unit {"匹"}
     bill_time {rand(1..99).day.ago}
+    association :product
   end
 end
