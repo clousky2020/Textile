@@ -31,8 +31,8 @@ module Textile
     # the framework and any gems in your application.
     # config.active_model.i18n_customize_full_message = true
     # Don't generate system test files.
-    config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    config.i18n.default_locale = :zh_CN
+    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
+    # config.i18n.default_locale = :zh_CN
     config.generators.system_tests = nil
     config.generators do |g|
       g.test_framework :rspec,
