@@ -67,7 +67,7 @@ class SaleCustomersController < ApplicationController
   def export
     @sale_customer = SaleCustomer.find(params[:id])
     # 获取该客户下的所有已经审核的订单
-    @sale_orders = SaleOrder.includes(:products).where(sale_customer_id: params[:id]).where(check_status: true)
+    @sale_orders = SaleOrder.includes(:product).where(sale_customer_id: params[:id]).where(check_status: true)
     if @sale_customer.check_money_time
       # 获取在清算日期后的订单
       @sale_orders = @sale_orders.where("bill_time >=?", @sale_customer.check_money_time)
