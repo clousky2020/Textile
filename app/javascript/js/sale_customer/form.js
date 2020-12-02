@@ -10,6 +10,4 @@ $(document).on("turbolinks:load", function () {
     $("#sale_customer_check_money").on("change", function () {
         $("#sale_customer_check_money_time").val(str_now_time());
     })
-
-
 })

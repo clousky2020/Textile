@@ -46,21 +46,18 @@ $(document).on("turbolinks:load", function () {
             doneLabel: '完成',
             exitOnOverlayClick: false
         });
-
-        intro.start();
         //主动退出的话，在cookie中记录一下，本次访问不弹出引导了
-        intro.onbeforeexit(function () {
+        intro.onexit(function () {
             Cookies.set(title, true, {path: '/'})
         });
-        intro.oncomplete(function () {
+        intro.start().oncomplete(function () {
             Cookies.remove(title);
             $.post('/introjs', data)
         });
     }
 
 //只有在首页的时候，检查是不是需要新手引导
-    var now_href = window.location.pathname;
-    if (now_href == "/") {
+    if (window.location.pathname == "/") {
         //检查cookies中是否经历过新手引导了
         var value = Cookies.get(title);
         if (!value) {
@@ -152,7 +149,7 @@ $(document).on("turbolinks:load", function () {
     });
 //为供应商设置初始的对账金额
     $("#change_purchase_supplier_check_money_time_tour").on("click", function () {
-        Cookies.set("change_purchase_supplier_check_money_time_tour_index", true, {path: '/'});
+        Cookies.set("change_purchase_supplier_check_money_time_tour", true, {path: '/'});
         var intro = introJs();
         intro.setOptions({
             steps: [{
@@ -166,7 +163,7 @@ $(document).on("turbolinks:load", function () {
     });
 //导出供应商的对账单
     $("#export_sale_customer_tour").on("click", function () {
-        Cookies.set("export_sale_customer_tour_index", true, {path: '/'});
+        Cookies.set("export_sale_customer_tour", true, {path: '/'});
         var intro = introJs();
         intro.setOptions({
             steps: [{

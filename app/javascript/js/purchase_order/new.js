@@ -1,8 +1,8 @@
 $(document).on("turbolinks:load", function () {
-    if (Cookies.get("purchase_order_tour")) {
+    if (Cookies.get("purchase_order_tour" && window.location.pathname == '/purchase_orders/new')) {
         var intro = introJs();
         intro.setOptions({
-            skipLabel: "暂时跳过",
+            skipLabel: "跳过",
             nextLabel: '下一步',
             prevLabel: '上一步',
             doneLabel: '完成',

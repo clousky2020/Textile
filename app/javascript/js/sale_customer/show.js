@@ -1,8 +1,8 @@
 $(document).on("turbolinks:load", function () {
-    if (Cookies.get("export_sale_customer_tour_show")) {
+    if (Cookies.get("export_sale_customer_tour") && window.location.pathname.match('/sale_customers/\\d+$')) {
         var intro = introJs();
         intro.setOptions({
-            skipLabel: "暂时跳过",
+            skipLabel: "跳过",
             nextLabel: '下一步',
             prevLabel: '上一步',
             doneLabel: '完成',
@@ -15,11 +15,10 @@ $(document).on("turbolinks:load", function () {
             }],
         });
         intro.onexit(function () {
-            Cookies.remove("export_sale_customer_tour_show");
+            Cookies.remove("export_sale_customer_tour");
         });
         intro.start().oncomplete(function () {
-            Cookies.remove('export_sale_customer_tour_show');
+            Cookies.remove('export_sale_customer_tour');
         });
     }
-
 })
