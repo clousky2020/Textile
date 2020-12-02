@@ -1,5 +1,5 @@
 $(document).on("turbolinks:load", function () {
-    if (Cookies.get("proceed_tour"&&window.location.pathname=='/proceeds/new')) {
+    if (Cookies.get("proceed_tour") && window.location.pathname == '/proceeds/new') {
         var intro = introJs();
         intro.setOptions({
             skipLabel: "跳过",
@@ -8,7 +8,7 @@ $(document).on("turbolinks:load", function () {
             doneLabel: '完成',
             exitOnOverlayClick: false,
         });
-        intro.onexit(function () {
+        intro.exit(function () {
             Cookies.remove("proceed_tour");
         });
         intro.start().oncomplete(function () {

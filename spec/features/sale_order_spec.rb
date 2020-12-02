@@ -32,7 +32,7 @@ describe "sale_orders" do
       sale_order = SaleOrder.last
       #   查看是否有一张付款单
       visit expenses_path
-      if el = find("a", text: "暂时跳过")
+      if el = find("a", text: "跳过")
         el.click
       end
       expect(page).to have_content("销售单#{sale_order.order_id}")
@@ -64,7 +64,7 @@ describe "sale_orders" do
       expect(page).to have_content(product.specification)
       #   查看是否有一张付款单，应该有
       visit expenses_path
-      if el = find("a", text: "暂时跳过")
+      if el = find("a", text: "跳过")
         el.click
       end
       expect(page).to have_content("销售单#{order_id}")
@@ -89,7 +89,7 @@ describe "sale_orders" do
       expect(page).to have_content(product.specification)
       #   查看是否有一张付款单,不用我方付运费，应该没有
       visit expenses_path
-      if el = find("a", text: "暂时跳过")
+      if el = find("a", text: "跳过")
         el.click
       end
       expect(page).not_to have_content("销售单#{sale_order.order_id}")

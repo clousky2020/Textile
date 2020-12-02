@@ -1,5 +1,5 @@
 $(document).on("turbolinks:load", function () {
-    if (Cookies.get("purchase_order_tour" && window.location.pathname == '/purchase_orders/new')) {
+    if (Cookies.get("purchase_order_tour") && window.location.pathname == '/purchase_orders/new') {
         var intro = introJs();
         intro.setOptions({
             skipLabel: "跳过",
