@@ -10,22 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_15_054109) do
+ActiveRecord::Schema.define(version: 2020_12_03_110930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "abraham_histories", id: :serial, force: :cascade do |t|
-    t.string "controller_name"
-    t.string "action_name"
-    t.string "tour_name"
-    t.integer "creator_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["created_at"], name: "index_abraham_histories_on_created_at"
-    t.index ["creator_id"], name: "index_abraham_histories_on_creator_id"
-    t.index ["updated_at"], name: "index_abraham_histories_on_updated_at"
-  end
 
   create_table "change_machines", force: :cascade do |t|
     t.string "change_person"
@@ -62,7 +50,7 @@ ActiveRecord::Schema.define(version: 2020_11_15_054109) do
     t.string "phone"
     t.string "bank_card"
     t.string "id_number"
-    t.string "work_status"
+    t.boolean "status", default: false
     t.date "entry_date"
     t.date "daparture_date"
     t.date "birthday"
@@ -107,6 +95,27 @@ ActiveRecord::Schema.define(version: 2020_11_15_054109) do
     t.index ["purchase_supplier_id"], name: "index_expenses_purchase_suppliers_on_purchase_supplier_id"
   end
 
+  create_table "intro_histories", id: :serial, force: :cascade do |t|
+    t.string "controller_name"
+    t.string "action_name"
+    t.string "tour_name"
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_intro_histories_on_created_at"
+    t.index ["updated_at"], name: "index_intro_histories_on_updated_at"
+    t.index ["user_id"], name: "index_intro_histories_on_user_id"
+  end
+
+  create_table "machines", force: :cascade do |t|
+    t.string "specification"
+    t.string "remark"
+    t.string "company"
+    t.integer "machine_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "materials", force: :cascade do |t|
     t.string "name"
     t.string "specification"
@@ -122,13 +131,16 @@ ActiveRecord::Schema.define(version: 2020_11_15_054109) do
     t.index ["purchase_supplier_id"], name: "index_materials_on_purchase_supplier_id"
   end
 
-  create_table "params", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.boolean "status", default: true
-    t.string "type"
+  create_table "outputs", force: :cascade do |t|
+    t.bigint "product_id"
+    t.date "output_date"
+    t.bigint "machine_id"
+    t.integer "work_id"
+    t.decimal "weight", precision: 3, scale: 1
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["machine_id"], name: "index_outputs_on_machine_id"
+    t.index ["product_id"], name: "index_outputs_on_product_id"
   end
 
   create_table "proceeds", force: :cascade do |t|
@@ -163,6 +175,8 @@ ActiveRecord::Schema.define(version: 2020_11_15_054109) do
     t.string "specification"
     t.string "measuring_unit"
     t.integer "turns_number"
+    t.integer "production_num", default: 0
+    t.integer "sale_num", default: 0
     t.decimal "labor_cost", precision: 8, scale: 2, default: "0.0"
     t.decimal "preset_price", precision: 8, scale: 2, default: "0.0"
     t.string "remarks"
@@ -179,14 +193,15 @@ ActiveRecord::Schema.define(version: 2020_11_15_054109) do
     t.bigint "material_id"
     t.bigint "repo_id"
     t.bigint "user_id"
-    t.integer "number"
+    t.integer "number", default: 0
     t.string "measuring_unit"
-    t.decimal "weight", precision: 8, scale: 2, default: "0.0"
-    t.decimal "price", precision: 8, scale: 2, default: "0.0"
+    t.decimal "weight", precision: 10, scale: 2, default: "0.0"
+    t.decimal "price", precision: 10, scale: 2, default: "0.0"
     t.decimal "tax_rate", precision: 4, scale: 3, default: "0.0"
-    t.decimal "total_price", default: "0.0"
+    t.decimal "total_price", precision: 10, scale: 2, default: "0.0"
     t.integer "deposit", default: 0
     t.integer "freight", default: 0
+    t.boolean "our_freight", default: false
     t.string "picture"
     t.string "create_person"
     t.string "check_person"
@@ -212,12 +227,12 @@ ActiveRecord::Schema.define(version: 2020_11_15_054109) do
     t.string "phone"
     t.string "address"
     t.string "description"
-    t.string "status"
     t.decimal "check_money", precision: 10, scale: 2
     t.datetime "check_money_time"
-    t.decimal "total_payment_required", precision: 10, scale: 2
-    t.decimal "paid", precision: 10, scale: 2
-    t.decimal "unpaid", precision: 10, scale: 2
+    t.decimal "total_payment_required", precision: 10, scale: 2, default: "0.0"
+    t.decimal "paid", precision: 10, scale: 2, default: "0.0"
+    t.decimal "unpaid", precision: 10, scale: 2, default: "0.0"
+    t.decimal "total_deposit", precision: 10, scale: 2, default: "0.0"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -244,11 +259,11 @@ ActiveRecord::Schema.define(version: 2020_11_15_054109) do
 
   create_table "roles", force: :cascade do |t|
     t.string "name", null: false
+    t.text "description"
     t.text "permissions"
     t.string "type", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "description"
   end
 
   create_table "sale_customers", force: :cascade do |t|
@@ -257,12 +272,11 @@ ActiveRecord::Schema.define(version: 2020_11_15_054109) do
     t.string "phone"
     t.string "address"
     t.string "description"
-    t.string "status"
     t.decimal "check_money", precision: 10, scale: 2
     t.datetime "check_money_time"
-    t.decimal "total_collection_required", precision: 10, scale: 2
-    t.decimal "received", precision: 10, scale: 2
-    t.decimal "uncollected", precision: 10, scale: 2
+    t.decimal "total_collection_required", precision: 10, scale: 2, default: "0.0"
+    t.decimal "received", precision: 10, scale: 2, default: "0.0"
+    t.decimal "uncollected", precision: 10, scale: 2, default: "0.0"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -274,13 +288,14 @@ ActiveRecord::Schema.define(version: 2020_11_15_054109) do
     t.bigint "product_id"
     t.bigint "repo_id"
     t.bigint "user_id"
-    t.integer "number"
+    t.integer "number", default: 0
     t.string "measuring_unit"
-    t.decimal "weight", precision: 8, scale: 2, default: "0.0"
-    t.decimal "price", precision: 8, scale: 2, default: "0.0"
+    t.decimal "weight", precision: 10, scale: 2, default: "0.0"
+    t.decimal "price", precision: 10, scale: 2, default: "0.0"
     t.decimal "tax_rate", precision: 4, scale: 3, default: "0.0"
-    t.decimal "total_price", default: "0.0"
+    t.decimal "total_price", precision: 10, scale: 2, default: "0.0"
     t.integer "freight", default: 0
+    t.boolean "our_freight", default: false
     t.string "picture"
     t.string "create_person"
     t.string "check_person"
@@ -300,16 +315,23 @@ ActiveRecord::Schema.define(version: 2020_11_15_054109) do
     t.index ["user_id"], name: "index_sale_orders_on_user_id"
   end
 
+  create_table "settings", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.boolean "status", default: true
+    t.string "type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "password_digest"
     t.string "email"
-    t.bigint "employee_id"
     t.boolean "is_lock", default: false
     t.datetime "lock_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["employee_id"], name: "index_users_on_employee_id"
   end
 
   add_foreign_key "role_assignments", "roles"

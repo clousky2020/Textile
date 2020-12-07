@@ -12,7 +12,7 @@ class CreateEmployees < ActiveRecord::Migration[6.0]
       t.string :phone
       t.string :bank_card
       t.string :id_number
-      t.string :work_status
+      t.boolean :status, default: false
       t.date :entry_date
       t.date :daparture_date
       t.date :birthday

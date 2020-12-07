@@ -9,6 +9,9 @@ require("./expenses/form");
 require("./expenses/new");
 require("./expenses/index");
 
+require("./output/new");
+require("./output/index");
+
 require("./setting/index");
 
 require("./proceed/form");

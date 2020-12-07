@@ -1,0 +1,48 @@
+<% provide :button_text, "提交" %>
+<% provide :title, "增加产量记录" %>
+<% provide :back_url, outputs_path %>
+
+
+<h2 class="text-center"><%= yield(:title) %></h2>
+<div class="offset-md-1 col-md-10">
+  <div>当前共有<span id="record_num">0</span>条记录</div>
+  <table class="table table-hover table-active">
+    <thead>
+    <tr>
+      <td>日期</td>
+      <td>型号</td>
+      <td>机号</td>
+      <td>工号</td>
+      <td>产量</td>
+    </tr>
+    </thead>
+  </table>
+  <%= form_tag outputs_path do |f| %>
+    <div id="outputs_attributes"></div>
+    <div class="form-group">
+      <%= submit_tag yield(:button_text), class: "btn btn-primary" %>
+      <%= link_to "取消", yield(:back_url), class: "btn btn-default" %>
+    </div>
+  <% end %>
+  <div class="temp">
+    <hr>
+    <div class="input">
+      <%= label_tag "日期" %>
+      <%= date_field_tag 'output_date', default_date_now %>
+      <%= label_tag "型号" %>
+      <%= select_tag "product_specification", options_from_collection_for_select(@product, 'id', 'specification') %>
+    </div>
+    <div class="input">
+      <%= label_tag "机号" %>
+      <%= number_field_tag "machine_id", nil, in:1..27 %>
+      <%= label_tag "工号" %>
+      <%= select_tag "work_id", options_from_collection_for_select(@employee, "work_id", "work_id") %>
+    </div>
+    <div class="input">
+      <%= label_tag "产量(千克)" %>
+      <%= number_field_tag "weight", nil, step: 0.1, in: 1.0..99.9 %>
+    </div>
+    <%= button_tag "添加", id: "add_button", class: "btn btn-primary", data: {disable_with: false} %>
+  </div>
+</div>
+

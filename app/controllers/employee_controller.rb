@@ -1,7 +1,8 @@
 class EmployeeController < ApplicationController
-  # before_action :get_employee, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
-
+  before_action :get_employee, only: [:edit, :update, :destroy]
+  # load_and_authorize_resource
+  authorize_resource
+  skip_authorize_resource :only => :show
 
   def index
     if params.has_key?(:search) && params[:search] != ""
@@ -9,15 +10,21 @@ class EmployeeController < ApplicationController
     elsif params[:order] == "all"
       @employees = Employee.order("work_id").page(params[:page]).per(10)
     else
-      @employees = Employee.where("work_status=?", "在职").order("work_id").page(params[:page]).per(10)
+      @employees = Employee.where(status: true).order("work_id").page(params[:page]).per(10)
     end
   end
 
   def new
     @employee = Employee.new
+    @employees_work_id = Employee.where(status: true).select(:work_id).map(&:work_id)
   end
 
   def show
+    if params.has_key?('output_date')
+      @employee = Employee.find_work_id(params[:output_date], params[:id])
+    else
+      get_employee
+    end
   end
 
   def edit
@@ -58,7 +65,7 @@ class EmployeeController < ApplicationController
 
   def employee_params
     params.require(:employee).permit(:name, :gender, :work_id, :work_type, :basic_wage, :minimun_wage, :house_allowance,
-                                     :other_allowance, :phone, :bank_card, :work_status, :entry_date, :daparture_date,
+                                     :other_allowance, :phone, :bank_card, :status, :entry_date, :daparture_date,
                                      :remarks, :role)
   end
 

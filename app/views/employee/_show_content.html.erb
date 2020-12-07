@@ -1,81 +1,90 @@
 <table class="table">
   <tbody>
-<tr>
-  <th>姓名</th>
-  <td><%= object.name %></td>
-  <th>性别</th>
-  <td><%= object.gender %></td>
-</tr>
-<tr>
-  <th>工号</th>
-  <td><%= object.work_id %></td>
-  <th>工种</th>
-  <td><%= object.work_type %></td>
-</tr>
-<tr>
+  <tr>
+    <th>姓名</th>
+    <td><%= object.name %></td>
+    <th>性别</th>
+    <td><%= object.gender %></td>
+  </tr>
+  <tr>
+    <th>工号</th>
+    <td><%= object.work_id %></td>
+    <th>工种</th>
+    <td><%= object.work_type %></td>
+  </tr>
+
   <% if object.basic_wage != 0 && object.basic_wage != nil %>
-    <th>工资方式</th>
-    <td>计时</td>
-    <th>基本工资</th>
-    <td><%= object.basic_wage %>元/月</td>
+    <tr>
+      <th>工资方式</th>
+      <td>计时</td>
+      <th>基本工资</th>
+      <td><%= object.basic_wage %>元/月</td>
+    </tr>
   <% end %>
   <% if object.minimun_wage != 0 && object.minimun_wage != nil %>
-    <th>工资方式</th>
-    <td>计件</td>
-    <th>保低工资</th>
-    <td><%= object.minimun_wage %>元/月</td>
-  <% end %>
-</tr>
-<tr>
-  <th>房屋补贴</th>
-  <% if object.house_allowance != 0 && object.house_allowance != nil %>
-    <td><%= object.house_allowance %>元/月</td>
-  <% else %>
-    <td>无</td>
-  <% end %>
-  <th>其他补贴</th>
-  <% if object.other_allowance != 0 && object.other_allowance != nil %>
-    <td><%= object.other_allowance %>元/月</td>
-  <% else %>
-    <td>无</td>
+    <tr>
+      <th>工资方式</th>
+      <td>计件</td>
+      <th>保低工资</th>
+      <td><%= object.minimun_wage %>元/月</td>
+    </tr>
   <% end %>
 
-</tr>
-<tr>
-  <th>邮箱</th>
-  <td><%= object.email %></td>
-  <th>住址</th>
-  <td><%= object.address %></td>
-</tr>
-<tr>
-  <th>手机号码</th>
-  <td><%= object.phone %></td>
-  <th>银行卡号</th>
-  <td><%= object.bank_card %></td>
-</tr>
-<tr>
-  <th>身份证号</th>
-  <td><%= object.id_number %></td>
-  <th>生日</th>
-  <td><%= object.birthday %></td>
-</tr>
-<tr>
-  <th>入职日期</th>
-  <td><%= object.entry_date %></td>
-  <th>目前状态</th>
-  <td><%= object.work_status %></td>
-</tr>
-
-<% if object.daparture_date != nil %>
   <tr>
-    <th>离职日期</th>
-    <td><%= object.daparture_date %></td>
-  </tr>
-<% end %>
+    <th>房屋补贴</th>
+    <% if object.house_allowance != 0 && object.house_allowance != nil %>
+      <td><%= object.house_allowance %>元/月</td>
+    <% else %>
+      <td>无</td>
+    <% end %>
+    <th>其他补贴</th>
+    <% if object.other_allowance != 0 && object.other_allowance != nil %>
+      <td><%= object.other_allowance %>元/月</td>
+    <% else %>
+      <td>无</td>
+    <% end %>
 
-<tr>
-  <th>备注</th>
-  <td colspan="5"><%= object.remarks %></td>
-</tr>
+  </tr>
+  <tr>
+    <th>邮箱</th>
+    <td><%= object.email %></td>
+    <th>住址</th>
+    <td><%= object.address %></td>
+  </tr>
+  <tr>
+    <th>手机号码</th>
+    <td><%= object.phone %></td>
+    <th>银行卡号</th>
+    <td><%= object.bank_card %></td>
+  </tr>
+  <tr>
+    <th>身份证号</th>
+    <td><%= object.id_number %></td>
+    <th>生日</th>
+    <td><%= object.birthday %></td>
+  </tr>
+  <tr>
+    <th>入职日期</th>
+    <td><%= object.entry_date %></td>
+
+    <th>目前状态</th>
+    <% if object.status %>
+      <td>在职</td>
+    <% else %>
+      <td>离职</td>
+    <% end %>
+  </tr>
+
+  <% if object.daparture_date != nil %>
+    <tr>
+      <th>离职日期</th>
+      <td><%= object.daparture_date %></td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <th>备注</th>
+    <td colspan="5"><%= object.remarks %></td>
+  </tr>
   </tbody>
 </table>

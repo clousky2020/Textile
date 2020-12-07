@@ -8,9 +8,9 @@
       <%= render 'purchase_suppliers/form_content', f: f, type_2: type_2, object: object %>
     <% elsif type == "proceed" %>
       <%= render 'proceeds/form_content', f: f, type_2: type_2, object: object %>
-  <% elsif type == "expense" %>
+    <% elsif type == "expense" %>
       <%= render 'expenses/form_content', f: f, type_2: type_2, object: object %>
-   <% elsif type == "user" %>
+    <% elsif type == "user" %>
       <%= render 'users/form_content', f: f, type_2: type_2, object: object %>
     <% elsif type == "repo" %>
       <%= render 'repos/form_content', f: f, type_2: type_2, object: object %>

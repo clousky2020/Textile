@@ -65,7 +65,7 @@ describe "product" do
       end
       product = products[0]
       el = find("td") {|el| el.text == product.specification}
-      delete_link = el.find(:xpath, "./../td[4]/a")
+      delete_link = el.find(:xpath, "./../td[5]/a")
       delete_link.click
       expect(page).not_to have_content(product.name)
       expect(page).not_to have_content(product.specification)

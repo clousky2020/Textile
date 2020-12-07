@@ -10,6 +10,11 @@ Rails.application.routes.draw do
 
   resources :sessions, :only => [:new, :create, :destroy]
   resources :settings, only: [:index, :update]
+  resources :outputs do
+    collection do
+      post :delete_list
+    end
+  end
   resources :introjs, only: [:create, :destroy] do
     collection do
       post :find_attribute

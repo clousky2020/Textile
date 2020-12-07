@@ -17,6 +17,7 @@
     <td>ID</td>
     <td>名称</td>
     <td>型号</td>
+    <td>剩余量</td>
     <% if can? :destroy, Product %>
       <td>删除</td>
     <% end %>
@@ -28,6 +29,7 @@
       <td><%= product.id %></td>
       <td><%= link_to product.name, product_path(product) %></td>
       <td><%= product.specification %></td>
+      <td><%= product.production_num - product.sale_num %></td>
       <% if can? :destroy, Product %>
         <td>
           <%= link_to "删除", product_path(product), method: :delete, data: {confirm: "确定删除吗？"} %>

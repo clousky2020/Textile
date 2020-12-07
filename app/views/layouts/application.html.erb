@@ -14,7 +14,7 @@
 <%= render 'layouts/head' %>
 <%= render "shard/flashes" %>
 
-<div class="container">
+<div class="container-fluid">
   <%= yield %>
   <%= debug(params) if Rails.env.development? %>
 </div>

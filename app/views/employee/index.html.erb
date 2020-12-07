@@ -33,7 +33,11 @@
       <td><%= link_to user.name, employee_path(user) %></td>
       <td><%= user.gender %></td>
       <td><%= user.work_type %></td>
-      <td><%= user.work_status %></td>
+      <%if user.status  %>
+      <td>在职</td>
+        <%else %>
+        <td>离职</td>
+        <%end %>
       <% if can? :destroy, Employee %>
         <td><%= link_to "删除", employee_path(user), method: :delete, data: {confirm: "确定删除？"} %></td>
       <% end %>
