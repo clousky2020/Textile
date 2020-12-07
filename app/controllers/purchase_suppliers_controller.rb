@@ -19,6 +19,8 @@ class PurchaseSuppliersController < ApplicationController
   end
 
   def show
+    @purchase_orders = @supplier.purchase_orders.where(is_invalid: false).count
+    @expenses = @supplier.expenses.where(is_invalid: false).count
   end
 
   def create
@@ -99,7 +101,7 @@ class PurchaseSuppliersController < ApplicationController
 
   def purchase_supplier_params
     params.require(:purchase_supplier).permit(:name, :contacts, :phone, :address, :description, :status,
-                                               :check_money, :check_money_time)
+                                              :check_money, :check_money_time)
   end
 
 end

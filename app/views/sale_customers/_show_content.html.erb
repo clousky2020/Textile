@@ -45,11 +45,11 @@
   <% end %>
   <tr>
     <th>已有订单数</th>
-    <td><%= link_to object.sale_orders.where(is_invalid: false).count, sale_orders_path(:search => "#{object.name}") %></td>
+    <td><%= link_to @sale_orders, sale_orders_path(:search => "#{object.name}") %></td>
   </tr>
   <tr>
     <th>已有收款单数</th>
-    <td><%= link_to object.proceeds.where(is_invalid: false).count, proceeds_path(:search => "#{object.name}") %></td>
+    <td><%= link_to @proceeds, proceeds_path(:search => "#{object.name}") %></td>
   </tr>
   </tbody>
 </table>

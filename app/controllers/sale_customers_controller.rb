@@ -20,7 +20,8 @@ class SaleCustomersController < ApplicationController
   end
 
   def show
-    # @customer.calcu_list
+    @sale_orders = @customer.sale_orders.where(is_invalid: false).count
+    @proceeds = @customer.proceeds.where(is_invalid: false).count
   end
 
   def create
