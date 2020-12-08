@@ -88,48 +88,32 @@ if File.exist?("初始资料.xlsm")
   end
 
   creek.sheets.each do |sheet|
-    if sheet.name == '原始产量'
-      p '导入原始产量'
+    if sheet.name == '交易单'
+      p '导入采购单'
       sheet.rows_with_meta_data.each do |row|
         n = row['r']
         if n != "1"
           cells = row['cells']
-          if cells["E#{n}"].to_f < 99.9
-            product = Product.find_by(specification: cells["B#{n}"])
-            Output.create(output_date: cells["A#{n}"], product_id: product.id, machine_id: cells["C#{n}"],
-                           work_id: cells["D#{n}"], weight: cells["E#{n}"])
-
+          #记录供应商名字
+          purchase_supplier = PurchaseSupplier.find_or_create_by(name: cells["E#{n}"])
+          if !cells["B#{n}"].blank? && !cells["C#{n}"].blank?
+            #创建原材料目录
+            material = Material.find_or_create_by(name: cells["B#{n}"], specification: cells["C#{n}"],
+                                                  purchase_supplier: purchase_supplier, measuring_unit: "包/箱")
+            if material
+              user = User.find(rand(1..3))
+              repo = Repo.first
+              #导入以前的交易单
+              PurchaseOrder.find_or_create_by(batch_number: cells["D#{n}"], weight: cells["F#{n}"], number: cells["G#{n}"],
+                                              measuring_unit: "包/箱", repo_id: repo.id, user_id: user.id,
+                                              tax_rate: cells["J#{n}"] || 0, deposit: cells["L#{n}"], freight: cells["M#{n}"],
+                                              description: cells["N#{n}"], bill_time: cells["A#{n}"], price: cells["I#{n}"],
+                                              material_id: material.id, purchase_supplier_id: purchase_supplier.id,)
+            end
           end
         end
       end
     end
-
-    # if sheet.name == '交易单'
-    #   p '导入采购单'
-    #   sheet.rows_with_meta_data.each do |row|
-    #     n = row['r']
-    #     if n != "1"
-    #       cells = row['cells']
-    #       #记录供应商名字
-    #       purchase_supplier = PurchaseSupplier.find_or_create_by(name: cells["E#{n}"])
-    #       if !cells["B#{n}"].blank? && !cells["C#{n}"].blank?
-    #         #创建原材料目录
-    #         material = Material.find_or_create_by(name: cells["B#{n}"], specification: cells["C#{n}"],
-    #                                               purchase_supplier: purchase_supplier, measuring_unit: "包/箱")
-    #         if material
-    #           user = User.find(rand(1..3))
-    #           repo = Repo.first
-    #           #导入以前的交易单
-    #           PurchaseOrder.find_or_create_by(batch_number: cells["D#{n}"], weight: cells["F#{n}"], number: cells["G#{n}"],
-    #                                           measuring_unit: "包/箱", repo_id: repo.id, user_id: user.id,
-    #                                           tax_rate: cells["J#{n}"] || 0, deposit: cells["L#{n}"], freight: cells["M#{n}"],
-    #                                           description: cells["N#{n}"], bill_time: cells["A#{n}"], price: cells["I#{n}"],
-    #                                           material_id: material.id, purchase_supplier_id: purchase_supplier.id,)
-    #         end
-    #       end
-    #     end
-    #   end
-    # end
 
     if sheet.name == '型号转数表设定'
       p '导入型号转数表设定'
@@ -144,90 +128,106 @@ if File.exist?("初始资料.xlsm")
       end
     end
 
-    # if sheet.name == '改机'
-    #   p '导入改机信息'
-    #   sheet.rows_with_meta_data.each do |row|
-    #     n = row['r']
-    #     if n != "1"
-    #       cells = row['cells']
-    #       change_machine = ChangeMachine.new(change_person: cells["D#{n}"], contacts: cells["E#{n}"], price: cells["C#{n}"],
-    #                                          machine_id: cells["B#{n}"], machine_type: cells["F#{n}"], remark: cells["H#{n}"],
-    #                                          change_date: cells["A#{n}"], change_to_specification: cells["G#{n}"])
-    #       if cells["I#{n}"] == "已结清"
-    #         change_machine.is_settle = true
-    #       end
-    #       change_machine.save
-    #     end
-    #   end
-    # end
+    if sheet.name == '改机'
+      p '导入改机信息'
+      sheet.rows_with_meta_data.each do |row|
+        n = row['r']
+        if n != "1"
+          cells = row['cells']
+          change_machine = ChangeMachine.new(change_person: cells["D#{n}"], contacts: cells["E#{n}"], price: cells["C#{n}"],
+                                             machine_id: cells["B#{n}"], machine_type: cells["F#{n}"], remark: cells["H#{n}"],
+                                             change_date: cells["A#{n}"], change_to_specification: cells["G#{n}"])
+          if cells["I#{n}"] == "已结清"
+            change_machine.is_settle = true
+          end
+          change_machine.save
+        end
+      end
+    end
 
-    # if sheet.name == '出货'
-    #   p '导入出货'
-    #   sheet.rows_with_meta_data.each do |row|
-    #     n = row['r']
-    #     if n != "1"
-    #       user = User.find(rand(1..3))
-    #       repo = Repo.first
-    #       cells = row['cells']
-    #       # 创建客户名称
-    #       sale_customer = SaleCustomer.find_or_create_by(name: cells["C#{n}"])
-    #       #创建产品目录
-    #       product = Product.find_or_create_by(name: cells["B#{n}"], specification: cells["D#{n}"], measuring_unit: "匹")
-    #       #导入以前的出货单
-    #       SaleOrder.create(weight: cells["E#{n}"], number: cells["F#{n}"], measuring_unit: "匹", tax_rate: 0, freight: 0,
-    #                        price: cells["G#{n}"], description: cells["N#{n}"], bill_time: cells["A#{n}"],
-    #                        sale_customer_id: sale_customer.id, product_id: product.id, repo_id: repo.id, user_id: user.id)
-    #
-    #
-    #     end
-    #   end
-    # end
+    if sheet.name == '出货'
+      p '导入出货'
+      sheet.rows_with_meta_data.each do |row|
+        n = row['r']
+        if n != "1"
+          user = User.find(rand(1..3))
+          repo = Repo.first
+          cells = row['cells']
+          # 创建客户名称
+          sale_customer = SaleCustomer.find_or_create_by(name: cells["C#{n}"])
+          #创建产品目录
+          product = Product.find_or_create_by(name: cells["B#{n}"], specification: cells["D#{n}"], measuring_unit: "匹")
+          #导入以前的出货单
+          SaleOrder.create(weight: cells["E#{n}"], number: cells["F#{n}"], measuring_unit: "匹", tax_rate: 0, freight: 0,
+                           price: cells["G#{n}"], description: cells["N#{n}"], bill_time: cells["A#{n}"],
+                           sale_customer_id: sale_customer.id, product_id: product.id, repo_id: repo.id, user_id: user.id)
 
-    # if sheet.name == '收入详细'
-    #   p '导入收入详细'
-    #   sheet.rows_with_meta_data.each do |row|
-    #     n = row['r']
-    #     if n != "1" && n != "2"
-    #       user = User.find(rand(1..3))
-    #       cells = row['cells']
-    #       #创建客户目录
-    #       sale_customer = SaleCustomer.find_or_create_by(name: cells["B#{n}"])
-    #       Proceed.find_or_create_by(sale_customer_id: sale_customer.id, user_id: user.id,
-    #                                 paper_amount: cells["C#{n}"], actual_amount: cells["D#{n}"],
-    #                                 remark: cells["E#{n}"], bill_time: cells["A#{n}"])
-    #     end
-    #   end
-    # end
 
-    # if sheet.name == '支出详细'
-    #   p '导入支出详细'
-    #   sheet.rows_with_meta_data.each do |row|
-    #     n = row['r']
-    #     if n != "1" && n != "2" && row['cells']["B#{n}"] != nil
-    #       user = User.find(rand(1..3))
-    #       cells = row['cells']
-    #
-    #       #查询供应商名单
-    #       purchase_supplier = PurchaseSupplier.find_by(name: cells["B#{n}"])
-    #       if purchase_supplier
-    #         type = "货款"
-    #       elsif cells["B#{n}"].include? "工资"
-    #         type = "工资"
-    #       elsif cells["B#{n}"].include? "改机"
-    #         type = "改机"
-    #       else
-    #         type = "日常消耗"
-    #       end
-    #       expose = Expense.find_or_create_by(counterparty: cells["B#{n}"], expense_type: type, user_id: user.id,
-    #                                          paper_amount: cells["C#{n}"], actual_amount: cells["D#{n}"],
-    #                                          account_number: cells["F#{n}"], account_name: cells["E#{n}"],
-    #                                          account_from: cells["G#{n}"], remark: cells["H#{n}"], bill_time: cells["A#{n}"])
-    #       expose.build_purchase_supplier
-    #     end
-    #   end
-    # end
+        end
+      end
+    end
 
+    if sheet.name == '收入详细'
+      p '导入收入详细'
+      sheet.rows_with_meta_data.each do |row|
+        n = row['r']
+        if n != "1" && n != "2"
+          user = User.find(rand(1..3))
+          cells = row['cells']
+          #创建客户目录
+          sale_customer = SaleCustomer.find_or_create_by(name: cells["B#{n}"])
+          Proceed.find_or_create_by(sale_customer_id: sale_customer.id, user_id: user.id,
+                                    paper_amount: cells["C#{n}"], actual_amount: cells["D#{n}"],
+                                    remark: cells["E#{n}"], bill_time: cells["A#{n}"])
+        end
+      end
+    end
+
+    if sheet.name == '支出详细'
+      p '导入支出详细'
+      sheet.rows_with_meta_data.each do |row|
+        n = row['r']
+        if n != "1" && n != "2" && row['cells']["B#{n}"] != nil
+          user = User.find(rand(1..3))
+          cells = row['cells']
+
+          #查询供应商名单
+          purchase_supplier = PurchaseSupplier.find_by(name: cells["B#{n}"])
+          if purchase_supplier
+            type = "货款"
+          elsif cells["B#{n}"].include? "工资"
+            type = "工资"
+          elsif cells["B#{n}"].include? "改机"
+            type = "改机"
+          else
+            type = "日常消耗"
+          end
+          expose = Expense.find_or_create_by(counterparty: cells["B#{n}"], expense_type: type, user_id: user.id,
+                                             paper_amount: cells["C#{n}"], actual_amount: cells["D#{n}"],
+                                             account_number: cells["F#{n}"], account_name: cells["E#{n}"],
+                                             account_from: cells["G#{n}"], remark: cells["H#{n}"], bill_time: cells["A#{n}"])
+          expose.build_purchase_supplier
+        end
+      end
+    end
   end
+  # creek.sheets.each do |sheet|
+  #   if sheet.name == '原始产量'
+  #     p '导入原始产量'
+  #     sheet.rows_with_meta_data.each do |row|
+  #       n = row['r']
+  #       if n != "1"
+  #         cells = row['cells']
+  #         if cells["E#{n}"].to_f < 99.9
+  #           product = Product.find_by(specification: cells["B#{n}"])
+  #           Output.create(output_date: cells["A#{n}"], product_id: product.id, machine_id: cells["C#{n}"],
+  #                         work_id: cells["D#{n}"], weight: cells["E#{n}"])
+  #
+  #         end
+  #       end
+  #     end
+  #   end
+  # end
 else
   p "没有初始资料.xlsm,导入预设的主要测试内容！"
 
