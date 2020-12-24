@@ -45,7 +45,7 @@ gem 'font-awesome-sass', '~> 5.15.1'
 gem 'bootsnap', '>= 1.4.2', require: false
 # 自动部署
 gem 'mina'
-gem 'mina-puma', require: false
+# gem 'mina-puma', require: false
 gem 'mina-systemd', require: false
 
 group :development, :test do
